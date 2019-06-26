@@ -39,23 +39,24 @@
             
             require_once "../models/Imagenes.php";
             $imagen = new Imagen();
-     
-      
-           
             //Vamos a declarar un array para luego mostrar uno a uno en la tabla de la vista. 
             $data = array();
             while ($reg = $respuesta->fetch_object()){
                 $mostrarImagen = $imagen->mostrar($reg->id_producto);
                 $mostrar = '';
                 while ($registroimagen = $mostrarImagen->fetch_object())
-                {
+                { //traemos todas las imagenes  y cargamos cuando sean las relacionadas al producto
                     if($reg->id_producto == $registroimagen->producto_id){
-                       
-                        $mostrar .= '<button class="btn btn-primary"><a class="sb" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:white;"><i class="fa fa-image"></i></a></button>';
-                       
+                        $mostrar .= ' <div style="height:50px;width:50px;float:left;padding:3px 53px 53px 3px;background-color:gray; margin-right:5px;border-radius: 5px;">
+                                        <button class="close" onclick=EliminarImagen('.$registroimagen->id_imagen.') style="position:relative;right:-50px;">
+                                        <span aria-hidden="true" style="color:black">&times;</span>
+                                        </button>
+                                            <img src="../files/images/productos/'.$registroimagen->descripcion.'" height="50" width="50">
+                                        <a class="sb" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:white;"></a>
+                                    </div> ';
                     }
                 }
-
+                //creamos la tabla que se mostrata en la vista
                 $data[] = array(
                     "0"=>($reg->condicion)?'<button class="btn btn-warning" data-toggle="modal" data-target="#modal_producto" onclick="mostrar('.$reg->id_producto.')"><i class="fa fa-pencil"></i></button>'.' <button class="btn btn-danger" onclick="desactivar('.$reg->id_producto.')"><i class="fa fa-close"></i></button>':'<button class="btn btn-warning" data-toggle="modal" data-target="#modal_producto" onclick="mostrar('.$reg->id_producto.')"><i class="fa fa-pencil"></i></button>'.' <button class="btn btn-success" onclick="activar('.$reg->id_producto.')"><i class="fa fa-check"></i></button>',
                     "1"=>$reg->cod_producto,
@@ -125,18 +126,36 @@
                 }
             }
             echo $mensage;// Regresamos los mensajes generados al cliente
-
         break;
         case 'mostrarImagen':
             require_once "../models/Imagenes.php";
             $imagen = new Imagen();
-            $respuesta = $imagen->mostrar($producto_id);
+            $respuesta = $imagen->mostrar($idproducto);
             while ($reg = $respuesta->fetch_object())
-            {
-                
+            {   
+                $rutaimg= '../files/images/productos/'.$reg->descripcion;
+                echo ' <button><input type="hidden" name="idimagen" id="idimagen" value="'.$reg->id_imagen.'">
+                <img src="'.$rutaimg.'" height="100px" width="100px"></button>';
             }
         break;
-
+        case 'EliminarImagen':
+            require_once "../models/Imagenes.php";
+            $idimagen = isset($_POST['id_imagen'])? limpiarCadena($_POST['id_imagen']):"";
+            $imagen = new Imagen();
+            $nombreimagen = $imagen->nombreimagen($idimagen);
+            while ($reg = $nombreimagen->fetch_object())
+            {
+                $ruta = '../files/images/productos/'.$reg->descripcion;
+                $files = glob($ruta); //obtenemos todos los nombres de los ficheros
+                foreach($files as $file){
+                    if(is_file($file))
+                    unlink($file); //elimino el fichero
+                }
+                $respuesta = $imagen->eliminar($idimagen);
+            }
+           
+            echo $respuesta ? "1" : "0";
+        break;
     }
 
 

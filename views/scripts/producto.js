@@ -14,18 +14,23 @@ function init() {
     $.post("../ajax/producto.php?op=selectCategoria", function(r) {
         $("#categoria_id").html(r);
         $("#categoria_id").selectpicker('refresh');
+    });
+    $.post("../ajax/producto.php?op=selectMaterial", function(s) {
+        $("#material_id").html(s);
+        $("#material_id").selectpicker('refresh');
     })
 
 }
 
-function formImagen(idproducto) {
-    $.post("../ajax/producto.php?op=mostrar", { id_producto: idproducto },
-        function(data, status) {
-            data = JSON.parse(data);
-            $("#producto_id").val(data.id_producto);
-        });
-}
 
+//function para guardar imagenes y mande el Id del producto al que pertenence
+function formImagen(idproducto) {
+
+    $("#formularioImagen").ready(function() {
+        $('#producto_id').val(idproducto);
+    });
+}
+//deja limpio todos los campos al cerrar
 function limpiar() {
     $("#id_producto").val("");
     $("#cod_producto").val("");
@@ -147,6 +152,22 @@ function guardaryeditar(e) {
         }
     });
     limpiar();
+}
+
+function EliminarImagen(idimagen) {
+    alertify.confirm("ATENCIÓN", "¿Esta segúro que quiere Eliminar la Imagen?", function() {
+            $.post("../ajax/producto.php?op=EliminarImagen", { id_imagen: idimagen }, function(e) {
+                if (e == 1) {
+                    alertify.success('Se Eliminio con exito!');
+                } else {
+                    alertify.error('Hubo un error al Eliminar');
+                }
+                $('#tablalistado').dataTable().api().ajax.reload();
+            });
+        },
+        function() {
+            alertify.error('Acción Cancelada')
+        });
 }
 
 function mostrar(idproducto) {

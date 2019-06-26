@@ -26,6 +26,13 @@
             $sql= "SELECT * FROM imagenes";
             return ejectuarConsulta($sql);
         }
-
+        public function eliminar($idimagen){
+            $sql= "DELETE FROM imagenes WHERE id_imagen = '$idimagen'";
+            return ejectuarConsulta($sql);
+        }
+        public function nombreimagen($idimagen){
+            $sql = "SELECT * FROM imagenes WHERE id_imagen = '$idimagen'";
+            return ejectuarConsulta($sql);
+        }
     }
 ?>
