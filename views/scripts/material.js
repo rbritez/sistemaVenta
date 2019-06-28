@@ -12,6 +12,7 @@ function init() {
 }
 
 function limpiar() {
+    $("#title_material").text("Nuevo Material");
     $("#id_material").val("");
     $("#nombre").val("");
 }
@@ -83,6 +84,7 @@ function guardaryeditar(e) {
 
 function mostrar(idmaterial) {
     $.post("../ajax/material.php?op=mostrar", { id_material: idmaterial }, function(data, status) {
+        $("#title_material").text("Editar Material");
         data = JSON.parse(data);
         $("#id_material").val(data.id_material);
         $("#nombre").val(data.nombre);

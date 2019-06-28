@@ -53,7 +53,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color:white">&times;</span>
                     </button>
-                    <h4 style="color:white;" class="modal-title">Nuevo Material</h4>
+                    <h4 style="color:white;" id="title_material" class="modal-title">Nuevo Material</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">

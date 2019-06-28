@@ -13,6 +13,7 @@ function init() {
 }
 //funcion limpiar, dejara vacio a los objetos del formulario
 function limpiar() {
+    $("#title_categoria").text("Nueva Categoria");
     $("#id_categoria").val("");
     $("#nombre_categoria").val("");
 }
@@ -100,6 +101,7 @@ function guardaryeditar(e) {
 
 function mostrar(idcategoria) {
     $.post("../ajax/categoria.php?op=mostrar", { id_categoria: idcategoria }, function(data, status) {
+        $("#title_categoria").text("Editar Categoria");
         data = JSON.parse(data);
         $("#id_categoria").val(data.id_categoria); //aquie se encuentra el valor del input hidden id_categoria
         $("#nombre_categoria").val(data.nombre_categoria); //aqui se encuentra el valor del imput nombre_categoria
