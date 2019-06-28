@@ -64,7 +64,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color:white">&times;</span>
                     </button>
-                    <h4 style="color:white;" class="modal-title">Nuevo Producto</h4>
+                    <h4 style="color:white;" id="title_product" class="modal-title">Nuevo Producto</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -74,7 +74,18 @@
                                     <input type="hidden" name="id_producto" id="id_producto">
                                     <label class="col-sm-2 col-sm-2 control-label">Codigo de Producto</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="cod_producto" id="cod_producto" class="form-control" placeholder="" maxlength="" required>
+                                            <div class="input-group">
+                                                <input type="text" name="cod_producto" id="cod_producto" class="form-control" placeholder="" maxlength="" required>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-success" type="button" onclick="generarBarcode()"><i class="fa fa-barcode"></i> Generar</button>
+                                                </span>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-info" onclick="printBarcode()"> <i class="fa fa-print"></i> Imprimir</button>
+                                                </span>
+                                            </div>    
+                                            <div id="printbarcode" style="display:none">
+                                                <svg id="barcode"></svg>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -149,4 +160,6 @@
 <?php
     require 'footer.php';
 ?>
+<script type="text/javascript" src="../public/js/jquery.PrintArea.js"></script>
+<script type='text/javascript' src="../public/js/JsBarcode.all.min.js"></script>
 <script type="text/javascript" src="scripts/producto.js"></script>

@@ -52,7 +52,8 @@
                                         <span aria-hidden="true" style="color:black">&times;</span>
                                         </button>
                                             <img src="../files/images/productos/'.$registroimagen->descripcion.'" height="50" width="50">
-                                        <a class="sb" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:white;"></a>
+                                            <div style="position:relative;right:-15px;bottom:16px;font-weight: bold;"><a class="sb" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:black;">Ver</a></div>
+                                        
                                     </div> ';
                     }
                 }

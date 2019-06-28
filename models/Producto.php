@@ -28,7 +28,7 @@
         }
         Public function mostrar($idproducto)
         {
-            $sql="SELECT * FROM productos WHERE id_producto = '$idproducto'";
+            $sql="SELECT `id_producto`, LPAD(`cod_producto`,4,'0') AS cod_producto,`descripcion`,`stock`,`material_id`,`categoria_id`,`condicion` FROM productos WHERE id_producto = '$idproducto'";
             return ejectuarConsultaSimpleFila($sql);
         }
 

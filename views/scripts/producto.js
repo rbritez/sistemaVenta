@@ -32,6 +32,7 @@ function formImagen(idproducto) {
 }
 //deja limpio todos los campos al cerrar
 function limpiar() {
+    $("#title_product").text("Nuevo Producto");
     $("#id_producto").val("");
     $("#cod_producto").val("");
     $("#descripcion").val("");
@@ -40,6 +41,7 @@ function limpiar() {
     $("#material_id").selectpicker('refresh');
     $("#categoria_id").val("");
     $("#categoria_id").selectpicker('refresh');
+    $("#printbarcode").hide();
 }
 
 function limpiarimagen() {
@@ -101,16 +103,13 @@ function guardarImagen(e) {
     var archivos = document.getElementById("file-1"); //Creamos un objeto con el elemento que contiene los archivos: el campo input file, que tiene el id = 'archivos'
     var archivo = archivos.files; //Obtenemos los archivos seleccionados en el imput
     //Creamos una instancia del Objeto FormDara.
-
     var archivos = new FormData($("#formularioImagen")[0]);
-
     /* Como son multiples archivos creamos un ciclo for que recorra la el arreglo de los archivos seleccionados en el input
     Este y añadimos cada elemento al formulario FormData en forma de arreglo, utilizando la variable i (autoincremental) como 
     indice para cada archivo, si no hacemos esto, los valores del arreglo se sobre escriben*/
     for (i = 0; i < archivo.length; i++) {
         archivos.append('archivo' + i, archivo[i]); //Añadimos cada archivo a el arreglo con un indice direfente
     }
-
     /*Ejecutamos la función ajax de jQuery*/
     $.ajax({
         url: '../ajax/producto.php?op=guardaryeditarImagen', //Url a donde la enviaremos
@@ -123,11 +122,9 @@ function guardarImagen(e) {
             alertify.alert(datos);
             $('#tablalistado').dataTable().api().ajax.reload();
         }
-
     });
-
 }
-
+//funcion para guardar nuevo y editado los productos
 function guardaryeditar(e) {
     e.preventDefault();
     var formData = new FormData($("#formulario")[0]);
@@ -153,7 +150,7 @@ function guardaryeditar(e) {
     });
     limpiar();
 }
-
+//function eliminar imagen 
 function EliminarImagen(idimagen) {
     alertify.confirm("ATENCIÓN", "¿Esta segúro que quiere Eliminar la Imagen?", function() {
             $.post("../ajax/producto.php?op=EliminarImagen", { id_imagen: idimagen }, function(e) {
@@ -169,10 +166,11 @@ function EliminarImagen(idimagen) {
             alertify.error('Acción Cancelada')
         });
 }
-
+//funcion mostrar productos para editar
 function mostrar(idproducto) {
     $.post("../ajax/producto.php?op=mostrar", { id_producto: idproducto },
         function(data, status) {
+            $("#title_product").text("Editar Producto");
             data = JSON.parse(data);
             $("#id_producto").val(data.id_producto);
             $("#cod_producto").val(data.cod_producto);
@@ -182,12 +180,13 @@ function mostrar(idproducto) {
             $("#material_id").selectpicker('refresh');
             $("#categoria_id").val(data.categoria_id);
             $("#categoria_id").selectpicker('refresh');
+            generarBarcode();
         });
     $("#cerrar").on("click", function() {
         limpiar();
     });
 }
-
+//function activar productos
 function activar(idproducto) {
     alertify.confirm("ATENCIÓN", "¿Esta seguro que desea activar el Producto?",
         function() {
@@ -204,7 +203,7 @@ function activar(idproducto) {
             alertify.error('Acción Cancelada');
         });
 }
-
+//desactivar productos
 function desactivar(idproducto) {
     alertify.confirm("ATENCIÓN", "¿Esta seguro que desea desactivar el Producto?",
         function() {
@@ -220,5 +219,15 @@ function desactivar(idproducto) {
         function() {
             alertify.error('Acción Cancelada');
         });
+}
+//Generar codigo de Barras
+function generarBarcode() {
+    $("#printbarcode").show();
+    cod_producto = $("#cod_producto").val();
+    JsBarcode('#barcode', cod_producto);
+}
+//funcion para imprimir codigo de barra
+function printBarcode() {
+    $('#printbarcode').printArea();
 }
 init();
