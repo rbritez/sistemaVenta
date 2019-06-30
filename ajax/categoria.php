@@ -16,7 +16,7 @@ switch($_GET["op"]){
     case 'guardaryeditar' :
         if(empty($idcategoria)){
             $respuesta = $categoria->insertar($nombre_categoria);
-            echo $respuesta ? "1" : "0";
+            echo $respuesta ? "1" : "0"; //si respuesta es igual a 1 enviar 1 , si es igual a 0 enviar 0. $respuesta recibe 1 si fue exitoso o 0 si hubo error.
         }else{
             $respuesta = $categoria->editar($idcategoria,$nombre_categoria);
             echo $respuesta ? "2" : "3";
