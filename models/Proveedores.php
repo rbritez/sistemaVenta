@@ -1,6 +1,6 @@
 <?php
-//conectamos a la base de datos
-require "../config/conexion.php";
+    //conectamos con la base de datos
+    require "../config/conexion.php";
     Class Proveedor
     {
         Public function __construct()
@@ -33,8 +33,7 @@ require "../config/conexion.php";
             proveedores.`razon_social`,
             personas.`nombres`,
             personas.`apellidos`,
-            personas.`nro_doc`,
-            personas.`fecha_nac`,
+            personas.`nro_doc`
             FROM proveedores
             JOIN personas ON personas.`id_persona` = proveedores.`persona_id`
             WHERE proveedores.`id_proveedor` = '$id_proveedor' 
@@ -53,8 +52,6 @@ require "../config/conexion.php";
             proveedores.`condicion`
             FROM proveedores
             JOIN personas ON personas.`id_persona` = proveedores.`persona_id`
-            LEFT JOIN contactos ON contactos.`persona_id` = personas.`id_persona`
-            LEFT JOIN direcciones ON direcciones.`persona_id` = personas.`id_persona`
             ";
             return ejectuarConsulta($sql);
         }

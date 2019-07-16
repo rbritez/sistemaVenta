@@ -13,6 +13,7 @@ if(mysqli_connect_errno())
 }
 
 //preguntamos si existe alguna consulta realizandose, para evitar errores
+
 if(!function_exists('ejectuarConsulta'))
 {
     //funciones para hacer peticiones a la base de datos
