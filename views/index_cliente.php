@@ -10,7 +10,7 @@ require 'header.php';
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">LISTA DE PROVEEDORES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_proveedor"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
+                        <h1 class="box-title">LISTA DE CLIENTES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cliente"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -19,9 +19,9 @@ require 'header.php';
                         <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
                             <thead >
                                 <th style="text-align: center;">OPCIONES</th>
-                                <th style="text-align: center;">RAZON SOCIAL</th>
                                 <th style="text-align: center;">NOMBRES</th>
                                 <th style="text-align: center;">APELLIDOS</th>
+                                <th style="text-align: center;">NRO DOC/CUIL</th>
                                 <th style="text-align: center;">CONTACTOS</th>
                                 <th style="text-align: center;">DIRECCIONES</th>
                                 <th style="text-align: center;">ESTADO</th>
@@ -30,9 +30,9 @@ require 'header.php';
                             </tbody>
                             <tfoot>
                                 <th style="text-align: center;">OPCIONES</th>
-                                <th style="text-align: center;">RAZON SOCIAL</th>
                                 <th style="text-align: center;">NOMBRES</th>
                                 <th style="text-align: center;">APELLIDOS</th>
+                                <th style="text-align: center;">NRO DOC/CUIL</th>
                                 <th style="text-align: center;">CONTACTOS</th>
                                 <th style="text-align: center;">DIRECCIONES</th>
                                 <th style="text-align: center;">ESTADO</th>
@@ -64,7 +64,7 @@ require 'header.php';
 </div>
 <!-- /.content-wrapper -->
 <!--Fin-Contenido-->
-    <div class="modal fade" id="modal_proveedor"> <!-- modallllllllll-->
+    <div class="modal fade" id="modal_cliente"> <!-- modallllllllll-->
         <div class="modal-dialog">
             <div class="modal-content"> <!-- div content --> 
                 <div class="modal-warning modal-header " style="background-color:#f39c12">
@@ -78,7 +78,6 @@ require 'header.php';
                         <div class="col-sm-12">
                             <form  class="form-horizontal"  name="formulario" id="formulario" method="POST">
                                 <div class="form-group">
-                                    <input type="hidden" name="id_proveedor" id="id_proveedor">
                                     <input type="hidden" name="persona_id" id="persona_id">
                                     <label class="col-sm-3 col-sm-3 control-label">NOMBRES (*)</label>
                                     <div class="col-sm-9">
@@ -92,23 +91,16 @@ require 'header.php';
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 col-sm-3 control-label">DNI</label>
+                                    <label class="col-sm-3 col-sm-3 control-label">NRO DOC/CUIL (*)</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="nro_doc" id="nro_doc" class="form-control" maxlength="15">
-                                    </div>
-                                    <input type="hidden" name="fecha_nac" id="fecha_nac">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 col-sm-3 control-label">EMPRESA (*)</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" style="text-transform:uppercase" maxlength="50" required>
+                                        <input type="text" name="nro_doc" id="nro_doc" class="form-control" style="text-transform:uppercase" maxlength="50">
                                     </div>
                                 </div>
                         </div>
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrar" name="cerrar" onclick="limpiarProveedor()"><i class="fa fa-arrow-circle-left" ></i> VOLVER</button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrar" name="cerrar" onclick="limpiar()"><i class="fa fa-arrow-circle-left" ></i> VOLVER</button>
                     <button type="submit" class="btn btn-info"> <i class="fa fa-save" id="btnGuardar"></i> GUARDAR</button>
                 </div>
                 </form>
@@ -263,6 +255,6 @@ require 'header.php';
 <?php
 require 'footer.php';
 ?>
-<script type="text/javascript" src="scripts/proveedor.js"></script>
+<script type="text/javascript" src="scripts/cliente.js"></script>
 <script type="text/javascript" src="scripts/contacto.js"></script>
 <script type="text/javascript" src="scripts/direccion.js"></script>

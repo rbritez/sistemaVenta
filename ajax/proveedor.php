@@ -8,7 +8,6 @@
 
     $id_proveedor = isset($_POST["id_proveedor"])? limpiarCadena($_POST["id_proveedor"]):"";
     $id_persona = isset($_POST["persona_id"])? limpiarCadena($_POST["persona_id"]):"";
-    $id_direccion = isset($_POST["id_direccion"])? limpiarCadena($_POST["id_direccion"]):"";
     $nombres = isset($_POST["nombres"])? limpiarCadena($_POST["nombres"]):"";
     $apellidos = isset($_POST["apellidos"])? limpiarCadena($_POST["apellidos"]):"";
     $nro_doc = isset($_POST["nro_doc"])? limpiarCadena($_POST["nro_doc"]):"";
