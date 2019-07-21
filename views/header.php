@@ -131,7 +131,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="usuario.php"><i class="fa fa-circle-o"></i> Usuarios</a></li>
-                        <li><a href="permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
+                        <li><a href="index_permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
