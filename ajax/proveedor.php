@@ -1,8 +1,6 @@
 <?php
     require_once "../models/Proveedores.php";
     require_once "../models/Personas.php";
-    require_once "../models/Direcciones.php";
-    $direccion = new Direccion();
     $persona = new Persona();
     $proveedor = new Proveedor();
     
@@ -81,8 +79,8 @@
                 "1"=>$reg->razon_social,
                 "2"=>$reg->nombres,
                 "3"=>$reg->apellidos,
-                "4"=>($reg->contactos) ? '<button class="btn btn-info"><i class="fa fa-eye"></i></button> <button class="btn btn-success" data-toggle="modal" data-target="#modal_contacto"><i class="fa fa-plus"></i></button>' :' <button class="btn btn-success" data-toggle="modal" data-target="#modal_contacto"><i class="fa fa-plus"></i></button>',
-                "5"=>($reg->direcciones)?'<button class="btn btn-info" onclick="mostrarDireccion('.$reg->id_persona.')"><i class="fa fa-eye" ></i></button> <button class="btn btn-success" data-toggle="modal" data-target="#modal_direcciones" onclick="mandarid_direccion('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>' :' <button class="btn btn-success" data-toggle="modal" data-target="#modal_direcciones" onclick="mandarid_direccion('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>',
+                "4"=>($reg->contactos) ? '<button class="btn btn-info" onclick="mostrarContacto('.$reg->id_persona.')"><i class="fa fa-book"></i></button> <button class="btn btn-success" data-toggle="modal" data-target="#modal_contacto"onclick="mandarid_contacto('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>' :' <button class="btn btn-success" data-toggle="modal" data-target="#modal_contacto"onclick="mandarid_contacto('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>',
+                "5"=>($reg->direcciones)?'<button class="btn btn-info" onclick="mostrarDireccion('.$reg->id_persona.')"><i class="fa fa-location-arrow" ></i></button> <button class="btn btn-success" data-toggle="modal" data-target="#modal_direcciones" onclick="mandarid_direccion('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>' :' <button class="btn btn-success" data-toggle="modal" data-target="#modal_direcciones" onclick="mandarid_direccion('.$reg->id_persona.')"><i class="fa fa-plus"></i></button>',
                 "6"=>($reg->condicion) ? '<span class="label bg-green-active">Activo</span>':'<span class="label bg-red-active">Inactivo</span>',
                 ); 
             }

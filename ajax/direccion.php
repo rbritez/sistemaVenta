@@ -17,9 +17,10 @@
         case 'guardaryeditar':
         if(empty($id_direccion)){
             $respuesta = $direccion->insertar($provincia,$localidad,$barrio,$calle,$manzana,$altura,$nro_piso,$nro_dpto,$info_add,$persona_id);
-            echo $respuesta;
+            echo $respuesta ? "1": "0";
         }else{
-
+            $respuesta = $direccion->editar($id_direccion,$provincia,$localidad,$barrio,$calle,$manzana,$altura,$nro_piso,$nro_dpto,$info_add);
+            echo $respuesta? "2" : "3";
         }   
         break;
         case 'listar':
@@ -51,6 +52,10 @@
         case 'mostrar':
             $respuesta = $direccion->mostrar($id_direccion);
             echo json_encode($respuesta);
+        break;
+        case 'eliminar':
+            $respuesta = $direccion->eliminar($id_direccion);
+            echo $respuesta ? "1" : "0";
         break;
     }
 ?>

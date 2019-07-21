@@ -23,7 +23,12 @@ if(!function_exists('ejectuarConsulta'))
     {
         global $conexion;
         $query = $conexion->query($sql);
-        return $query;
+        if (!$query) {
+             return $conexion->error;
+         }else{
+            return $query;
+         }
+        
     }
 
 
