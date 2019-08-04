@@ -21,7 +21,8 @@
         <link rel="stylesheet" type="text/css" href="../public/datatables/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="../public/datatables/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="../public/datatables/responsive.dataTables.min.css">
-
+        <!-- chosen select multiple -->
+        <link rel="stylesheet" href="../public/plugins/chosen_v1.8.7/chosen.css">
         <!-- include the style ALERTIFY -->
         <link rel="stylesheet" href="../public/alertify/css/alertify.css" />
         <!-- include a theme -->

@@ -27,5 +27,6 @@
      <script src="../public/Smoothbox-master/js/smoothbox.min.js"></script>
      <!-- input file -->
      <script src="../public/input-file/js/jquery.custom-file-input.js"></script>
-
+     <!-- chosen select multiple -->
+    <script src="../public/plugins/chosen_v1.8.7/chosen.jquery.js"></script>
 </html>

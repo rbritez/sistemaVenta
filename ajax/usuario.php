@@ -58,8 +58,8 @@
                         
                         move_uploaded_file($temporal, $Destino); //Movemos el archivo temporal a la ruta 
 
-                        $respuestaUsuario = $usuario->insertar($id_persona,$nombre_usuario,$passHash,$cargo,$imagen_usuario1);
-                        echo $respuestaUsuario ? "1" :"0";
+                        $respuestaUsuario = $usuario->insertar($id_persona,$nombre_usuario,$passHash,$cargo,$imagen_usuario1,$_POST['permiso']);
+                        echo $respuestaUsuario ? "2" :"1";
                     }
             }else{
                  //pasamos a guardar en usuario ,FALTA HACER QUE ELIMINE LA IMAGEN ANTERIOR
@@ -83,7 +83,7 @@
                  move_uploaded_file($temporal, $Destino); //Movemos el archivo temporal 
                 // editamos la tabla persona y la tabla usuario
                 $respuestaPersona = $persona->editar($nombres,$apellidos,$nro_doc,$fecha_nac,$persona_id);
-                $respuestaUsuario = $usuario->editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario1);
+                $respuestaUsuario = $usuario->editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario1,$_POST['permiso']);
                 echo $respuestaPersona ? "3" : "4"; 
             }
         break;
@@ -148,6 +148,24 @@
                 "aaData"=>$data //aca se encuentra almacenado todos los registros
             );
             echo json_encode($result);
+        break;
+        case 'selectPermisos':
+            require_once "../models/Permisos.php";
+            $permiso = new Permiso();
+            $respuesta = $permiso->listar();
+            $id = $_POST['id_usuario'];
+            $marcados= $usuario->mostrarPermisos($id);
+            $valores= array();
+            while($per= $marcados->fetch_object())
+            {
+                array_push($valores,$per->permiso_id);
+            }
+            
+            while ($reg = $respuesta->fetch_object())
+            {
+                $selected = in_array($reg->id_permiso,$valores)?'selected':'';
+                echo '<option value="'.$reg->id_permiso. '" '.$selected.'>'.$reg->descripcion.'</option>';
+            }
         break;
     }
 ?>

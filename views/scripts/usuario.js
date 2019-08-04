@@ -15,8 +15,16 @@ var cargardenuevo = '<div id="eliminarclave1">' +
     '</div>' +
     '</div>' +
     '</div>';
+var cargarSelectMultple = '<div class="form-group" id="eliminarselect">' +
+    '<label class="col-sm-4 col-sm-4 control-label">PERMISOS (*)</label>' +
+    '<div class="col-sm-8">' +
+    '<select multiple class="form-control" name="permiso[]" id="permiso_id">' +
+    '</select>' +
+    '</div>' +
+    '</div>';
 
 function init() {
+
     listar();
     //funcion para ver si hay cambios en el imput IMG para mostrar la imagen 
     $("#file-1").change(function() {
@@ -27,8 +35,13 @@ function init() {
 
     })
     $("#formulario_Pass").on('submit', function(e) {
-        actualizarPass(e);
-    })
+            actualizarPass(e);
+        })
+        // $("#permiso_id").chosen({
+        //     placeholder_text_multiple: "Seleccione al menos 1 permiso",
+        //     width: "100%"
+        // });
+
 }
 //funcion para realizar preview de la imagen ,antes de guardar
 function filePreview(input) {
@@ -47,6 +60,16 @@ function filePreview(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
+}
+//funcion para agregar los permisos de los usuarios
+function agregarselect() {
+    $(cargarSelectMultple).insertAfter($("#cargodiv"));
+    $.post("../ajax/usuario.php?op=selectPermisos", function(s) {
+        $("#permiso_id").append(s).chosen({
+            placeholder_text_multiple: "Seleccione al menos 1 permiso",
+            width: "100%"
+        });
+    });
 }
 
 function listar() {
@@ -81,7 +104,8 @@ function listar() {
 //dejar los campos vacios
 function limpiar() {
     $("#title_proveedor").text("NUEVO PROVEEEDOR");
-    $("#id_usuario").remove("");
+    $("#id_usuario").remove();
+    $("#eliminarselect").remove();
     $("#persona_id").val("");
     $("#nombres").val("");
     $("#apellidos").val("");
@@ -115,7 +139,7 @@ function cerrar() {
 function cerrarPass() {
     $("#formulario_Pass").ready(function() {
         $("#cerrarPass").trigger("click");
-        limpiar();
+        limpiarPass();
     });
 }
 
@@ -193,6 +217,7 @@ function guardaryeditar(e) {
                 processData: false,
 
                 success: function(datos) {
+                    alert(datos);
                     if (datos == 0) {
                         alertify.alert('RESULTADO INCONCLUSO', 'NO SE PUDO GUARDAR LA PERSONA! ');
                     } else if (datos == 1) {
@@ -209,6 +234,7 @@ function guardaryeditar(e) {
             cerrar();
         }
     } else {
+        //editar usuario
         var formData = new FormData($("#formulario")[0]);
         $.ajax({
             url: "../ajax/usuario.php?op=guardaryeditar",
@@ -242,6 +268,7 @@ function mostrar(idusuario) {
         $("#title_usuario").text("EDITAR USUARIO");
         $("#eliminarclave1").remove();
         $("#eliminarclave2").remove();
+        $("#eliminarselect").remove();
         data = JSON.parse(data);
         $("#formulario").append('<input type="hidden" name="id_usuario" id="id_usuario"><input type="hidden" id="imagen_anterior" name="imagen_anterior" value="' + data.imagen_usuario + '">');
         $("#id_usuario").val(data.id_usuario);
@@ -253,6 +280,13 @@ function mostrar(idusuario) {
         $("#nombre_usuario").val(data.nombre_usuario);
         $("#cargo").val(data.cargo);
         $("#cargarimagen").append('<img id="img_user" src="../files/images/usuarios/' + data.imagen_usuario + '" width="150" height="100">');
+    });
+    $.post("../ajax/usuario.php?op=selectPermisos", { id_usuario: idusuario }, function(data, status) {
+        $(cargarSelectMultple).insertAfter($("#cargodiv"));
+        $("#permiso_id").append(data).chosen({
+            placeholder_text_multiple: "Seleccione al menos 1 permiso",
+            width: "100%"
+        });
     });
     $("#cerrar").on("click", function() {
         limpiar();

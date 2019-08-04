@@ -18,15 +18,35 @@
         Public function __construct()
         {
         }
-        Public function insertar($persona_id,$nombre_usuario,$clave,$cargo,$imagen_usuario)
+        Public function insertar($persona_id,$nombre_usuario,$clave,$cargo,$imagen_usuario,$permisos)
         {
             $sql = "INSERT INTO usuarios (persona_id,nombre_usuario,clave,cargo,imagen_usuario) VALUES ('$persona_id','$nombre_usuario','$clave','$cargo','$imagen_usuario')";
-            return ejectuarConsulta($sql);
+            $usuarioNew = ejectuarConsulta_retornarID($sql);
+            $num_elementos=0;
+            $resp=1;
+            while($num_elementos < count($permisos)){
+                $sql_detalle="INSERT INTO permisosxusuario (permiso_id, usuario_id) VALUES('$permisos[$num_elementos]','$usuarioNew')";
+                $num_elementos=$num_elementos+1;
+                ejectuarConsulta($sql_detalle) or $resp=0;
+            }
+            return $resp;
         }
-        Public function editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario)
+        Public function editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario,$permisos)
         {
             $sql= "UPDATE usuarios SET  nombre_usuario = '$nombre_usuario',cargo = '$cargo', imagen_usuario = '$imagen_usuario' WHERE id_usuario = '$id_usuario'";
-            return ejectuarConsulta($sql);
+            ejectuarConsulta($sql);
+            //eliminamos los permisos para volver a cargarlos
+            $eliminar = "DELETE FROM permisosxusuario WHERE usuario_id = '$id_usuario'";
+            ejectuarConsulta($eliminar);
+            //cargamos los nuevos permisos
+            $num_elementos=0;
+            $resp=1;
+            while($num_elementos < count($permisos)){
+                $sql_detalle="INSERT INTO permisosxusuario (permiso_id, usuario_id) VALUES('$permisos[$num_elementos]','$id_usuario')";
+                $num_elementos=$num_elementos+1;
+                ejectuarConsulta($sql_detalle) or $resp=0;
+            }
+            return $resp;
         }
         Public function logeado($id_usuario,$login){
             $sql= "UPDATE usuarios SET login_usuario = '$login' WHERE id_usuario = '$id_usuario'";
@@ -84,6 +104,10 @@
             FROM usuarios
             JOIN personas ON personas.`id_persona` = usuarios.`persona_id`
             ";
+            return ejectuarConsulta($sql);
+        }
+        Public function mostrarPermisos($id_usuario){
+            $sql= "SELECT * FROM permisosxusuario WHERE usuario_id = '$id_usuario'";
             return ejectuarConsulta($sql);
         }
     }

@@ -10,7 +10,7 @@ require 'header.php';
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">LISTA DE USUARIOS <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_usuario"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
+                        <h1 class="box-title">LISTA DE USUARIOS <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_usuario" onclick="agregarselect()"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -132,12 +132,13 @@ require 'header.php';
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="cargodiv">
                                     <label class="col-sm-4 col-sm-4 control-label">CARGO (*)</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="cargo" id="cargo" class="form-control" style="text-transform:uppercase" maxlength="50" required>
                                     </div>
                                 </div>
+                               
                                 <div class="form-group">
                                     <label class="col-sm-4 col-sm-4 control-label">IMAGEN (*)</label>
                                     <div class="col-sm-8">
