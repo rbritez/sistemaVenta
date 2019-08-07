@@ -1,5 +1,13 @@
 <?php
+//activamos el almacenamietno en el buffer
+ob_start();
+session_start();
+if(!isset($_SESSION["nombres"])){
+    header("Location: login.html");
+}else{
 require 'header.php';
+//verificamos si tiene acceso al modulo
+if($_SESSION['ventas'] == 1){
 ?>
 <!--Contenido-->
 <!-- Content Wrapper. Contains page content -->
@@ -253,8 +261,15 @@ require 'header.php';
     </div><!-- /.modal -->
     
 <?php
+}else{
+    require 'accesoDenegado.php';
+}
 require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/cliente.js"></script>
 <script type="text/javascript" src="scripts/contacto.js"></script>
 <script type="text/javascript" src="scripts/direccion.js"></script>
+<?php
+};
+ob_end_flush();
+?>

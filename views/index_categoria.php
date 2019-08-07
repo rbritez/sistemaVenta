@@ -1,5 +1,16 @@
 <?php
+//activamos el almacenamietno en el buffer
+ob_start();
+session_start();
+if(!isset($_SESSION["nombres"])){
+    header("Location: login.html");
+}else{
+
+
 require 'header.php';
+
+if($_SESSION['almacen'] == 1){
+
 ?>
 <!--Contenido-->
 <!-- Content Wrapper. Contains page content -->
@@ -78,6 +89,13 @@ require 'header.php';
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 <?php
+}else{
+    require 'accesoDenegado.php';
+};
 require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/categoria.js"></script>
+<?php 
+} //cerramos el else de sesion
+ob_end_flush();
+?>

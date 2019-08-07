@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "../models/Usuarios.php";
     require_once "../models/Personas.php";
     $persona = new Persona();
@@ -195,27 +196,26 @@
                     $_SESSION['apellidos'] = $fetch->apellidos;
                     $_SESSION['imagen'] = $fetch->imagen_usuario;
                     $_SESSION['login'] = $fetch->login_usuario;
+                    //cargar permisos del usuario
+                    $marcados = $usuario->mostrarPermisos($fetch->id_usuario);
+                    //declaramos el array para almacenar todos los permisos asigados al usuario
+                    $valores = array();
+                    while ($per = $marcados->fetch_object()){
+                        array_push($valores,$per->permiso_id);
+                    }
+                    //Determinamos los accesos del usuario
+                    in_array(1,$valores) ? $_SESSION['escritorio']=1 : $_SESSION['escritorio']=0;
+                    in_array(2,$valores) ? $_SESSION['almacen']=1 : $_SESSION['almacen']=0;
+                    in_array(3,$valores) ? $_SESSION['compras']=1 : $_SESSION['compras']=0;
+                    in_array(4,$valores) ? $_SESSION['ventas']=1 : $_SESSION['ventas']=0;
+                    in_array(5,$valores) ? $_SESSION['acceso']=1 : $_SESSION['acceso']=0;
+                    in_array(6,$valores) ? $_SESSION['consultac']=1 : $_SESSION['consultac']=0;
+                    in_array(7,$valores) ? $_SESSION['consultav']=1 : $_SESSION['consultav']=0;
                 }
                 echo json_encode($fetch); exit();
             } else { echo "clave incorrecta"; exit();}
                 //fin verificar pass
             }
-            //encriptar clave y verificar;
-
-
-
-            // $respuesta = $usuario->verificarLogin($loginA,$clave);
-            // $fetch = $respuesta->fetch_object();
-            // if(isset($fetch))
-            // {
-            //     //creamos las variables de sesión
-            //     $_SESSION['id_usuario'] = $fetch->id_usuario;
-            //     $_SESSION['nombres'] = $fetch->nombres;
-            //     $_SESSION['apellidos'] = $fetch->apellidos;
-            //     $_SESSION['imagen'] = $fetch->imagen_usuario;
-            //     $_SESSION['login'] = $fetch->login_usuario;
-            // }
-            // echo $id_user;
         break;
     }
 ?>
