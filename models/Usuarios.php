@@ -110,5 +110,16 @@
             $sql= "SELECT * FROM permisosxusuario WHERE usuario_id = '$id_usuario'";
             return ejectuarConsulta($sql);
         }
+        Public function verificaruser($login){
+            $sql="SELECT id_usuario, login_usuario FROM usuarios WHERE login_usuario = '$login'";
+            return ejectuarConsultaSimpleFila($sql);
+        }
+        Public function verificarLogin($id_usuario,$login){
+            $sql= "SELECT usuarios.`id_usuario`, personas.`nombres`,personas.`apellidos`,personas.`nro_doc`, usuarios.`imagen_usuario`,usuarios.`login_usuario`,usuarios.`condicion`
+            FROM usuarios 
+            JOIN personas ON personas.`id_persona` = usuarios.`persona_id`
+            WHERE usuarios.`id_usuario`='$id_usuario' AND  usuarios.`login_usuario` = '$login' AND usuarios.`condicion`=1;";
+            return ejectuarConsulta($sql);
+        }
     }
 ?>
