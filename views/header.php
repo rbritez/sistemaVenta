@@ -1,3 +1,8 @@
+<?php
+if(strlen(session_id())< 1 ){
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,20 +61,20 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="../public/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Ger Britez</span>
+                                <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>" class="user-image" alt="User Image">
+                                <span class="hidden-xs" style="text-transform:uppercase"><?php echo $_SESSION['nombre_usuario'] ?> </span>
                             </a>
                             <ul class="dropdown-menu">
                                     <!-- User image -->
                                 <li class="user-header">
-                                    <img src="../public/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                        <p>Administrador<small> <a >Editar Datos</a></small>
+                                    <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>"  class="img-circle" alt="User Image">
+                                        <p>Administrador<small> <a href="usuario_editar.php">Editar Datos</a></small>
                                         </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Cerrar</a>
+                                    <a href="../ajax/usuario.php?op=salir" class="btn btn-default btn-flat">Cerrar</a>
                                     </div>
                                 </li>
                             </ul>
@@ -85,11 +90,23 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header"></li>
-                <li>
+                <!-- li escritorio -->
+                <?php
+                if($_SESSION['escritorio']==1){
+                ?>
+                    <li>
                     <a href="#">
                         <i class="fa fa-tasks"></i> <span>Escritorio</span>
                     </a>
-                </li>            
+                </li>
+                <?php  
+                }//cerramos if
+                ?>
+                <!-- Fin li escritorio -->
+                <!-- inicio li almacen -->
+                <?php
+                if($_SESSION['almacen']==1){
+                ?>       
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-laptop"></i>
@@ -102,7 +119,14 @@
                         <li><a href="index_material.php"><i class="fa fa-circle-o"></i> Materiales</a></li>
                     </ul>
                 </li>
-                
+                <?php
+                }//cerramos if
+                ?>
+                <!-- Fin li almacen -->
+                <!-- inicio li compras -->
+                <?php
+                if($_SESSION['compras']==1){
+                ?>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-th"></i>
@@ -114,6 +138,14 @@
                         <li><a href="index_proveedor.php"><i class="fa fa-circle-o"></i> Proveedores</a></li>
                     </ul>
                 </li>
+                <?php
+                }//cerramos if
+                ?>
+                <!-- fin li compras -->
+                <!-- inicio li ventas -->
+                <?php
+                if($_SESSION['ventas']==1){
+                ?>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-shopping-cart"></i>
@@ -124,7 +156,15 @@
                         <li><a href="venta.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
                         <li><a href="index_cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
                     </ul>
-                </li>                       
+                </li>            
+                <?php
+                }//cerramos if
+                ?>    
+                <!-- fin li ventas -->
+                <!-- inicio li acceso -->
+                <?php
+                if($_SESSION['acceso']==1){
+                ?>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>Acceso</span>
@@ -135,6 +175,14 @@
                         <li><a href="index_permiso.php"><i class="fa fa-circle-o"></i> Permisos</a></li>
                     </ul>
                 </li>
+                <?php
+                }//cerramos if
+                ?>
+                <!-- fin li acceso -->
+                <!-- inicio consulta compras -->
+                <?php
+                if($_SESSION['consultac']==1){
+                ?>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-bar-chart"></i> <span>Consulta Compras</span>
@@ -144,6 +192,14 @@
                         <li><a href="consultacompras.php"><i class="fa fa-circle-o"></i> Consulta Compras</a></li>                
                     </ul>
                 </li>
+                <?php
+                }//cerramos if
+                ?>
+                <!-- fin li consultas compras -->
+                <!-- inicio li consulta ventas-->
+                <?php
+                if($_SESSION['consultav']==1){
+                ?>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-bar-chart"></i> <span>Consulta Ventas</span>
@@ -153,6 +209,10 @@
                         <li><a href="consultaventas.php"><i class="fa fa-circle-o"></i> Consulta Ventas</a></li>                
                     </ul>
                 </li>
+                <?php
+                }//cerramos if
+                ?>
+                <!-- cerramos li consulta ventas -->
                 <li>
                     <a href="#">
                         <i class="fa fa-plus-square"></i> <span>Ayuda</span>

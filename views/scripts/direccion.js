@@ -12,6 +12,7 @@ function mandarid_direccion(id) {
         $("#formulario_direccion").append("<input type='hidden' id='persona_iddd' value='' name='persona_id'>");
         $("#persona_iddd").val(id);
     }
+
 }
 
 function limpiarDireccion() {
@@ -29,8 +30,10 @@ function limpiarDireccion() {
 }
 
 function cerrardireccion() {
+    $("#contactobtn").attr("enabled", true);
     $("#formulario_direccion").ready(function() {
         $("#cerrardireccion").trigger("click");
+
         limpiarDireccion();
     });
 }
@@ -83,6 +86,7 @@ function eliminarDireccion(iddireccion) {
 }
 //datos que van al modal para ser editados
 function mostrarDireccionEditar(iddireccion) {
+
     $.post("../ajax/direccion.php?op=mostrar", { id_direccion: iddireccion }, function(data, status) {
         $("#title_direccion").text("EDITAR DIRECCION");
         $("#formulario_direccion").append('<input type="hidden" id="persona_iddd" name="persona_id">');
@@ -105,6 +109,13 @@ function mostrarDireccionEditar(iddireccion) {
 }
 //funcion para dar forma y mostrar la vista de direcciones de un proveedor
 function mostrarDireccion(idpersona) {
+    if (idpersona > 0) {
+        $("#direccionbtn").attr("disabled", true);
+        $("#contactobtn").attr("disabled", true);
+    } else {
+        $("#direccionbtn").attr("disabled", false);
+        $("#contactobtn").attr("disabled", false);
+    };
     var caja_contenido = $("#caja_contenido");
     $.post("../ajax/direccion.php?op=listar", { persona_id: idpersona }, function(data, status) {
 

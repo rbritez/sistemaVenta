@@ -84,8 +84,28 @@
                  move_uploaded_file($temporal, $Destino); //Movemos el archivo temporal 
                 // editamos la tabla persona y la tabla usuario
                 $respuestaPersona = $persona->editar($nombres,$apellidos,$nro_doc,$fecha_nac,$persona_id);
-                $respuestaUsuario = $usuario->editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario1,$_POST['permiso']);
-                echo $respuestaPersona ? "3" : "4"; 
+                if(isset($_POST['permiso'])){
+                    $respuestaUsuario = $usuario->editar($id_usuario,$nombre_usuario,$cargo,$imagen_usuario1,$_POST['permiso']);
+                    if($respuestaUsuario = 1){
+                        $_SESSION['nombres'] = $nombres;
+                        $_SESSION['apellidos'] = $apellidos;
+                        $_SESSION['imagen'] = $imagen_usuario1;
+                        $_SESSION['nro_doc'] = $nro_doc;
+                        $_SESSION['nombre_usuario'] = $nombre_usuario;
+                    }
+                    echo $respuestaPersona ? "3" : "4"; 
+                }else{
+                    $respuestaUsuario = $usuario->editar_sinpermisos($id_usuario,$nombre_usuario,$cargo,$imagen_usuario1);
+                    if($respuestaUsuario = 1){
+                        $_SESSION['nombres'] = $nombres;
+                        $_SESSION['apellidos'] = $apellidos;
+                        $_SESSION['imagen'] = $imagen_usuario1;
+                        $_SESSION['nro_doc'] = $nro_doc;
+                        $_SESSION['nombre_usuario'] = $nombre_usuario;
+                    }
+                    echo $respuestaPersona ? "3" : "4"; 
+                }
+               
             }
         break;
         case 'verificarPass':
@@ -192,10 +212,13 @@
                 {
                     //creamos las variables de sesión
                     $_SESSION['id_usuario'] = $fetch->id_usuario;
+                    $_SESSION['id_persona'] = $fetch->id_persona;
                     $_SESSION['nombres'] = $fetch->nombres;
                     $_SESSION['apellidos'] = $fetch->apellidos;
                     $_SESSION['imagen'] = $fetch->imagen_usuario;
                     $_SESSION['login'] = $fetch->login_usuario;
+                    $_SESSION['nro_doc'] = $fetch->nro_doc;
+                    $_SESSION['nombre_usuario'] = $fetch->nombre_usuario;
                     //cargar permisos del usuario
                     $marcados = $usuario->mostrarPermisos($fetch->id_usuario);
                     //declaramos el array para almacenar todos los permisos asigados al usuario
@@ -217,5 +240,13 @@
                 //fin verificar pass
             }
         break;
+        case 'salir':
+        //limpiamos las variables de sesion
+        session_unset();
+        //destruimos la sesion
+        session_destroy();
+        //redireccionamos al index
+        header("location: ../index.php");
+        break; 
     }
 ?>

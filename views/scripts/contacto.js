@@ -99,6 +99,13 @@ function mostrarContactoEditar(idcontacto) {
 }
 
 function mostrarContacto(idpersona) {
+    if (idpersona > 0) {
+        $("#direccionbtn").attr("disabled", true);
+        $("#contactobtn").attr("disabled", true);
+    } else {
+        $("#direccionbtn").attr("disabled", false);
+        $("#contactobtn").attr("disabled", false);
+    };
     var caja_contenido = $("#caja_contenido");
     $.post("../ajax/contacto.php?op=listar", { persona_id: idpersona }, function(data, status) {
         //verifico si esta visible la caja de contenido

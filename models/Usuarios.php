@@ -48,6 +48,11 @@
             }
             return $resp;
         }
+        Public function editar_sinpermisos($id_usuario,$nombre_usuario,$cargo,$imagen_usuario)
+        {
+            $sql= "UPDATE usuarios SET  nombre_usuario = '$nombre_usuario',cargo = '$cargo', imagen_usuario = '$imagen_usuario' WHERE id_usuario = '$id_usuario'";
+             return ejectuarConsulta($sql);
+        }
         Public function logeado($id_usuario,$login){
             $sql= "UPDATE usuarios SET login_usuario = '$login' WHERE id_usuario = '$id_usuario'";
             return ejectuarConsulta($sql);
@@ -111,14 +116,14 @@
             return ejectuarConsulta($sql);
         }
         Public function verificaruser($login){
-            $sql="SELECT id_usuario, login_usuario FROM usuarios WHERE login_usuario = '$login'";
+            $sql="SELECT id_usuario, nombre_usuario FROM usuarios WHERE nombre_usuario = '$login'";
             return ejectuarConsultaSimpleFila($sql);
         }
         Public function verificarLogin($id_usuario,$login){
-            $sql= "SELECT usuarios.`id_usuario`, personas.`nombres`,personas.`apellidos`,personas.`nro_doc`, usuarios.`imagen_usuario`,usuarios.`login_usuario`,usuarios.`condicion`
+            $sql= "SELECT usuarios.`id_usuario`,personas.`id_persona`, personas.`nombres`,personas.`apellidos`,personas.`nro_doc`,usuarios.`nombre_usuario`, usuarios.`imagen_usuario`,usuarios.`login_usuario`,usuarios.`condicion`
             FROM usuarios 
             JOIN personas ON personas.`id_persona` = usuarios.`persona_id`
-            WHERE usuarios.`id_usuario`='$id_usuario' AND  usuarios.`login_usuario` = '$login' AND usuarios.`condicion`=1;";
+            WHERE usuarios.`id_usuario`='$id_usuario' AND  usuarios.`nombre_usuario` = '$login' AND usuarios.`condicion`=1;";
             return ejectuarConsulta($sql);
         }
     }
