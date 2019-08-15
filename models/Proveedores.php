@@ -55,5 +55,16 @@
             ";
             return ejectuarConsulta($sql);
         }
+        Public function selectProveedor(){
+            $sql= "SELECT proveedores.`id_proveedor`,
+            personas.`id_persona`,
+            proveedores.`razon_social`,
+            personas.`nombres`,
+            personas.`apellidos`,
+            proveedores.`condicion`
+            FROM proveedores
+            JOIN personas ON personas.`id_persona` = proveedores.`persona_id`";
+            return ejectuarConsulta($sql);
+        }
     }
 ?>

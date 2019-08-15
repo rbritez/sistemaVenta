@@ -52,6 +52,15 @@
             ";
             return ejectuarConsulta($sql);
         }
+        Public function selectCliente(){
+            $sql= "SELECT clientes.`id_clientes`,
+            personas.`nombres`,
+            personas.`apellidos`
+            FROM clientes
+            JOIN personas ON personas.`id_persona` = clientes.`persona_id`
+            WHERE condicion = '1'";
+            return ejectuarConsulta($sql);
+        }
     }
     
 ?>

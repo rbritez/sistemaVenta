@@ -47,6 +47,32 @@
             ";
             return ejectuarConsulta($sql);
         }
+        Public function listarActivos(){
+            $sql="SELECT productos.`id_producto`,
+            LPAD(productos.`cod_producto`,4,'0') AS cod_producto,
+            productos.`descripcion`,
+            productos.`stock`,
+            materiales.`nombre` as material_id,
+            categorias.`nombre_categoria` as categoria_id,
+            productos.`condicion` FROM productos 
+            JOIN materiales ON materiales.`id_material` = productos.`material_id`
+            JOIN categorias ON categorias.`id_categoria` = productos.`categoria_id` WHERE productos.`condicion` = 1
+            ";
+            return ejectuarConsulta($sql);
+        }
+        public function listarActivosVenta(){
+            $sql="SELECT p.`id_producto`, p.`categoria_id`,p.`material_id`,
+            c.`nombre_categoria`, m.`nombre` AS nombre_material,
+            LPAD(p.`cod_producto`,4,'0') AS cod_producto, p.`descripcion`,p.`stock`,
+            (SELECT precio_venta FROM detalles_compra 
+            WHERE producto_id = p.`id_producto` ORDER BY id_detallecompra DESC LIMIT 0,1 )AS precio_venta,
+            (SELECT imagenes.`descripcion` FROM imagenes WHERE producto_id = p.`id_producto` ORDER BY id_imagen DESC LIMIT 0,1)AS imagen_producto
+            FROM productos p 
+            INNER JOIN categorias c ON p.`categoria_id` = c.`id_categoria`
+            INNER JOIN materiales m ON p.`material_id` = m.`id_material`
+            WHERE p.`condicion` = 1";
+            return ejectuarConsulta($sql);
+        }
     }
     
 ?>
