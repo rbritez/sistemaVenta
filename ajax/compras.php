@@ -41,9 +41,6 @@ switch ($_GET['op']) {
         $id= $_GET['id'];
         $total=0;
         $respuesta= $compra->listarDetalles($id);
-        while($reg = $respuesta->fetch_object()){
-            $subtotal=$reg->cantidad * $reg->precio_compra;
-            $total = $total + $subtotal;
             echo ' <thead style="background-color:#F39C12">
             <th id="opciones">Opciones</th>
             <th>Producto</th>
@@ -51,7 +48,11 @@ switch ($_GET['op']) {
             <th>Precio Compra</th>
             <th>Precio Venta</th>
             <th>Subtotal</th>   
-        </thead>';
+            </thead>';
+        while($reg = $respuesta->fetch_object()){
+            $subtotal=$reg->cantidad * $reg->precio_compra;
+            $total = $total + $subtotal;
+           
             echo '<tr class="filas" style="text-align:center">'.
             '<td id="TD_opciones"></td>'.
             '<td>'.$reg->descripcion.'</td>'.
@@ -60,15 +61,16 @@ switch ($_GET['op']) {
             '<td>'.$reg->precio_venta.'</td>'.
             '<td>'.$subtotal.'</td>'.
             '</tr>';
-            echo ' <tfoot>
-            <th>TOTAL</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th><p id="total" style="font-size:20px">$ '.$total.'</p><input type="hidden" name="total_compra" id="total_compra"></th>
-            </tfoot>';
         }
+        echo ' <tfoot>
+        <th>TOTAL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><p id="total" style="font-size:20px">$ '.$total.'</p><input type="hidden" name="total_compra" id="total_compra"></th>
+        </tfoot>';
+
     break; 
     case 'listar':
         $respuesta = $compra->listar();

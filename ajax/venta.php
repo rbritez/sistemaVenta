@@ -41,43 +41,50 @@ switch ($_GET['op']) {
         $id= $_GET['id'];
         $total=0;
         $respuesta= $venta->listarDetalles($id);
-        while($reg = $respuesta->fetch_object()){
-            $subtotal=$reg->cantidad * $reg->precio_venta;
-            $total = $total + $subtotal;
             echo ' <thead style="background-color:#F39C12" style="text-align:center">
-            <th style="text-align:center">Opciones</th>
-            <t style="text-align:center"h>Producto</th>
-            <th style="text-align:center">Cantidad</th>
-            <th style="text-align:center">Precio Venta</th>
-            <th style="text-align:center">Descuento</th>
-            <th style="text-align:center">interes</th>
-            <th style="text-align:center">Subtotal</th>
-            </thead>';
+                <th style="text-align:center">Opciones</th>
+                <th style="text-align:center"h>Producto</th>
+                <th style="text-align:center">Cantidad</th>
+                <th style="text-align:center">Precio Venta</th>
+                <th style="text-align:center">Descuento</th>
+                <th style="text-align:center">interes</th>
+                <th style="text-align:center">Subtotal</th>
+                </thead>';
+        while($reg = $respuesta->fetch_object()){
+            $subtotal=$reg->cantidad * $reg->precio_venta - $reg->descuento;
+            $total = $total + $subtotal;
+            
             echo '<tr class="filas" style="text-align:center">'.
-            '<td id="TD_opciones"></td>'.
+            '<td></td>'.
             '<td>'.$reg->descripcion.'</td>'.
             '<td>'.$reg->cantidad.'</td>'.
-            '<td>'.$reg->precio_compra.'</td>'.
             '<td>'.$reg->precio_venta.'</td>'.
+            '<td>'.$reg->descuento.'</td>'.
+            '<td>'.$reg->interes.'</td>'.
             '<td>'.$subtotal.'</td>'.
             '</tr>';
-            echo ' <tfoot>
-            <th>TOTAL</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th><p id="total" style="font-size:20px">$ '.$total.'</p><input type="hidden" name="total_compra" id="total_compra"></th>
-            </tfoot>';
         }
+        echo ' <tfoot>
+        <th>TOTAL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><p id="total" style="font-size:20px">$ '.$total.'</p><input type="hidden" name="total_compra" id="total_compra"></th>
+        </tfoot>';
     break; 
     case 'listar':
         $respuesta = $venta->listar();
         $data = array();
         while ($reg = $respuesta->fetch_object()){
+            if($reg->tipo_pago =="tarjeta"){
+                $url = '../reportes/exTicket.php?id='.$reg->id_factura;
+            }else{
+
+            }
             $data[]= array(
-                "0" =>($reg->estado =='aceptado')?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>'. ' <button class="btn btn-danger" onclick="anular('.$reg->id_factura.')"><i class="fa fa-close"></i></button>':'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>',
+                "0" =>($reg->estado =='aceptado')?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>'. ' <button class="btn btn-danger" onclick="anular('.$reg->id_factura.')"><i class="fa fa-close"></i></button>'.' <button class="btn btn-info" onclick="imprimir('.$reg->id_factura.',\''.$reg->tipo_pago.'\')"><i class="fa fa-print"></i></button>':'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>',
                 "1"=>$reg->fecha_venta,
                 "2"=>$reg->nombre_cliente.' '. $reg->apellido_cliente,
                 "3"=>$reg->nombre_usuario,
@@ -105,6 +112,10 @@ switch ($_GET['op']) {
             echo '<option style="text-transform:uppercase;" value="'.$reg->id_clientes.'">'.$reg->nombres.' '.$reg->apellidos.'</option>';
         }
     break;
+    case 'ultimocodigo':
+        $respuesta=$venta->mandarUltCodySerie();
+        echo json_encode($respuesta);
+    break;
     case 'listarProductos':
     require_once "../models/Producto.php";
     $producto = new Producto();
@@ -131,6 +142,11 @@ switch ($_GET['op']) {
         "aaData"=>$data //aca se encuentra almacenado todos los registros
     );
     echo json_encode($results);//devolvemos en json el ultimo array y sera utilizado por el data table
+    break;
+    case 'ultimaFactura':
+    $id=$_POST['id_user'];
+    $respuesta=$venta->ultimaFacturaUser($id);
+    echo json_encode($respuesta);
     break;
 }
 ?>

@@ -72,7 +72,7 @@ if($_SESSION['ventas'] == 1){
                                         <option value="">Seleccionar...</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
-                                        <option value="">C</option>
+                                        <option value="C">C</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
@@ -89,7 +89,7 @@ if($_SESSION['ventas'] == 1){
                                 </div>
                                 <div id="cuotasDiv" class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
                                     <label>CUOTAS</label>
-                                    <select name="nro_cuotas" id="nro_cuotas" class="form-control selectpicker" data-live-search="true" required>
+                                    <select name="nro_cuotas" id="nro_cuotas" class="form-control selectpicker" data-live-search="true">
                                         <option value="">Seleccionar...</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -126,19 +126,18 @@ if($_SESSION['ventas'] == 1){
                                             <th style="text-align:center" >Descuento</th>
                                             <th style="text-align:center" >interes</th>
                                             <th style="text-align:center" >Subtotal</th>
-                                            
                                         </thead>
                                         <tbody>
                                         
                                         </tbody>
                                         <tfoot>
-                                        <th>TOTAL</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th><p id="total" style="font-size:20px">$ 0.00</p><input type="hidden" name="total_compra" id="total_compra"></th>
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th><p id="total" style="font-size:15px">$ 0.00</p><input type="hidden" name="total_compra" id="total_compra"></th>
                                         </tfoot>
                                        
                                     </table>

@@ -56,7 +56,17 @@
         );
 
         echo json_encode($result);
-    break;
-        
+        break;
+    
+        case 'GananciasDia':
+            $respuesta = $consulta->GananciasDia();
+            $data = array();
+            $totalDiaGanancias=0;
+            while ($reg = $respuesta->fetch_object()){
+                $totalDiaGanancias += $reg->ganancia_producto;
+            }
+            echo $totalDiaGanancias;
+    
+        break;
     }
 ?>

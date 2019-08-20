@@ -1,7 +1,7 @@
 <?php
-if(strlen(session_id())< 1 ){
+if(strlen(session_id())< 1 )
     session_start();
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,6 +63,7 @@ if(strlen(session_id())< 1 ){
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>" class="user-image" alt="User Image">
                                 <span class="hidden-xs" style="text-transform:uppercase"><?php echo $_SESSION['nombre_usuario'] ?> </span>
+                                <input type="hidden" id="valorUsuarioParaFactura" value="<?php echo $_SESSION['id_usuario'];?>"> 
                             </a>
                             <ul class="dropdown-menu">
                                     <!-- User image -->
@@ -95,7 +96,7 @@ if(strlen(session_id())< 1 ){
                 if($_SESSION['escritorio']==1){
                 ?>
                     <li>
-                    <a href="#">
+                    <a href="escritorio.php">
                         <i class="fa fa-tasks"></i> <span>Escritorio</span>
                     </a>
                 </li>

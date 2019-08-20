@@ -38,7 +38,6 @@ function cancelarform() {
 }
 //deja limpio todos los campos al cerrar
 function limpiar() {
-    $("#title_product").text("Nueva Compra");
     $("#id_compra").val("");
     $("#proveedor_id").val("");
     $("#proveedor_id").selectpicker('refresh');

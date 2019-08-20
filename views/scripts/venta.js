@@ -1,4 +1,5 @@
 var tabla;
+var nuevo;
 
 function init() {
     mostrarform(false);
@@ -8,11 +9,28 @@ function init() {
         guardaryeditar(e);
         // cerrar();
     });
-    //cargamos los proveedores
+    //cargamos los clientes
     $.post("../ajax/venta.php?op=selectCliente", function(r) {
         $("#cliente_id").html(r);
         $("#cliente_id").selectpicker('refresh');
     });
+}
+
+function ultimaFactura(iduser) {
+    $.post("../ajax/venta.php?op=ultimaFactura", { id_user: iduser }, function(data, status) {
+        data = JSON.parse(data);
+        imprimir(data.id_factura, data.tipo_pago);
+    })
+}
+
+function imprimir(idfactura, tipoPago) {
+    if (tipoPago === 'tarjeta') {
+        window.open('../reportes/exTicket.php?id=' + idfactura, '_blank');
+        window.open('../reportes/exFactura.php?id=' + idfactura, '_blank');
+    } else {
+        window.open('../reportes/exFactura.php?id=' + idfactura, '_blank');
+    }
+
 }
 //function mostrar form
 function mostrarform(flag) {
@@ -55,11 +73,20 @@ function cancelarform() {
 }
 //deja limpio todos los campos al cerrar
 function limpiar() {
+    $.post("../ajax/venta.php?op=ultimocodigo", function(data, status) {
+        data = JSON.parse(data);
+        if (data.cantidad == '101') {
+            var serie = parseInt(data.serie) + 1;
+            newserie = String(serie).padStart(4, '0');
+            $('#serie').val(newserie);
+        } else {
+            $("#serie").val(data.serie);
+            $("#codigo").val(data.codigo);
+        }
+    });
     $("#id_venta").val("");
     $("#cliente_id").val("");
     $("#cliente_id").selectpicker('refresh');
-    $("#serie").val("");
-    $("#codigo").val("");
     $("#fecha_venta").val("");
     $("#tipo_pago").val("");
     $("#tipo_pago").selectpicker('refresh');
@@ -159,7 +186,12 @@ function guardaryeditar(e) {
 
         success: function(datos) {
             if (datos == 1) {
-                alertify.alert('Resultado Satisfactorio', 'Se guardaron los datos con exito! ');
+                alertify.confirm('Resultado Satisfactorio', 'Se guardaron los datos con exito! ¿Imprimir Factura?', function() {
+                    var user = $("#valorUsuarioParaFactura").val();
+                    ultimaFactura(user);
+                }, function() {
+                    alertify.error('Cancelado, Puede volver atras o Crear una Venta Nueva')
+                });
             } else if (datos == 0) {
                 alertify.alert('Resultado Inconcluso', 'Hubo un error al guardar');
             }
@@ -195,7 +227,7 @@ function mostrar(idventa) {
             $("#btnCancelar").html("<i class='fa fa-arrow-circle-left'></i> Volver");
 
         });
-    $.post("../ajax/compras.php?op=mostrarDetalles&id=" + idventa, function(r) {
+    $.post("../ajax/venta.php?op=mostrarDetalles&id=" + idventa, function(r) {
 
         $("#detalles").html(r);
     })
@@ -247,13 +279,13 @@ function agregardetalle(idproducto, descripcion, precioVenta) {
 
             '<td><input type="hidden" style="width:90%;" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
 
-            '<td><input type="number" style="width:90%;" name="cantidad[]" min="1" id="cantidad[]" value="' + cantidad + '"></td>' +
+            '<td><input type="number" align="right" style="width:90%;text-align:right" name="cantidad[]" min="1" id="cantidad[]" value="' + cantidad + '"></td>' +
 
-            '<td><input type="number" style="width:90%;" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" value="' + precioVenta + '"></td>' +
+            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" value="' + precioVenta + '"></td>' +
 
-            '<td><input type="number" style="width:90%;" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '"></td>' +
-            '<td><input type="number" style="width:90%;" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '"></td>' +
-            '<td><span name="subtotal" style="width:90%;" id="subtotal' + cont + '">' + subtotal + '</span></td>' +
+            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '"></td>' +
+            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '"></td>' +
+            '<td>$<span name="subtotal" style="width:90%;text-align:right" id="subtotal' + cont + '"> ' + subtotal + '</span></td>' +
 
             '<td><button type="button" onclick="modificarSubtotales()" class="btn btn-info"><i class="fa fa-refresh"></i></button></td>'
         '<tr>';
@@ -316,4 +348,4 @@ function eliminardetalle(i) {
     detalle = detalle - 1;
     comprobar();
 }
-init();
+init()

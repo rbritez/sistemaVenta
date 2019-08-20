@@ -47,7 +47,7 @@
             INNER JOIN proveedores ON proveedores.`id_proveedor` = compras.`proveedor_id`
             INNER JOIN personas pp ON pp.`id_persona` = proveedores.`persona_id`
             INNER JOIN usuarios ON usuarios.`id_usuario` = compras.`usuario_id`
-            INNER JOIN personas pu ON pu.`id_persona` = usuarios.`persona_id` ORDER BY compras.`id_compra`";
+            INNER JOIN personas pu ON pu.`id_persona` = usuarios.`persona_id` ORDER BY compras.`id_compra` DESC";
             return ejectuarConsulta($sql);
         }
     }

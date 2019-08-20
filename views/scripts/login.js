@@ -10,7 +10,7 @@ $("#frmAceeso").on('submit', function(e) {
             alertify.alert("RESULTADO INCONCLUSO", " LA CONTRASEÑA INGRESADA NO ES CORRECTA");
             return false;
         } else {
-            $(location).attr("href", "index_categoria.php");
+            $(location).attr("href", "escritorio.php");
         }
     });
 })

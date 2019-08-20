@@ -19,7 +19,7 @@ if($_SESSION['almacen'] == 1){
                 <div class="box">
                     <div class="box-header with-border">
                         <h1 class="box-title">Lista de productos <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_producto"><i class="fa fa-plus-circle"></i> Agregar</button>
-                        
+                        <a target="_blank" href="../reportes/rptarticulos.php"><button class="btn btn-info">Reporte</button></a>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -73,6 +73,7 @@ if($_SESSION['almacen'] == 1){
                         <span aria-hidden="true" style="color:white">&times;</span>
                     </button>
                     <h4 style="color:white;" id="title_product" class="modal-title">Nuevo Producto</h4>
+
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -177,4 +178,5 @@ if($_SESSION['almacen'] == 1){
 <?php
 }
 ob_end_flush();
+
 ?>
