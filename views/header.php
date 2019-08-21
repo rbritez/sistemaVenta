@@ -8,7 +8,7 @@ if(strlen(session_id())< 1 )
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>ITVentas | www.incanatoit.com</title>
+        <title>S.F.E | FormosaAberturas</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -43,11 +43,11 @@ if(strlen(session_id())< 1 )
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="escritorio.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>IT</b>Ventas</span>
+            <span class="logo-mini"><b>S.F.E</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>ITVentas</b></span>
+            <span class="logo-lg"><b>FA</b> <i style="font-size:18px">Formosa Aberturas</i></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -61,16 +61,29 @@ if(strlen(session_id())< 1 )
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>" class="user-image" alt="User Image">
+                                <?php 
+                                    if( isset($_SESSION['imagen']) && !empty($_SESSION['imagen']) ){
+                                        echo '<img src="../files/images/usuarios/'.$_SESSION['imagen'].'" class="user-image" alt="User Image">';
+                                    }else{
+                                        echo '<img src="../files/images/usuarios/usuarioNONE_L.jpg" class="user-image" alt="User Image">';
+                                    }
+                                ?>
+                                
                                 <span class="hidden-xs" style="text-transform:uppercase"><?php echo $_SESSION['nombre_usuario'] ?> </span>
                                 <input type="hidden" id="valorUsuarioParaFactura" value="<?php echo $_SESSION['id_usuario'];?>"> 
                             </a>
                             <ul class="dropdown-menu">
                                     <!-- User image -->
                                 <li class="user-header">
-                                    <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>"  class="img-circle" alt="User Image">
-                                        <p>Administrador<small> <a href="usuario_editar.php">Editar Datos</a></small>
-                                        </p>
+                                    <?php 
+                                        if( isset($_SESSION['imagen']) && !empty($_SESSION['imagen']) ){
+                                            echo '<img src="../files/images/usuarios/'.$_SESSION['imagen'].'"  class="img-circle" alt="User Image">';
+                                        }else{
+                                            echo '<img src="../files/images/usuarios/usuarioNONE_L.jpg" class="img-circle" alt="User Image">';
+                                        }
+                                    ?>
+                                    <p>Administrador<small> <a href="usuario_editar.php">Editar Datos</a></small>
+                                    </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
@@ -190,7 +203,8 @@ if(strlen(session_id())< 1 )
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="compras_fecha.php"><i class="fa fa-circle-o"></i> Consulta Compras</a></li>                
+                        <li><a href="compras_fecha.php"><i class="fa fa-circle-o"></i> Consulta Compras</a></li>
+                        <li><a href="consultaAumentoProducto.php"><i class="fa fa-circle-o"></i>Historial de Precios</a></li>                     
                     </ul>
                 </li>
                 <?php

@@ -2,8 +2,6 @@
     require_once "../models/Consultas.php";
     $consulta = new Consultas();
 
-    $idmaterial = isset($_POST["id_material"]) ? limpiarCadena($_POST["id_material"]) : "";
-    $nombre = isset($_POST["nombre"]) ? limpiarCadena($_POST["nombre"]) : "";
     switch($_GET["op"]){
         case 'comprasFecha':
             $fechaInicio = $_REQUEST["fechaInicio"];

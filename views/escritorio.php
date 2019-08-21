@@ -20,6 +20,26 @@ if($_SESSION['escritorio'] == 1){
     $regV = $respuestaV->fetch_object();
     $totalV = $regV->monto_total;
 
+    // Clientes mas habituales
+
+    // datos para el grafico
+    $compras10 = $consulta->clientesMax();
+    $nombresCC= "";
+    $pellidoCC="";
+    $cantidadCC="";
+    while ( $regCC = $compras10->fetch_object()){
+        $nombresCC = $nombresCC."'$regCC->nombres $regCC->apellidos'".',';
+        $cantidadCC = $cantidadCC.$regCC->cantidad.',';
+    }
+    //quitamos la ultima coma
+    $nombresCC = substr($nombresCC,0,-1);
+    $cantidadCC = substr($cantidadCC,0,-1);
+
+
+
+
+
+
     // datos para el grafico
     $compras10 = $consulta->consultaCompras_10dias();
     $fechaC = "";
@@ -209,7 +229,19 @@ if($_SESSION['escritorio'] == 1){
                                 <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
                                 <canvas id="ventasMes" width="400" height="300"></canvas>
                             </div>
-                        </div>   
+                        </div>  
+                        <div class="col-lg-6 col-md-6 col-ms-6 col-xs-12">
+                        
+                            <div class="box box-primary">
+                            <div class="box-header with-border">
+                                Clientes mas Hábituales
+                            </div>
+                            <div >
+                                     <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
+                                <canvas id="clientesMas" width="400" height="300"></canvas>
+                            </div>
+                            </div>
+                        </div>    
                     </div>
                     <!-- Fin centro -->
                 </div>
@@ -381,6 +413,28 @@ var ventasMes = new Chart(ctx, {
                 }
             }]
         }
+    }
+});
+</script>
+<script type="text/javaScript">
+var ctx = document.getElementById('clientesMas').getContext('2d');
+var ventasMes = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [<?php echo $nombresCC ;?>],
+        datasets: [{
+            data: [<?php echo $cantidadCC ;?>],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+                // quitar o agregar mas segun la cantidad de dias
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true
     }
 });
 </script>

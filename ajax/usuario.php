@@ -142,9 +142,16 @@
             $data = array();
             while ($reg = $respuesta->fetch_object()){
                 if($reg->imagen_usuario){
-                    $mostrar = ' <div style="height:40px;">
+
+                    if( isset($reg->imagen_usuario) && !empty($reg->imagen_usuario) ){
+                        $mostrar = ' <div style="height:40px;">
                     <img src="../files/images/usuarios/'.$reg->imagen_usuario.'"style="border:2px solid gray;border-radius: 5px;; width="30" height="45" >
                     <div style="position:relative;bottom:16px;font-weight: bold;"><a class="sb"  target="_blank" href="../files/images/usuarios/'.$reg->imagen_usuario.'" style="text-decoration:none;color:black;">Ver</a></div></div> ';
+                    }else{
+                        $mostrar = ' <div style="height:40px;">
+                        <img src="../files/images/usuarios/usuarioNONE_L.jpg" style="border:2px solid gray;border-radius: 5px;; width="30" height="45" >
+                        </div> ';
+                    }           
                 }else{
                     $mostrar= 'no posee foto de perfil';
                 }

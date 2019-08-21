@@ -52,7 +52,7 @@
                                         <span aria-hidden="true" style="color:black">&times;</span>
                                         </button>
                                             <img src="../files/images/productos/'.$registroimagen->descripcion.'" height="50" width="50">
-                                            <div style="position:relative;right:-15px;bottom:16px;font-weight: bold;"><a class="sb" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:black;">Ver</a></div>
+                                            <div style="position:relative;right:-15px;bottom:16px;font-weight: bold;"><a class="sb" target="_blank" href="../files/images/productos/'.$registroimagen->descripcion.'" style="text-decoration:none;color:white;">Ver</a></div>
                                         
                                     </div> ';
                     }
@@ -156,6 +156,80 @@
             }
            
             echo $respuesta ? "1" : "0";
+        break;
+        case 'aumentoProducto':
+        $idproducto = $_REQUEST["id_producto"];
+        $respuesta = $producto->AumentoProducto($idproducto);
+        $data = array(); 
+        $precioinicial = "0";
+            while ($reg = $respuesta->fetch_object()){
+                
+                $data[] = array(
+                "0"=>$reg->descripcion,
+                "1"=>$reg->precio_compra,
+                "2"=>($precioinicial == 0 )? $precioinicial = $precioinicial - $reg->precio_compra + $reg->precio_compra : $precioinicial = $reg->precio_compra - $precioinicial,
+                "3"=>$porcentaje =  $precioinicial/($reg->precio_compra-$precioinicial),
+                "4"=>$newDate = date("d/m/Y", strtotime($reg->fecha_compra))
+                ); 
+                $precioinicial =$reg->precio_compra;
+
+            }
+            $result = array(
+                "sEcho" =>1, //Informacion para el data table
+                "iTotalRecords"=>count($data), //enviamos el total de registros al data table
+                "iTotalDisplayRecords"=>count($data), //enviamos el toal de registros a visualizar
+                "aaData"=>$data //aca se encuentra almacenado todos los registros
+            );
+
+            echo json_encode($result);
+        break;
+        case 'selectProducto':
+        $respuesta = $producto->traerproducto();
+        $option = '<option value="">Seleccionar un Producto...</option>';
+        while ($reg = $respuesta->fetch_object())
+        { 
+        
+            echo $option;
+            $option= '<option value="'.$reg->id_producto.'" >'.$reg->descripcion.'</option>';
+        }
+        echo $option;
+        break;
+        case 'datosGrafico':
+            $idproducto = $_REQUEST["id_producto"];
+            $respuesta = $producto->AumentoProducto($idproducto);
+            $precioinicial = 0;
+            $aumentoenteros=0;
+            $fechas = "";
+            $aumentoprocentaje=0;
+            $precios=0;
+            while ($reg = $respuesta->fetch_object()){
+                if($precioinicial == 0){
+                    $precioinicial = $precioinicial - $reg->precio_compra + $reg->precio_compra;
+                }else{
+                    $precioinicial = $reg->precio_compra - $precioinicial;
+                }
+              
+                $newDate = date("d/m/Y", strtotime($reg->fecha_compra));
+                $porcentaje =  $precioinicial/($reg->precio_compra-$precioinicial);
+                $aumentoenteros = $aumentoenteros.$precioinicial.','; //aumento en enteros
+                $aumentoprocentaje= $aumentoprocentaje.$porcentaje.',';//aumento en porcentaje
+                $fechas = $fechas."'$newDate'".',';//fechas
+                
+                $precios = $precios.$reg->precio_compra.','; //precio de compra
+                $precioinicial =$reg->precio_compra;
+            }
+             $aumentoenteros = substr($aumentoenteros,1,-1);
+             $aumentoprocentaje = substr($aumentoprocentaje ,1,-1);
+             $fechas=substr($fechas ,0,-1);
+             $precios=substr($precios ,1,-1);
+            $data = array();
+            $data[]= array(
+                "precios"=> $precios,
+                "aumentoenteros"=> $aumentoenteros,
+                "aumentoporcentaje"=> $aumentoprocentaje,
+                "fechas"=>$fechas,
+            );
+            echo json_encode($data);
         break;
     }
 

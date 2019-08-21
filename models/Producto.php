@@ -73,6 +73,19 @@
             WHERE p.`condicion` = 1";
             return ejectuarConsulta($sql);
         }
+        Public function AumentoProducto($idproducto){
+            $sql="SELECT p.`id_producto`,p.`descripcion`, dc.`precio_compra`,DATE(c.`fecha_compra`)fecha_compra
+            FROM compras c
+            INNER JOIN detalles_compra dc ON dc.`compra_id` = c.`id_compra`
+            INNER JOIN productos p ON p.`id_producto` = dc.`producto_id`
+            WHERE p.`id_producto` = '$idproducto'
+            ORDER BY DATE(c.fecha_compra) ASC";
+            return ejectuarConsulta($sql);
+        }
+        Public function traerproducto(){
+            $sql="SELECT id_producto ,descripcion FROM productos ";
+            return ejectuarConsulta($sql);
+        }
     }
     
 ?>

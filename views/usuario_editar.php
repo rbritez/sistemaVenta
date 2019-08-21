@@ -23,10 +23,16 @@ require 'header.php';
                         <div class="box-tools pull-right"></div>
                     </div >
                    
-                    <div class="container"  style="font-size:30px;text-transform:uppercase;border-radius:10px;border: 2px solid gray; padding:0;margin-bottom:10px;">
+                    <div class="container-fluid"  style="font-size:30px;text-transform:uppercase;border-radius:10px;border: 2px solid gray; padding:0;margin-bottom:10px;">
                         <div class="col-xs-12 col-md-12 col-lg-12 col-sm-12" style="padding:0;border-radius:10px">
                         <div class="col-md-4"style="text-align:center">
-                        <img src="../files/images/usuarios/<?php echo $_SESSION['imagen']?>" width="300" style="border: 5px solid gray;margin-top:10px;margin-bottom:10px" class="img-circle" alt="User Image">
+                        <?php 
+                            if( isset($_SESSION['imagen']) && !empty($_SESSION['imagen']) ){
+                                echo '<img src="../files/images/usuarios/'.$_SESSION['imagen'].'"  width="300" style="border: 5px solid gray;margin-top:10px;margin-bottom:10px" class="img-circle" alt="User Image">';
+                            }else{
+                                echo '<img src="../files/images/usuarios/usuarioNONE_L.jpg" width="300" style="border: 5px solid gray;margin-top:10px;margin-bottom:10px" class="img-circle" alt="User Image">';
+                            }
+                        ?>
                         </div>
                         <div class="col-md-8" style="padding:0;border-radius:10px">
                             <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="padding: 10px;background-color:#d0d5dd;margin-bottom:2px;border-top-right-radius:10px">

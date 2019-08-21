@@ -28,12 +28,12 @@ if($_SESSION['consultav'] == 1){
                     <!-- centro -->
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label >FECHA INICIO</label>
-                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="<?php echo date("Y-m-d"); ?>">
+                        <label >FECHA INICIO</label>
+                        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="<?php echo date("Y-m-d"); ?>">
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label >FECHA FIN</label>
-                    <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="<?php echo date("Y-m-d"); ?>">
+                        <label >FECHA FIN</label>
+                        <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="<?php echo date("Y-m-d"); ?>">
                     </div>
                     <div class="panel-body table-responsive" id="listadoregistros" style="text-align:center">
                         <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
