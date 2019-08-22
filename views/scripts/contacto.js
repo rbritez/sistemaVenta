@@ -107,40 +107,61 @@ function mostrarContacto(idpersona) {
         $("#contactobtn").attr("disabled", false);
     };
     var caja_contenido = $("#caja_contenido");
+    var valor = "";
     $.post("../ajax/contacto.php?op=listar", { persona_id: idpersona }, function(data, status) {
-        //verifico si esta visible la caja de contenido
-        if (caja_contenido.is(":visible")) {
-            caja_contenido.hide(); //oculto el contenido 
-            $("#datos").remove(); //remuevo los datos mostrados
+        valor = JSON.parse(data);
+        if (valor['aaData'].length == "") { //vericamos si existe contactos para mostrar
+            //si no existe contactos para mostrar****
+            //verifico si esta visible la caja de contenido
+
+            if (caja_contenido.is(":visible")) {
+                caja_contenido.hide(); //oculto el contenido 
+                $("#datos").remove(); //remuevo los datos mostrados
+            } else {
+                caja_contenido.show(); //muestro el contenido
+                $("#contenido_extra").append("<div id='datos'></div>"); //creo una caja donde mostrara los datos
+                $("#title_mostrar_direccion").html('<div class="col-md-6"><b style="text-transform:uppercase;">NO HAY CONTACTOS PARA MOSTRAR</b></div> <div class="col-md-6"><button onclick="mostrarContacto(0)" class="btn btn-block btn-info"><i class="fa fa-chevron-circle-up"></i>  Cerrar</button></div>');
+
+                $("#datos").append('<div class="col-md-12"><div class="col-md-6"><button  data-toggle="modal" data-target="#modal_contacto" onclick="mandarid_contacto(' + idpersona + ')" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i>Nuevo Contacto</button></div> </br></br>'); //creo los divs
+            }
         } else {
-            caja_contenido.show(); //muestro el contenido
+            //si no existe contactos para mostrar***
+            //verifico si esta visible la caja de contenido
+            if (caja_contenido.is(":visible")) {
+                caja_contenido.hide(); //oculto el contenido 
+                $("#datos").remove(); //remuevo los datos mostrados
+            } else {
+                caja_contenido.show(); //muestro el contenido
 
-            $("#contenido_extra").append("<div id='datos'></div>"); //creo una caja donde mostrara los datos
+                $("#contenido_extra").append("<div id='datos'></div>"); //creo una caja donde mostrara los datos
 
-            $.each(JSON.parse(data), function(i, item) {
-                var cantidad = item.length;
-                if (cantidad > 1) {
-                    $("#title_mostrar_direccion").html('<div class="col-md-6"><b style="text-transform:uppercase;">CONTACTOS DE  ' + item[0][6] + ' ' + item[0][7] + '</b></div> <div class="col-md-6"><button onclick="mostrarContacto(0)" class="btn btn-block btn-info"><i class="fa fa-chevron-circle-up"></i>  Cerrar</button></div>');
-                } else {
-                    $("#title_mostrar_direccion").html('<div class="col-md-6"><b style="text-transform:uppercase;">CONTACTO DE  ' + item[0][6] + ' ' + item[0][7] + '</b></div> <div class="col-md-6"><button onclick="mostrarContacto(0)" class="btn btn-block btn-info"><i class="fa fa-chevron-circle-up"></i>  Cerrar</button></div>');
-                }
-                for (var a = 0; a < cantidad; a++) {
-                    var num = a + 1;
+                $.each(JSON.parse(data), function(i, item) {
+                    var cantidad = item.length;
+                    if (cantidad > 1) {
+                        $("#title_mostrar_direccion").html('<div class="col-md-6"><b style="text-transform:uppercase;">CONTACTOS DE  ' + item[0][6] + ' ' + item[0][7] + '</b></div> <div class="col-md-6"><button onclick="mostrarContacto(0)" class="btn btn-block btn-info"><i class="fa fa-chevron-circle-up"></i>  Cerrar</button></div>');
 
-                    $("#datos").append('<div class="col-md-12"><h2 style="font-weight: bold;">CONTACTO ' + num + '</h2></div>' + '<div name="telefono" id="telefono" class="col-md-3"></div>' + '<div name="celular" id="celular" class="col-md-3"></div>' + '<div name="email" id="email" class="col-md-3"></div>' + '<div name="fax" id="fax" class="col-md-3"></div>' + '<div class="col-md-12"><div class="col-md-6"><button  data-toggle="modal" data-target="#modal_contacto" class="btn btn-block btn-warning" onclick="mostrarContactoEditar(' + item[a][0] + ')"><i class="fa fa-pencil"></i> Editar</button></div><div class="col-md-6"><button class="btn btn-block btn-danger" onclick="eliminarContacto(' + item[a][0] + ')"><i class="fa fa-trash"></i> Eliminar</button></div></div> </br></br>'); //creo los divs
+                    } else {
+                        $("#title_mostrar_direccion").html('<div class="col-md-6"><b style="text-transform:uppercase;">CONTACTO DE  ' + item[0][6] + ' ' + item[0][7] + '</b></div> <div class="col-md-6"><button onclick="mostrarContacto(0)" class="btn btn-block btn-info"><i class="fa fa-chevron-circle-up"></i>  Cerrar</button></div>');
+                    }
+                    for (var a = 0; a < cantidad; a++) {
+                        var num = a + 1;
 
-                    $("#telefono").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">TELEFONO: </b>' + item[a][1] + '</h4>'); //muestro los datos
-                    $("#celular").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">CELULAR: </b>' + item[a][2] + '</h4>'); //muestro los datos
-                    $("#email").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">EMAIL: </b>' + item[a][3] + '</h4>'); //muestro los datos   
-                    $("#fax").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">FAX: </b>' + item[a][4] + '</h4>'); //muestro los datos
+                        $("#datos").append('<div class="col-md-12"><h2 style="font-weight: bold;">CONTACTO ' + num + '</h2></div>' + '<div name="telefono" id="telefono" class="col-md-3"></div>' + '<div name="celular" id="celular" class="col-md-3"></div>' + '<div name="email" id="email" class="col-md-3"></div>' + '<div name="fax" id="fax" class="col-md-3"></div>' + '<div class="col-md-12"><div class="col-md-6"><button  data-toggle="modal" data-target="#modal_contacto" class="btn btn-block btn-warning" onclick="mostrarContactoEditar(' + item[a][0] + ')"><i class="fa fa-pencil"></i> Editar</button></div><div class="col-md-6"><button class="btn btn-block btn-danger" onclick="eliminarContacto(' + item[a][0] + ')"><i class="fa fa-trash"></i> Eliminar</button></div></div> </br></br>'); //creo los divs
 
-                    $("#telefono").prop('id', '');
-                    $("#celular").prop('id', '');
-                    $("#email").prop('id', '');
-                    $("#fax").prop('id', '');
-                }
-            });
+                        $("#telefono").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">TELEFONO: </b>' + item[a][1] + '</h4>'); //muestro los datos
+                        $("#celular").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">CELULAR: </b>' + item[a][2] + '</h4>'); //muestro los datos
+                        $("#email").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">EMAIL: </b>' + item[a][3] + '</h4>'); //muestro los datos   
+                        $("#fax").html('<h4 style="text-transform:uppercase"><b style="font-weight:bold">FAX: </b>' + item[a][4] + '</h4>'); //muestro los datos
+
+                        $("#telefono").prop('id', '');
+                        $("#celular").prop('id', '');
+                        $("#email").prop('id', '');
+                        $("#fax").prop('id', '');
+                    }
+                });
+            }
         }
+
     })
 }
 init();

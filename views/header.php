@@ -65,7 +65,7 @@ if(strlen(session_id())< 1 )
                                     if( isset($_SESSION['imagen']) && !empty($_SESSION['imagen']) ){
                                         echo '<img src="../files/images/usuarios/'.$_SESSION['imagen'].'" class="user-image" alt="User Image">';
                                     }else{
-                                        echo '<img src="../files/images/usuarios/usuarioNONE_L.jpg" class="user-image" alt="User Image">';
+                                        echo '<img src="../files/images/usuarios/usuario.jpg.jpg" class="user-image" alt="User Image">';
                                     }
                                 ?>
                                 
@@ -79,7 +79,7 @@ if(strlen(session_id())< 1 )
                                         if( isset($_SESSION['imagen']) && !empty($_SESSION['imagen']) ){
                                             echo '<img src="../files/images/usuarios/'.$_SESSION['imagen'].'"  class="img-circle" alt="User Image">';
                                         }else{
-                                            echo '<img src="../files/images/usuarios/usuarioNONE_L.jpg" class="img-circle" alt="User Image">';
+                                            echo '<img src="../files/images/usuarios/usuario.jpg.jpg" class="img-circle" alt="User Image">';
                                         }
                                     ?>
                                     <p>Administrador<small> <a href="usuario_editar.php">Editar Datos</a></small>
