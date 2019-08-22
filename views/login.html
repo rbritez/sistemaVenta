@@ -43,20 +43,28 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group has-feedback">
                             <label><h5>USUARIO</h5></label>
-                            <input type="text" id="loginA" name="loginA" class="form-control" placeholder="ingrese nombre de usuario ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="loginA" name="loginA" class="form-control" placeholder="ingrese nombre de usuario ">
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group has-feedback">
                             <label><h5>CONTRASEÑA</h5></label>
-                            <input type="password" id="claveA" name="claveA" class="form-control" placeholder="Password">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" id="claveA" name="claveA" class="form-control" placeholder="Password">
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-xs-8">
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-warning btn-block btn-flat">Ingresar</button>
+                        <button type="submit" class="btn btn-warning btn-block btn-flat"><i class="glyphicon glyphicon-log-in"></i> <b style="font-size: 19px">Ingresar</b> </i> </button>
                     </div>
                     <!-- /.col -->
                 </form>
@@ -123,7 +131,7 @@
         width: 500px;
         background: rgba(0, 0, 0, 0.1);
         color: white;
-        padding: 10px;
+        padding: 40px;
     }
     
     @media screen and (max-width: 955px) {
