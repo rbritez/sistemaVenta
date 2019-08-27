@@ -223,11 +223,11 @@ function agregardetalle(idproducto, descripcion) {
 
             '<td><input type="hidden" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
 
-            '<td><input type="number" name="cantidad[]"  id="cantidad[]" value="' + cantidad + '"></td>' +
+            '<td><input type="number" name="cantidad[]" min="1" id="cantidad[]" value="' + cantidad + '"></td>' +
 
-            '<td><input type="number" step="0.01" name="precio_compra[]" id="precio_compra[]" value="' + precio_compra + '"></td>' +
+            '<td><input type="number" step="0.01" min="1" name="precio_compra[]" id="precio_compra[]" value="' + precio_compra + '"></td>' +
 
-            '<td><input type="number" step="0.01" name="precio_venta[]" id="precio_venta[]" value="' + precio_venta + '"></td>' +
+            '<td><input type="number" step="0.01" min="1" name="precio_venta[]" id="precio_venta[]" value="' + precio_venta + '"></td>' +
 
             '<td><span name="subtotal" id="subtotal' + cont + '">' + subtotal + '</span></td>' +
 

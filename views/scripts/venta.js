@@ -48,7 +48,7 @@ function mostrarform(flag) {
         $("#listadoregistros").show();
         $("#formularioregistros").hide();
         $("#btnagregar").show();
-        $("#title_venta").html('Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Agregar</button>');
+        $("#title_venta").html('Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Factura</button>');
     }
 }
 $("#tipo_pago").change(mostrarCuotas);
@@ -267,7 +267,7 @@ function marcarImpuesto() {
     }
 }
 
-function agregardetalle(idproducto, descripcion, precioVenta) {
+function agregardetalle(idproducto, descripcion, precioVenta, stock) {
     var cantidad = 1;
     var descuento = 0;
     var interes = 0;
@@ -279,7 +279,7 @@ function agregardetalle(idproducto, descripcion, precioVenta) {
 
             '<td><input type="hidden" style="width:90%;" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
 
-            '<td><input type="number" align="right" style="width:90%;text-align:right" name="cantidad[]" min="1" id="cantidad[]" value="' + cantidad + '"></td>' +
+            '<td><input type="number" align="right" style="width:90%;text-align:right"  name="cantidad[]" min="1" max="' + stock + '" id="cantidad[]" value="' + cantidad + '"></td>' +
 
             '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" value="' + precioVenta + '"></td>' +
 

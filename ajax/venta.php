@@ -124,7 +124,7 @@ switch ($_GET['op']) {
     while($reg = $respuesta->fetch_object())
     {
         $data[]=array(
-            "0"=>'<button class="btn btn-warning" onclick="agregardetalle('.$reg->id_producto.',\''.$reg->descripcion.'\',\''.$reg->precio_venta.'\')"><span class="fa fa-plus"><span></button>',
+            "0"=>'<button class="btn btn-warning" onclick="agregardetalle('.$reg->id_producto.',\''.$reg->descripcion.'\',\''.$reg->precio_venta.'\',\''.$reg->stock.'\')"><span class="fa fa-plus"><span></button>',
             "1"=>$reg->cod_producto,
             "2"=>$reg->descripcion,
             "3"=>$reg->stock,

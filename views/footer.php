@@ -1,8 +1,8 @@
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.3.0
+        Creado por Gerardo Britez AS - <b>Version</b> 1.1.0
         </div>
-        <strong>Copyright &copy; 2013-2017 <a href="www.incanatoit.com">IncanatoIT</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2019-2023 <a href="#">GestionSy - Formosa Aberturas FA</a>.</strong> Todos los Derechos Resevados. 
     </footer>
     <!-- jQuery 2.1.4 -->
     <script src="../public/js/jquery-3.4.1.min.js"></script>

@@ -39,16 +39,17 @@
 
         }
         public function totalComprasHoy(){
-            $sql="SELECT IFNULL(SUM(total_compra),0) as total_compra FROM compras WHERE DATE(fecha_compra)=curdate()";
+            $sql="SELECT IFNULL(SUM(total_compra),0) as total_compra FROM compras WHERE DATE(fecha_compra)=curdate() AND compras.`estado` = 'aceptado'";
             return ejectuarConsulta($sql);
         }
         public function totalVentasHoy(){
-            $sql="SELECT IFNULL(SUM(monto_total),0) as monto_total FROM facturas WHERE DATE(fecha_venta)=curdate()";
+            $sql="SELECT IFNULL(SUM(monto_total),0) as monto_total FROM facturas WHERE DATE(fecha_venta)=curdate() AND facturas.`estado` = 'aceptado'";
             return ejectuarConsulta($sql);
         }
         Public function consultaCompras_10dias(){
             $sql="SELECT CONCAT(DAY(fecha_compra),'-',MONTH(fecha_compra)) AS fecha, SUM(total_compra) AS total 
             FROM compras 
+            WHERE compras.`estado` = 'aceptado'
             GROUP BY fecha_compra 
             ORDER BY fecha_compra DESC LIMIT 0,10";
             return ejectuarConsulta($sql);
@@ -59,6 +60,7 @@
         Public function consultaVentas_10dias(){
             $sql="SELECT CONCAT(DAY(fecha_venta),'-',MONTH(fecha_venta)) AS fecha, SUM(monto_total) AS total 
             FROM facturas 
+            WHERE facturas.`estado` = 'aceptado'
             GROUP BY fecha_venta 
             ORDER BY fecha_venta DESC LIMIT 0,10";
             return ejectuarConsulta($sql);

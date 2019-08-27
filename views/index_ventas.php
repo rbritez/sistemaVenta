@@ -21,7 +21,7 @@ if($_SESSION['ventas'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 id="title_venta" class="box-title">Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                        <h1 id="title_venta" class="box-title">Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Factura</button></h1>
                         <!-- boton para el modal  
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa-plus-circle"></i> Agregar</button>
                         -->
@@ -30,7 +30,7 @@ if($_SESSION['ventas'] == 1){
                     <!-- /.box-header -->
                     <!-- centro -->
                     <div class="panel-body table-responsive" id="listadoregistros">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
+                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%; text-transform:uppercase">
                             <thead>
                                 <th>OPCIONES</th>
                                 <th>FECHA</th>
@@ -112,7 +112,7 @@ if($_SESSION['ventas'] == 1){
                                     <input type="text" class="form-control" name="impuesto" id="impuesto" required>
                                 </div>
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_block">
-                                    <button type="button"  class="btn btn-block btn-warning" data-toggle="modal" data-target="#modal_categoria" onclick="listarProductos()">
+                                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal_categoria" onclick="listarProductos()">
                                             <span class="fa fa-plus"></span> Agregar Productos 
                                     </button>
                                 </div>
@@ -150,7 +150,7 @@ if($_SESSION['ventas'] == 1){
                                 </div>
                             </form>
                         </div>
-                    </div>
+                 
                     <!-- FIN DE FORMULARIO -->
                     <!-- Fin centro -->
                 </div>

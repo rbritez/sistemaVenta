@@ -90,7 +90,7 @@ if($_SESSION['compras'] == 1){
                                     <input type="text" class="form-control" name="impuesto" id="impuesto" required>
                                 </div>
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_block">
-                                    <button type="button"  class="btn btn-block btn-warning" data-toggle="modal" data-target="#modal_categoria" onclick="listarProductos()">
+                                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal_categoria" onclick="listarProductos()">
                                             <span class="fa fa-plus"></span> Agregar Productos 
                                     </button>
                                 </div>

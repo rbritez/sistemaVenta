@@ -8,7 +8,7 @@ if(strlen(session_id())< 1 )
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>S.F.E | FormosaAberturas</title>
+        <title>GestionSy | FormosaAberturas</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@ if(strlen(session_id())< 1 )
             <!-- Logo -->
             <a href="escritorio.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>S.F.E</b></span>
+            <span class="logo-mini"><b>GSy</b></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>FA</b> <i style="font-size:18px">Formosa Aberturas</i></span>
             </a>
