@@ -54,6 +54,16 @@ if(strlen(session_id())< 1 )
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Navegación</span></a>
+                    <?php
+                        if($_SESSION['ventas']==1){
+                    ?>
+                    <ul class="nav navbar-nav">
+                    <li>&nbsp;</li>
+                     <li><a href="index_factura.php" type="button" role="button" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i> Nueva Venta</a></li>
+                    </ul>
+                    <?php
+                        }
+                    ?>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
@@ -168,6 +178,7 @@ if(strlen(session_id())< 1 )
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="index_ventas.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
+                        <li><a href="index_cuentas.php"><i class="fa fa-circle-o"></i> Cuentas</a></li>
                         <li><a href="index_cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
                     </ul>
                 </li>            

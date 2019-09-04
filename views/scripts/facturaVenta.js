@@ -2,9 +2,7 @@ var tabla;
 var nuevo;
 
 function init() {
-    mostrarform(false);
-    listar();
-
+    limpiar();
     $("#formulario").on("submit", function(e) {
         guardaryeditar(e);
         // cerrar();
@@ -32,25 +30,6 @@ function imprimir(idfactura, tipoPago) {
     }
 
 }
-//function mostrar form
-function mostrarform(flag) {
-    limpiar();
-
-    if (flag) {
-        $("#title_venta").html('Nueva Venta');
-        $("#listadoregistros").hide();
-        $("#formularioregistros").show();
-        $("#btnguardar").prop('disabled', false);
-        $("#btnagregar").hide();
-        detalle = 0;
-
-    } else {
-        $("#listadoregistros").show();
-        $("#formularioregistros").hide();
-        $("#btnagregar").show();
-        $("#title_venta").html('Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Factura</button>');
-    }
-}
 $("#tipo_pago").change(mostrarCuotas);
 
 function mostrarCuotas() {
@@ -69,13 +48,12 @@ function mostrarCuotas() {
 //funcion para cancelar form
 function cancelarform() {
     limpiar();
-    mostrarform(false);
 }
 //deja limpio todos los campos al cerrar
 function limpiar() {
     $.post("../ajax/venta.php?op=ultimocodigo", function(data, status) {
         data = JSON.parse(data);
-        if (data.cantidad == '101') {
+        if (data.cantidad == '51') {
             var serie = parseInt(data.serie) + 1;
             newserie = String(serie).padStart(4, '0');
             $('#serie').val(newserie);
@@ -107,37 +85,6 @@ function limpiar() {
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
     $("#fecha_venta").val(today);
 }
-
-function listar() {
-    tabla = $('#tablalistado').dataTable({ //mediante la propiedad datatable enviamos valores
-
-        "responsive": {
-            "details": true,
-        },
-        "aProcessing": true, //Activamos el prcesamiento del datatable
-        "aServerSide": true, //Paginacion y filtrado realizado por el servidor
-        dom: 'Bfrtip', //Definimos los elementos del control de tabla
-        buttons: [ //botones para exportar 
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdf'
-        ],
-        "ajax": {
-            url: '../ajax/venta.php?op=listar',
-            type: "get",
-            dataType: "json",
-            error: function(e) {
-                console.log(e.responseText)
-            }
-        },
-        "bDestroy": true,
-        "iDisplayLength": 5, //paginacion cada 5 registros
-        "order": [
-                [0, "desc"]
-            ] //orden de listado , columna 0, el id de categoria
-    }).dataTable();
-}
 //mostrar producctos 
 function listarProductos() {
     tabla = $('#tblproductos').dataTable({ //mediante la propiedad datatable enviamos valores
@@ -166,13 +113,6 @@ function listarProductos() {
             ] //orden de listado , columna 0, el id de categoria
     }).dataTable();
 }
-
-// function cerrar() {
-//     $("#formulario").ready(function() {
-//         $("#cerrar").trigger("click");
-//         limpiar();
-//     })
-// }
 //funcion para guardar nuevo y editado los productos
 function guardaryeditar(e) {
     e.preventDefault();
@@ -196,60 +136,9 @@ function guardaryeditar(e) {
                 alertify.alert('Resultado Inconcluso', 'Hubo un error al guardar');
             }
             $('#tablalistado').dataTable().api().ajax.reload();
-            listar();
         }
     });
     limpiar();
-}
-
-//funcion mostrar productos para editar
-function mostrar(idventa) {
-    $.post("../ajax/venta.php?op=mostrar", { id_venta: idventa },
-        function(data, status) {
-            data = JSON.parse(data);
-            mostrarform(true);
-            $("#cliente_id").val(data.cliente_id);
-            $("#cliente_id").selectpicker('refresh');
-            $("#tipocomprobante").val(data.tipo_comprobante);
-            $("#tipocomprobante").selectpicker('refresh');
-            $("#tipo_pago").val(data.tipo_pago);
-            $("#tipo_pago").selectpicker('refresh');
-            $("#serie").val(data.serie);
-            $("#codigo").val(data.codigo);
-            $("#fecha_venta").val(data.fecha_venta);
-            $("#impuesto").val(data.impuesto);
-            $("#id_venta").val(data.id_factura);
-            //ocultar botones
-            $("#btnguardar").hide();
-            if ($("#boton_block").length) {
-                $("#boton_block").hide();
-            }
-            $("#btnCancelar").html("<i class='fa fa-arrow-circle-left'></i> Volver");
-
-        });
-    $.post("../ajax/venta.php?op=mostrarDetalles&id=" + idventa, function(r) {
-
-        $("#detalles").html(r);
-    })
-
-}
-
-//desactivar productos
-function anular(idcompra) {
-    alertify.confirm("ATENCIÓN", "¿Esta seguro que desea anular la compra?",
-        function() {
-            $.post("../ajax/compras.php?op=anular", { id_producto: idproducto }, function(e) {
-                if (e = 1) {
-                    alertify.success('Se anulo con exito!');
-                } else {
-                    alertify.error('Hubo un error al anular');
-                }
-                $('#tablalistado').dataTable().api().ajax.reload();
-            });
-        },
-        function() {
-            alertify.error('Acción Cancelada');
-        });
 }
 //declaracion de variables necesarias para trabajar con las cmpras
 var impuesto = 21;

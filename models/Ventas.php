@@ -26,8 +26,25 @@
             descuento
             interes
 
+            TABLA CUENTA
+            id_cuenta
+            cliente_id
+            usuario_id
+            total_cuotas
+            estado abierto/cerrado
+
+            TABLA CUOTAS
+            id_cuota
+            nro_cuota
+            fecha_v
+            fecha_pago
+            monto
+            descuento
+            interes
+            cuenta_id
+            estado  pendiente/pagado/retrazado/mora
         */
-        Public function insertar($tipo_comprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$monto_total,
+        Public function insertar($tipo_comprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,
         $producto_id,$cantidad,$precio_venta,$descuento,$interes){
             $sql= "INSERT INTO facturas (tipo_comprobante,serie,codigo,cliente_id,usuario_id,fecha_venta,impuesto,tipo_pago,monto_total) VALUES ('$tipo_comprobante','$serie','$codigo','$cliente_id','$usuario_id','$fecha_venta','$impuesto','$tipo_pago','$monto_total') ";
             $venta_id =  ejectuarConsulta_retornarID($sql);
@@ -38,6 +55,19 @@
                 ejectuarConsulta($sql_detalle) or $sw = false;
                 $num_elementos = $num_elementos +1;
             }
+            if($tipo_pago == 'cred_personal'){
+                $sqlCuenta= "INSERT INTO cuenta (cliente_id,usuario_id,factura_id,fecha_cuenta,total_cuotas)VALUES('$cliente_id','$usuario_id','$venta_id','$fecha_venta','$cantidadCuotas')";
+                $cuenta_id = ejectuarConsulta_retornarID($sqlCuenta);
+                $montoCuota = $monto_total / $cantidadCuotas;
+                $cantidadCuotas = $cantidadCuotas+1;
+                for ($i=1; $i < $cantidadCuotas; $i++) 
+                { 
+                    $newfecha = date("Y-m-d", strtotime($fecha_venta."+ $i month"));
+                    $sqlCuota = "INSERT INTO cuotas (nro_cuota,fecha_v,interes,monto,cuenta_id)VALUES('$i','$newfecha',0,'$montoCuota',$cuenta_id)";
+                    ejectuarConsulta($sqlCuota);                    
+                }
+            }
+            
             return $sw;
         }
         Public function anular($id_factura){

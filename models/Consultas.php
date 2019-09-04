@@ -81,6 +81,7 @@
             $sql= "SELECT COUNT(f.`cliente_id`)  AS cantidad , UPPER(pc.`nombres`) AS nombres, UPPER(pc.`apellidos`) AS apellidos FROM facturas f
             INNER JOIN clientes c ON c.`id_clientes` = f.`cliente_id`
             INNER JOIN personas pc ON pc.`id_persona` = c.`persona_id` 
+            WHERE f.`cliente_id`<> '7'            
             GROUP BY f.`cliente_id`
             LIMIT 0,3";
             return  ejectuarConsulta($sql);

@@ -16,13 +16,14 @@ $codigo = isset($_POST['codigo']) ? limpiarCadena($_POST['codigo']) : "";
 $fecha_venta = isset($_POST['fecha_venta']) ? limpiarCadena($_POST['fecha_venta']) : "";
 $impuesto=isset($_POST['impuesto']) ? limpiarCadena($_POST['impuesto']) : "";
 $tipo_pago=isset($_POST['tipo_pago']) ? limpiarCadena($_POST['tipo_pago']) : "";
+$cantidadCuotas = isset($_POST['nro_cuotas']) ? limpiarCadena($_POST['nro_cuotas']) : "";
 $monto_total=isset($_POST['total_compra']) ? limpiarCadena($_POST['total_compra']) : "";
 
 //
 switch ($_GET['op']) {
     case 'guardaryeditar':
         if(empty($id_compra)){
-            $respuesta = $venta->insertar($tipocomprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$monto_total,$_POST['producto_id'],$_POST['cantidad'],$_POST['precio_venta'],$_POST['descuento'],$_POST['interes']);
+            $respuesta = $venta->insertar($tipocomprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,$_POST['producto_id'],$_POST['cantidad'],$_POST['precio_venta'],$_POST['descuento'],$_POST['interes']);
             echo $respuesta ? "1" : "0";
         }else{
 
@@ -83,9 +84,10 @@ switch ($_GET['op']) {
             }else{
 
             }
+            $newDate = date("d-m-Y", strtotime($reg->fecha_venta));
             $data[]= array(
                 "0" =>($reg->estado =='aceptado')?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>'. ' <button class="btn btn-danger" onclick="anular('.$reg->id_factura.')"><i class="fa fa-close"></i></button>'.' <button class="btn btn-info" onclick="imprimir('.$reg->id_factura.',\''.$reg->tipo_pago.'\')"><i class="fa fa-print"></i></button>':'<button class="btn btn-warning" onclick="mostrar('.$reg->id_factura.')"><i class="fa fa-eye"></i></button>',
-                "1"=>$reg->fecha_venta,
+                "1"=>$newDate,
                 "2"=>$reg->nombre_cliente.' '. $reg->apellido_cliente,
                 "3"=>$reg->nombre_usuario,
                 "4"=>$reg->tipo_comprobante,
@@ -107,9 +109,10 @@ switch ($_GET['op']) {
         require_once "../models/Clientes.php";
         $cliente = new Cliente();
         $respuestaSelect = $cliente->selectCliente();
+        echo '<option value="">Seleccionar...</option><option value="7">CONSUMIDOR FINAL</option>';
         while($reg = $respuestaSelect->fetch_object())
         {
-            echo '<option style="text-transform:uppercase;" value="'.$reg->id_clientes.'">'.$reg->nombres.' '.$reg->apellidos.'</option>';
+            echo '<option style="text-transform:uppercase;" value="'.$reg->id_clientes.'">'.$reg->nombres.' '.$reg->apellidos.' | DNI: '.$reg->nro_doc.'</option>';
         }
     break;
     case 'ultimocodigo':

@@ -21,7 +21,7 @@ if($_SESSION['ventas'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 id="title_venta" class="box-title">Lista de Ventas <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Factura</button></h1>
+                        <h1 id="title_venta" class="box-title">NUEVA FACTURA</h1>
                         <!-- boton para el modal  
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa-plus-circle"></i> Agregar</button>
                         -->
@@ -29,37 +29,8 @@ if($_SESSION['ventas'] == 1){
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
-                    <div class="panel-body table-responsive" id="listadoregistros">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%; text-transform:uppercase">
-                            <thead>
-                                <th>OPCIONES</th>
-                                <th>FECHA</th>
-                                <th>CLIENTE</th>
-                                <th>USUARIO</th>
-                                <th>FACTURA</th>
-                                <th>NUMERO</th>
-                                <th>TIPO PAGO</th>
-                                <th>TOTAL VENTA</th>
-                                <th>ESTADO</th>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                            <tfoot>
-                                <th>OPCIONES</th>
-                                <th>FECHA</th>
-                                <th>CLIENTE</th>
-                                <th>USUARIO</th>
-                                <th>FACTURA</th>
-                                <th>NUMERO</th>
-                                <th>TIPO PAGO</th>
-                                <th>TOTAL VENTA</th>
-                                <th>ESTADO</th>
-                            </tfoot>
-                        </table>
-                    </div>
                     <!-- CONTENIDO DEL FORMULARIO DE COMPRA -->
-                        <div class="panel-body" style="height:400px;display:none" id="formularioregistros" >
+                        <div class="panel-body" style="height:400px">
                             <form name="formulario" id="formulario" method="POST">
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                     <input type="hidden" name="id_venta" id="id_venta">
@@ -142,14 +113,13 @@ if($_SESSION['ventas'] == 1){
                                     </table>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-                                    <button class="btn btn-danger" onclick="cancelarform()" id="btnCancelar"> <i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+                                <a type="button" role="button" class="btn btn-danger" href="javascript:window.history.back();"> <i class="fa fa-arrow-circle-left"></i> Volver</a>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" >
                                     <button class="btn btn-primary pull-right" type="submit" id="btnguardar"><i class="fa fa-save"></i> Guardar</button>
                                 </div>
                             </form>
                         </div>
-                 
                     <!-- FIN DE FORMULARIO -->
                     <!-- Fin centro -->
                 </div>
@@ -214,7 +184,7 @@ if($_SESSION['ventas'] == 1){
 };
 require 'footer.php';
 ?>
-<script type="text/javascript" src="scripts/venta.js"></script>
+<script type="text/javascript" src="scripts/facturaVenta.js"></script>
 <?php 
 } //cerramos el else de sesion
 ob_end_flush();

@@ -240,6 +240,17 @@
                 //fin verificar pass
             }
         break;
+        case 'permisoUser':
+            $id_usuario = $_REQUEST['id_usuario'];
+            $respuesta = $usuario->mostrarPermisosJS($id_usuario);
+            $data = array();
+            while ($reg = $respuesta->fetch_object()){
+            $data[] = array(
+                "0"=> $reg->permiso_id,
+                );
+            }
+            echo json_encode($data);
+        break;
         case 'salir':
         //limpiamos las variables de sesion
         session_unset();

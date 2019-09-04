@@ -115,6 +115,10 @@
             $sql= "SELECT * FROM permisosxusuario WHERE usuario_id = '$id_usuario'";
             return ejectuarConsulta($sql);
         }
+        Public function mostrarPermisosJS($id_usuario){
+            $sql="SELECT * FROM permisosxusuario WHERE usuario_id = '$id_usuario' ORDER BY permiso_id ASC LIMIT 1";
+            return ejectuarConsulta($sql);
+        }
         Public function verificaruser($login){
             $sql="SELECT id_usuario, nombre_usuario FROM usuarios WHERE nombre_usuario = '$login'";
             return ejectuarConsultaSimpleFila($sql);
