@@ -125,8 +125,15 @@ switch ($_GET['op']) {
     $respuesta = $producto->listarActivosVenta();
     $data = array();
     while($reg = $respuesta->fetch_object())
-    {
+    {   
+            if($reg->imagen_producto){
+                $mostrarimagen = '<div style="height:50px;width:50px;float:left;padding:3px 53px 53px 3px;background-color:gray; margin-right:5px;border-radius: 5px;">
+                <img src="../files/images/productos/'.$reg->imagen_producto.'" height="50" width="50"></div> ';
+            }else{
+                $mostrarimagen= "No hay Imagen Para Mostrar";
+            };
         $data[]=array(
+         
             "0"=>'<button class="btn btn-warning" onclick="agregardetalle('.$reg->id_producto.',\''.$reg->descripcion.'\',\''.$reg->precio_venta.'\',\''.$reg->stock.'\')"><span class="fa fa-plus"><span></button>',
             "1"=>$reg->cod_producto,
             "2"=>$reg->descripcion,
@@ -134,8 +141,7 @@ switch ($_GET['op']) {
             "4"=>$reg->nombre_material,
             "5"=>$reg->nombre_categoria,
             "6"=>'$ '.$reg->precio_venta,
-            "7"=>'<div style="height:50px;width:50px;float:left;padding:3px 53px 53px 3px;background-color:gray; margin-right:5px;border-radius: 5px;">
-                <img src="../files/images/productos/'.$reg->imagen_producto.'" height="50" width="50"></div> '
+            "7"=>$mostrarimagen
         );
     }
     $results = array(

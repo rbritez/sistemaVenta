@@ -232,7 +232,8 @@ if(strlen(session_id())< 1 )
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="ventas_fecha.php"><i class="fa fa-circle-o"></i> Consulta Ventas</a></li>                
+                        <li><a href="ventas_fecha.php"><i class="fa fa-circle-o"></i> Consulta Ventas</a></li>
+                        <li><a href="clientes_deudores.php"><i class="fa fa-circle-o"></i> Clientes Deudores</a></li>                    
                     </ul>
                 </li>
                 <?php

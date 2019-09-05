@@ -21,7 +21,7 @@ if($_SESSION['compras'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Lista de Compras <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                        <h1 class="box-title">Lista de Compras <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Compra</button></h1>
                         <!-- boton para el modal  
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa-plus-circle"></i> Agregar</button>
                         -->
@@ -30,7 +30,7 @@ if($_SESSION['compras'] == 1){
                     <!-- /.box-header -->
                     <!-- centro -->
                     <div class="panel-body table-responsive" id="listadoregistros">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
+                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="text-transform:uppercase; width:100%">
                             <thead>
                                 <th>OPCIONES</th>
                                 <th>FECHA</th>

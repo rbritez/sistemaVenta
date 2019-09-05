@@ -76,9 +76,10 @@ switch ($_GET['op']) {
         $respuesta = $compra->listar();
         $data = array();
         while ($reg = $respuesta->fetch_object()){
+            $newDate = date("d-m-Y", strtotime($reg->fecha));
             $data[]= array(
                 "0" =>($reg->estado =='aceptado')?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_compra.')"><i class="fa fa-eye"></i></button>'. ' <button class="btn btn-danger" onclick="anular('.$reg->id_compra.')"><i class="fa fa-close"></i></button>':'<button class="btn btn-warning" onclick="mostrar('.$reg->id_compra.')"><i class="fa fa-eye"></i></button>',
-                "1"=>$reg->fecha,
+                "1"=>$newDate,
                 "2"=>$reg->nombre_proveedor.' '. $reg->apellido_proveedor,
                 "3"=>$reg->nombre_usuario,
                 "4"=>$reg->tipocomprobante,

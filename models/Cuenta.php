@@ -64,7 +64,7 @@
         }
         Public function selectClientes(){
             $sql="SELECT cl.`id_clientes`, pe.`nombres`, pe.`apellidos`, pe.`nro_doc` FROM clientes cl
-            INNER JOIN personas pe ON pe.`id_persona` = cl.`persona_id`";
+            INNER JOIN personas pe ON pe.`id_persona` = cl.`persona_id` WHERE cl.`id_clientes` <> '7' ORDER BY pe.`apellidos` ASC";
             return ejectuarConsulta($sql);
         }
         Public function selectCuenta($cliente_id){
@@ -105,6 +105,16 @@
             $sql="SELECT c.`id_cuota`,c.`nro_cuota`,c.`fecha_v`,c.`fecha_pago`,c.`interes`,c.`monto`, cu.total_cuotas,(c.`monto` + c.`interes`) AS subtotal  FROM cuotas c 
             INNER JOIN cuenta cu ON cu.`id_cuenta` = c.`cuenta_id` 
             WHERE cu.`id_cuenta` = '$id_cuenta' AND c.`fecha_pago` = CURDATE();";
+            return ejectuarConsulta($sql);
+        }
+        Public function cuentasPendientes(){
+            $sql="SELECT cl.`id_clientes`,pe.`nombres`,pe.`apellidos`, (SELECT COUNT(*) FROM cuenta WHERE cuenta.`estado` = '1' AND cuenta.`cliente_id` = cl.`id_clientes` ) AS cuentas_abiertas,
+            (SELECT COUNT(*) FROM cuotas INNER JOIN cuenta ce ON ce.id_cuenta = cuotas.`cuenta_id` WHERE ce.`cliente_id` = cl.`id_clientes` AND cuotas.`estado` = 'pendiente' ) AS Cuentas_Pendientes,
+            (SELECT COUNT(*) FROM cuotas INNER JOIN cuenta ce ON ce.id_cuenta = cuotas.`cuenta_id` WHERE ce.`cliente_id` = cl.`id_clientes` AND cuotas.`estado` = 'mora' ) AS Cuentas_Mora FROM clientes cl
+            INNER JOIN cuenta cu ON cu.`cliente_id` = cl.`id_clientes`
+            INNER JOIN personas pe ON pe.`id_persona` = cl.`persona_id`
+            WHERE cu.`estado` = '1'
+            GROUP BY cl.`id_clientes`";
             return ejectuarConsulta($sql);
         }
     }
