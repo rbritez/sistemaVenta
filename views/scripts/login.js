@@ -10,6 +10,7 @@ $("#frmAceeso").on('submit', function(e) {
             alertify.alert("RESULTADO INCONCLUSO", " LA CONTRASEÑA INGRESADA NO ES CORRECTA");
             return false;
         } else {
+
             data = JSON.parse(data);
             var id_usuario = data.id_usuario;
             $.post("../ajax/usuario.php?op=permisoUser", { id_usuario: id_usuario }, function(datos) {

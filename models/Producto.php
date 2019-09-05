@@ -6,9 +6,9 @@
         Public function __construct()
         {
         }
-        Public function insertar($cod_producto,$descripcion,$stock,$material_id,$categoria_id)
+        Public function insertar($cod_producto,$descripcion,$stock,$precio,$material_id,$categoria_id)
         {
-            $sql = "INSERT INTO productos (cod_producto,descripcion,stock,material_id,categoria_id) VALUES ('$cod_producto','$descripcion','$stock','$material_id','$categoria_id')";
+            $sql = "INSERT INTO productos (cod_producto,descripcion,stock,precio_venta,material_id,categoria_id) VALUES ('$cod_producto','$descripcion','$stock','$material_id','$categoria_id')";
             return ejectuarConsulta($sql);
         }
         Public function editar($idproducto,$cod_producto,$descripcion,$stock,$material_id,$categoria_id)

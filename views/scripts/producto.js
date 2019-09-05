@@ -6,10 +6,7 @@ function init() {
         guardaryeditar(e);
         cerrar();
     });
-    $("#formularioImagen").on("submit", function(e) {
-        guardarImagen(e);
-        cerrarformImagen();
-    });
+
     //Cargamos los items al select categoria
     $.post("../ajax/producto.php?op=selectCategoria", function(r) {
         $("#categoria_id").html(r);
@@ -19,13 +16,32 @@ function init() {
         $("#material_id").html(s);
         $("#material_id").selectpicker('refresh');
     })
+    $("#formularioImagen").on("submit", function(e) {
+        guardarImagen(e);
+        cerrarformImagen();
+    });
 
 }
 
 
 //function para guardar imagenes y mande el Id del producto al que pertenence
 function formImagen(idproducto) {
-
+    $("#modalimagen").after('<div id="remover"><div class="modal-body">' +
+        '<form  class="form-horizontal"  name="formularioImagen" id="formularioImagen" method="POST">' +
+        '<input type="hidden" name="idimagen" id="idimagen">' +
+        '<input type="hidden" name="producto_id" id="producto_id">' +
+        '<input type="file"  id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" accept="image/x-png,image/jpg,image/jpeg" multiple="" />' +
+        '<label for="file-1">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>' +
+        '<span class="iborrainputfile">Seleccionar archivo</span>' +
+        '</label>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-danger pull-left" data-dismiss="modal" onclick="cerrarformImagen()" id="cerrarformImagen" name="cerrarformImagen"><i class="fa fa-arrow-circle-left"></i> Volver</button>' +
+        '<button type="submit" class="btn btn-info" id="btnGuardarImagen"> <i class="fa fa-save" ></i> Guardar</button>' +
+        '</form>' +
+        '</div>' +
+        '</div></div>');
     $("#formularioImagen").ready(function() {
         $('#producto_id').val(idproducto);
     });
@@ -37,6 +53,7 @@ function limpiar() {
     $("#cod_producto").val("");
     $("#descripcion").val("");
     $("#stock").val("");
+    $("#precio").val("01.00");
     $("#material_id").val("");
     $("#material_id").selectpicker('refresh');
     $("#categoria_id").val("");
@@ -45,8 +62,7 @@ function limpiar() {
 }
 
 function limpiarimagen() {
-    $("#file-1").val("");
-    $("#file-1").selectpicker('refresh');
+    $("#remover").remove();
 }
 
 function listar() {

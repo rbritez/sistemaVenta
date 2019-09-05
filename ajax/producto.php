@@ -7,6 +7,7 @@
     $cod_producto = isset($_POST['cod_producto'])? limpiarCadena($_POST['cod_producto']):"";
     $descripcion = isset($_POST['descripcion'])? limpiarCadena($_POST['descripcion']):"";
     $stock = isset($_POST['stock'])? limpiarCadena($_POST['stock']):"";
+    $precio = isset($_POST['precio'])? limpiarCadena($_POST['precio']):"";
     $material_id = isset($_POST['material_id'])? limpiarCadena($_POST['material_id']):"";
     $categoria_id = isset($_POST['categoria_id'])? limpiarCadena($_POST['categoria_id']):"";
 
