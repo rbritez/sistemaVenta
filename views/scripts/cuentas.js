@@ -1,18 +1,64 @@
 var tabla;
+var montointeresmensual = 0;
 
 function init() {
     mostrarform(false);
     listar();
+    mostrarInteres();
     $("#formulariocuota").on("submit", function(e) {
         guardar(e);
+    });
+    $("#formularioInteres").on("submit", function(e) {
+        guardarInteres(e);
+        cerrarInteres();
     });
     $.post("../ajax/cuentas.php?op=selectCliente", function(r) {
         $("#cliente_id").html(r);
         $("#cliente_id").selectpicker('refresh');
+        $("#btnguardar").hide();
     });
+
     $("#cliente_id").change(mostrarCuenta);
     $("#cuenta_id").change(mostrarCuota);
     $("#cuota_id").change(mostrardetalle);
+}
+//funcion para mostrar el formulario de pagar cuota
+function mostrarInteres() {
+    $.post("../ajax/cuentas.php?op=mostrarInteres", function(data, status) {
+        data = JSON.parse(data);
+        var monto = data.monto_interes_mes * 10;
+        var montonuevo = monto / 10;
+        $("#mostrarinteres").append('<span >El monto de Interes mensual actual impuesto por el AFIP es de ' + montonuevo + '%</span><br>')
+    });
+}
+
+function mostrarformInteres() {
+    $("#forminteres").append('<div id="eliminarinteres"><div class="modal-body">' +
+        '<div class="row">' +
+        '<div class="col-sm-12">' +
+        '<form  class="form-horizontal"  name="formularioInteres" id="formularioInteres" method="POST">' +
+        '<div class="form-group">' +
+        '<label class="col-sm-3 col-sm-3 control-label">TASA MENSUAL DE INTERES %</label>' +
+        '<div class="col-sm-9">' +
+        '<input type="number" step="0.01" min="0" name="interesM" id="interesM" class="form-control" required>' +
+        '<span>La tasa de interés <b style="font-size:18px">mensual</b> es actualizado por el AFIP. <b>*Antes de actualizar por favor verificar últimas actualizaciones en la página oficial del AFIP*</b></span>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrarInteres" name="cerrarInteres" onclick="cerrarInteres()"><i class="fa fa-arrow-circle-left" ></i> VOLVER</button>' +
+        '<button type="submit" class="btn btn-info"> <i class="fa fa-save" id="btnGuardar"></i> GUARDAR</button>' +
+        '</div>' +
+        '</form></div>');
+
+    $.post("../ajax/cuentas.php?op=mostrarInteres", function(data, status) {
+        data = JSON.parse(data);
+        var monto = data.monto_interes_mes * 10;
+        var montonuevo = monto / 10;
+        $("#interesM").val(montonuevo);
+    });
 }
 
 function mostrarform(flag) {
@@ -30,8 +76,28 @@ function mostrarform(flag) {
     }
 }
 
-function mostrarCuenta() {
+function cerrarInteres() {
+    $('#formularioInteres').ready(function() {
+        $('#cerrarInteres').trigger('click');
+        eliminarformInteres();
+    });
+}
 
+function eliminarformInteres() {
+    $("#eliminarinteres").remove();
+}
+
+function mostrarCuenta() {
+    var cuenta = "";
+    $.post("../ajax/cuentas.php?op=selectCuotaCliente", { cuenta_id: cuenta }, function(r) {
+        $("#cuota_id").html(r);
+        $("#cuota_id").selectpicker("refresh");
+        if ($(".filas")) {
+            $(".filas").remove();
+            $("#detalles").hide();
+            $("#btnguardar").hide();
+        }
+    });
     var cliente = $("#cliente_id").val();
     $.post("../ajax/cuentas.php?op=selectCuentaCliente", { cliente_id: cliente }, function(r) {
         $("#cuenta_id").html(r);
@@ -64,7 +130,7 @@ var detalle = 0;
 function agregardetalle(idcuota, nro_cuota, fecha_v, total_cuotas, monto, interes) {
     console.log([idcuota, nro_cuota, fecha_v, total_cuotas, monto, interes]);
     var subtotal = parseFloat(monto) + parseFloat(interes);
-    var newdate = fecha_v.split("-").reverse().join("-");
+    var newdate = fecha_v.split("-").reverse().join("-"); // funcion para voltear fechas
 
     var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
         '<td><button type="button" class="btn btn-danger" onclick="eliminarcuota(' + cont + ')"><i class="fa fa-times"></i></button></td>' +
@@ -152,6 +218,26 @@ function guardar(e) {
         }
     });
     limpiar();
+}
+
+function guardarInteres(e) {
+    e.preventDefault();
+    var formData = new FormData($("#formularioInteres")[0]);
+    $.ajax({
+        url: "../ajax/cuentas.php?op=guardarInteres",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        success: function(datos) {
+            if (datos == 1) {
+                alertify.alert('Resultado Satisfactorio', 'Se guardaron los datos con exito! ');
+            } else {
+                alertify.alert('Resultado Inconcluso', 'Hubo un error al guardar los datos! ');
+            }
+        }
+    });
 }
 
 function imprimir(idcuenta) {

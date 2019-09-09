@@ -128,7 +128,14 @@
             FROM usuarios 
             JOIN personas ON personas.`id_persona` = usuarios.`persona_id`
             WHERE usuarios.`id_usuario`='$id_usuario' AND  usuarios.`nombre_usuario` = '$login' AND usuarios.`condicion`=1;";
+            
+            $sql1= "UPDATE usuarios SET login_usuario = 1 WHERE `id_usuario` = '$id_usuario'";
+            ejectuarConsulta($sql1);
             return ejectuarConsulta($sql);
+        }
+        Public function salir($id_usuario){
+            $sql= "UPDATE usuarios SET login_usuario = 0 WHERE `id_usuario` = '$id_usuario'";
+            ejectuarConsulta($sql);
         }
     }
 ?>

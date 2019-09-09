@@ -23,10 +23,21 @@
             
         return $respuesta;
         }
-        Public function editar()
-        {
-        
+        Public function actualizarInteres($interes){
+            $montoDia = ($interes /300) + 1;
+            $sql="UPDATE interes SET monto_interes_mes = '$interes',monto_interes_dia = '$montoDia', fecha_mod = CURDATE()";
+            $sql2 = "DELIMITER $$
+            ALTER DEFINER=`root`@`localhost` EVENT `aumentarInteres` ON SCHEDULE EVERY 1 DAY STARTS '2019-08-31 00:05:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+                    UPDATE cuotas SET interes = interes * '$montoDia' WHERE estado = 'mora';
+                END$$
+            DELIMITER ;";
+            ejectuarConsulta($sql2);
+            return ejectuarConsulta($sql);
         }
+      Public function mostrarInteres(){
+          $sql = "SELECT monto_interes_mes FROM interes";
+          return ejectuarConsultaSimpleFila($sql);
+      }
         Public function mostrarProducto($cuenta_id){
             $sql = "SELECT pr.`descripcion`, ma.`nombre`  FROM cuenta cu
             INNER JOIN facturas fa ON fa.`id_factura` = cu.`factura_id`

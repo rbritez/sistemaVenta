@@ -8,7 +8,7 @@ if(strlen(session_id())< 1 )
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GestionSy | FormosaAberturas</title>
+        <title>GestionSyF | FormosaAberturas</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -45,7 +45,7 @@ if(strlen(session_id())< 1 )
             <!-- Logo -->
             <a href="escritorio.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>GSy</b></span>
+            <span class="logo-mini"><b>GSyF</b></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>FA</b> <i style="font-size:18px">Formosa Aberturas</i></span>
             </a>
@@ -98,7 +98,7 @@ if(strlen(session_id())< 1 )
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                    <a href="../ajax/usuario.php?op=salir" class="btn btn-default btn-flat">Cerrar</a>
+                                    <a href="../ajax/usuario.php?op=salir&id_usuario=<?php echo $_SESSION['id_usuario']; ?>" class="btn btn-default btn-flat">Cerrar</a>
                                     </div>
                                 </li>
                             </ul>
@@ -247,7 +247,7 @@ if(strlen(session_id())< 1 )
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="acercade.php">
                         <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
                         <small class="label pull-right bg-yellow">IT</small>
                     </a>

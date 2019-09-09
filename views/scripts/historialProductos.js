@@ -18,6 +18,7 @@ function traerdatosgrafico(id_producto) {
             datos = JSON.parse(datos);
             $("#titlebtn").html('<h1 class="box-title">HISTORIAL DE PRECIOS POR PRODUCTO <button type="button" class="btn btn-info" onclick="myFunction([' + datos[0]['fechas'] + '],[' + datos[0]['precios'] + '],[' + datos[0]['aumentoenteros'] + '],[' + datos[0]['aumentoporcentaje'] + '])" id="verGrafico">Ver Grafico</button></h1>' +
                 '<div class="box-tools pull-right"></div>')
+            console.log([datos[0]['fechas']]);
             $("#verGrafico").show();
             $("#fechas").val(datos[0]['fechas']);
             $("#precios").val(datos[0]['aumentoenteros']);

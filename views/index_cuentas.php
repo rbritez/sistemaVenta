@@ -18,7 +18,9 @@ if($_SESSION['ventas'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title" id="title">LISTA DE CUENTAS <button type="button" class="btn btn-success" onclick="mostrarform(true)" id="btnpagar"><i class="fa fa-money" aria-hidden="true"></i> Pagar Cuota</button></h1>
+                        <h1 class="box-title" id="title">LISTA DE CUENTAS <button type="button" class="btn btn-success" onclick="mostrarform(true)" id="btnpagar"><i class="fa fa-money" aria-hidden="true"></i> Pagar Cuota</button></h1>  <?php if($_SESSION['acceso'] =='1'){
+                            echo '<button class="btn btn-warning" data-toggle="modal" data-target="#modal_interes" onclick="mostrarformInteres()" style="font-size:14.5px"><i class="fa fa-pencil"></i> Interes</button>';
+                        }?>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -45,7 +47,11 @@ if($_SESSION['ventas'] == 1){
                                 <th style="text-align: center;">TOTAL DE CUOTAS</th>
                                 <th style="text-align: center;">ESTADO</th>
                             </tfoot>
-                        </table>
+                        </table><br>
+                        <div id="mostrarinteres" style="text-align:center; font-style:italic" align="center">
+                            
+                        </div>
+                        
                     </div>
                     <div class="panel-body"  style="height: 400px;display:none" id="formularioregistros">
                         <div class="col-md-6 col-xs-12" style="text-transform:uppercase">
@@ -99,15 +105,29 @@ if($_SESSION['ventas'] == 1){
                         </div>
                         </tfoot>    
                         </form>
-                       
-                        
                     </div>
                    <!-- Fin centro -->
+                    <!-- MODAL INTERES -->
+                    <div class="modal fade" id="modal_interes"> <!-- modallllllllll-->
+                        <div class="modal-dialog">
+                            <div class="modal-content"> <!-- div content --> 
+                                <div class="modal-warning modal-header " style="background-color:#f39c12">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" style="color:white">&times;</span>
+                                    </button>
+                                    <h4 style="color:white;" id="title_proveedor" class="modal-title">MODIFICAR INTERES DE POR MORA</h4>
+                                </div >
+                                <div id="forminteres">
+                                
+                                </div>
+                            </div><!-- div content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    <!-- FIN MODAL INTERES -->
                     <!-- modal -->
                     <div class="modal fade" id="modal_cuenta"> <!-- modallllllllll-->
                         <div class="modal-dialog" style="width:65% !important;">
                             <div class="modal-content"> <!-- div content --> 
-                            
                                 <div class="modal-warning modal-header " style="background-color:#f39c12">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true" style="color:white">&times;</span>
@@ -155,14 +175,18 @@ if($_SESSION['ventas'] == 1){
                                                 </tfoot>
                                             </table>
                                         </div>
+                                    </div>    
                                 <div>    
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrar" name="cerrar" onclick="limpiar()"><i class="fa fa-arrow-circle-left" ></i> CANCELAR</button>
-                                    
                                 </div>
                             </div><!-- div content -->
                         </div><!-- /.modal-dialog -->
+                    </div>
+                    </div> 
+                    </div>  
                     <!-- fin modal -->
+                   
                 </div>
                 <!-- /.box -->
             </div>

@@ -43,7 +43,7 @@ if($_SESSION['consultac'] == 1){
                                 <th>USUARIO</th>
                                 <th>COMPROBANTE</th>
                                 <th>SERIE | NUMERO</th>
-                                <th>TOTAL COMPRA</th>
+                                <th>TOTAL VENTA</th>
                                 <th>ESTADO</th>
                             </thead>
                             <tbody>
@@ -55,7 +55,7 @@ if($_SESSION['consultac'] == 1){
                                 <th>USUARIO</th>
                                 <th>COMPROBANTE</th>
                                 <th>SERIE | NUMERO</th>
-                                <th>TOTAL COMPRA</th>
+                                <th>TOTAL VENTA</th>
                                 <th>ESTADO</th>
                             </tfoot>
                         </table>

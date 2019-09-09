@@ -68,6 +68,14 @@
              si quiero obtener de mas dias o menos , hay que cambiar el desc limit 0,10
             */
         }
+        Public function ventasFechaGrafico($fechaInicio,$fechaFin){
+            $sql="SELECT CONCAT(DAY(fecha_venta),'-',MONTH(fecha_venta)) AS fecha, SUM(monto_total) AS total 
+            FROM facturas 
+            WHERE facturas.`estado` = 'aceptado' AND DATE(facturas.`fecha_venta`) BETWEEN '$fechaInicio' AND '$fechaFin'
+            GROUP BY fecha_venta 
+            ORDER BY fecha_venta DESC ";
+            return ejectuarConsulta($sql);
+        }
         Public function ventas12meses(){
            $sql="SELECT DATE_FORMAT(fecha_venta,'%M')AS fecha,SUM(monto_total)AS total 
            FROM facturas

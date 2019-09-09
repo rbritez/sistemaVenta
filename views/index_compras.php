@@ -130,7 +130,6 @@ if($_SESSION['compras'] == 1){
                     </div>
                     <!-- FIN DE FORMULARIO -->
                     <!-- Fin centro -->
-                </div>
                 <!-- /.box -->
             </div>
             <!-- /.col -->

@@ -6,9 +6,6 @@ function init() {
     $("#formulario").on("submit", function(e) {
         guardaryeditar(e);
         cerrar();
-
-
-
     })
 }
 //funcion limpiar, dejara vacio a los objetos del formulario

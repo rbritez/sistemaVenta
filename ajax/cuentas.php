@@ -17,6 +17,16 @@
             }
            echo $res;
         break;
+        case 'guardarInteres':
+            $interes = $_POST['interesM'];
+            $respuesta = $cuenta->actualizarInteres($interes);
+            $res= $respuesta ? '1' : '0';
+       echo $res;
+        break;
+        case 'mostrarInteres':
+        $respuesta = $cuenta->mostrarInteres();
+        echo json_encode($respuesta);
+        break;
         case 'mostrar':
             $id_cuenta = $_GET['idcuenta'];
             $respuesta = $cuenta->mostrar($id_cuenta);
@@ -131,6 +141,27 @@
         $id=$_POST['id_cuenta'];
         $respuesta=$cuenta->encabezadoFacturaCuota($id);
         echo json_encode($respuesta);
+        break;
+        case 'clientesDeudores':
+         $respuesta= $cuenta->cuentasPendientes();
+         $data = array();
+         while ($reg = $respuesta->fetch_object()){
+             $data[] = array(
+             "0"=>" ",
+             "1"=>$reg->nombres.' '.$reg->apellidos,
+             "2"=>$reg->cuentas_abiertas,
+             "3"=>$reg->Cuentas_Pendientes,
+             "4"=>$reg->Cuentas_Mora,
+             ); 
+         }
+         $result = array(
+             "sEcho" =>1, //Informacion para el data table
+             "iTotalRecords"=>count($data), //enviamos el total de registros al data table
+             "iTotalDisplayRecords"=>count($data), //enviamos el toal de registros a visualizar
+             "aaData"=>$data //aca se encuentra almacenado todos los registros
+         );
+         echo json_encode($result);
+
         break;
     }
 ?>

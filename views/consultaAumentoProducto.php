@@ -55,18 +55,6 @@ if($_SESSION['almacen'] == 1){
                     </div>
                         
                     <div class="panel-body" id="divgrafico" style="display:none">
-                            <!-- <div class="col-lg-12 col-md-12 col-ms-12 col-xs-12">
-                            <div class="box box-primary">
-                            <div class="box-header with-border">
-                                Historial de Precio 
-                            </div>
-                            <div > -->
-                                    <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
-                                
-                                <!-- <input type="hidden" id="fechas" value="">
-                                <input type="hidden" id="precios" value="">
-                            </div>
-                            </div> -->
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <!-- aqui insertaremos el slider Inicio carousel -->
                             <div id="carousel1" class="carousel slide" data-ride="carousel">
@@ -128,9 +116,10 @@ var AumPor = document.getElementById('aumentoPorcentaje').getContext('2d');
     function myFunction(fecha,precios,aumentoenteros,aumentoporcentaje) {
 
         if(fecha){
+            console.log(fecha);
                 var el = document.getElementById('divgrafico');
                 el.style.display = 'block';           
-                console.log(aumentoporcentaje);
+                // grafico de aumento en precio total
                 var myLineChart = new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -155,6 +144,7 @@ var AumPor = document.getElementById('aumentoPorcentaje').getContext('2d');
                         }
                     }
                 });
+                // grafico de aumento en $
                 var myLineChart2 = new Chart(AumPro, {
                     type: 'line',
                     data: {
@@ -179,6 +169,7 @@ var AumPor = document.getElementById('aumentoPorcentaje').getContext('2d');
                         }
                     }
                 });
+                // grafico de aumento en porcentaje
                 var myLineChart3 = new Chart(AumPor, {
                     type: 'line',
                     data: {

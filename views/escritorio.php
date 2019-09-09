@@ -178,7 +178,7 @@ if($_SESSION['escritorio'] == 1){
                                     <h4 style="font-size:17px">
                                         <strong>$ <?php echo $totalC;?></strong>
                                     </h4>
-                                    <p>Compras de Hoy</p>
+                                    <p style="font-size:25px">Compras de Hoy</p>
                                     <div class="icon">
                                     <i class="ion ion-bag"></i>
                                     </div>
@@ -192,9 +192,9 @@ if($_SESSION['escritorio'] == 1){
                                     <h4 style="font-size:17px">
                                         <strong>$ <?php echo $totalV;?><b id="ganancias"></b></strong>
                                     </h4>
-                                    <p>Ventas de Hoy</p>
+                                    <p style="font-size:25px">Ventas de Hoy</p>
                                     <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                        <i class="ion ion-bag"></i>
                                     </div>
                                     <a href="index_ventas.php" style="color:white" class="small-box-footer">Ventas <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
@@ -204,16 +204,16 @@ if($_SESSION['escritorio'] == 1){
                     <div class="panel-body">
                         <div class="col-lg-6 col-md-6 col-ms-6 col-xs-12">
                             <div class="box box-primary">
-                            <div class="box-header with-border">
-                                Compras de los ultimos 10 Dias
-                            </div>
+                                <div class="box-header with-border" style="font-size:25px">
+                                    Compras de los ultimos 10 Dias
+                                </div>
                                 <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
                                 <canvas id="compras" width="400" height="300"></canvas>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-ms-6 col-xs-12">
                             <div class="box box-primary">
-                            <div class="box-header with-border">
+                            <div class="box-header with-border" style="font-size:25px">
                                 Ventas de los ultimos 10 Dias
                             </div>
                                 <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
@@ -223,7 +223,7 @@ if($_SESSION['escritorio'] == 1){
                         <div class="col-lg-6 col-md-6 col-ms-6 col-xs-12">
                         
                             <div class="box box-primary">
-                            <div class="box-header with-border">
+                            <div class="box-header with-border" style="font-size:25px">
                                 Ventas de los ultimos 12 meses
                             </div>
                                 <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
@@ -233,7 +233,7 @@ if($_SESSION['escritorio'] == 1){
                         <div class="col-lg-6 col-md-6 col-ms-6 col-xs-12">
                         
                             <div class="box box-primary">
-                            <div class="box-header with-border">
+                            <div class="box-header with-border" style="font-size:25px">
                                 Clientes mas Hábituales
                             </div>
                             <div >

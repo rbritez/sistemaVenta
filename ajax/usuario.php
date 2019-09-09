@@ -208,6 +208,7 @@
                 //si la contraseña es correcta
                 $respuesta = $usuario->verificarLogin($id_user,$loginA);
                 $fetch = $respuesta->fetch_object();
+
                 if(isset($fetch))
                 {
                     //creamos las variables de sesión
@@ -252,6 +253,8 @@
             echo json_encode($data);
         break;
         case 'salir':
+        $id_usuario = $_GET['id_usuario'];
+        $respuesta=$usuario->salir($id_usuario); 
         //limpiamos las variables de sesion
         session_unset();
         //destruimos la sesion

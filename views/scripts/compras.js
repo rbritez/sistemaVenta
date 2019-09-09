@@ -225,7 +225,7 @@ function agregardetalle(idproducto, descripcion) {
 
             '<td><input type="number" name="cantidad[]" min="1" id="cantidad[]" value="' + cantidad + '"></td>' +
 
-            '<td><input type="number" step="0.01" min="1" name="precio_compra[]" id="precio_compra[]" value="' + precio_compra + '"></td>' +
+            '<td><input type="number" step="0.01" min="1" name="precio_compra[]" id="precio_compra[]" value="' + precio_compra + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
 
             '<td><input type="number" step="0.01" min="1" name="precio_venta[]" id="precio_venta[]" value="' + precio_venta + '"></td>' +
 
@@ -245,12 +245,19 @@ function agregardetalle(idproducto, descripcion) {
 function modificarSubtotales() {
     var cant = document.getElementsByName("cantidad[]");
     var prec = document.getElementsByName("precio_compra[]");
+    var preV = document.getElementsByName("precio_venta[]");
     var sub = document.getElementsByName("subtotal");
+
     for (var index = 0; index < cant.length; index++) {
 
         var inpC = $(cant[index]).val(); //cantidad 
         var inpP = $(prec[index]).val(); //precio
         var inpS = sub[index]; //subtotal
+        var sumar = inpP * 1.2;
+        console.log(sumar);
+        var nuevo = $(preV[index]).val(sumar);
+        preV.value = nuevo;
+        $(preV[index]).prop('min', sumar);
 
         inpS = inpC * inpP;
         document.getElementsByName("subtotal")[index].innerHTML = inpS;

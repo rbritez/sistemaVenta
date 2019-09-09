@@ -307,7 +307,7 @@ function mostrarFormPass(idusuario) {
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label class="col-sm-3 col-sm-3 control-label">CONTRASEÑA ACTUAL (*)</label>' +
+        '<label class="col-sm-3 col-sm-3 control-label">NUEVA CONTRASEÑA (*)</label>' +
         '<div class="col-sm-9">' +
         '<input type="password" name="clave1" id="clave1" class="form-control" required>' +
         '</div>' +
