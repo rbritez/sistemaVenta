@@ -20,7 +20,7 @@ if($_SESSION['consultac'] == 1){
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header with-border">
+                    <div class="box-header with-border" id="titlebtn">
                         <h1 class="box-title">Consulta de Compras</h1>
                         <div class="box-tools pull-right"></div>
                     </div>
@@ -36,7 +36,7 @@ if($_SESSION['consultac'] == 1){
                     <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="<?php echo date("Y-m-d"); ?>">
                     </div>
                     <div class="panel-body table-responsive" id="listadoregistros">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
+                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%;text-transform:uppercase">
                             <thead>
                                 <th>FECHA</th>
                                 <th>PROVEEDOR</th>
@@ -60,6 +60,17 @@ if($_SESSION['consultac'] == 1){
                             </tfoot>
                         </table>
                     </div>
+                    <div class="panel-body" style="text-align:center">
+                        <div class="col-lg-12 col-md-12 col-ms-12 col-xs-12">
+                            <div class="box box-primary">
+                                <div class="box-header with-border" id="textofecha" style="font-size:18px">
+                                    
+                                </div>
+                                <!-- incluimos la etiqueta canvas que sirve para mostrar graficos estadisticos -->
+                                <canvas id="comprasFecha" width="300" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>    
                     <!-- <div class="panel-body  style="height: 400px;" id="formularioregistros">
                     </div>
                     Fin centro -->
@@ -74,7 +85,61 @@ if($_SESSION['consultac'] == 1){
 </div>
 <!-- /.content-wrapper -->
 <!--Fin-Contenido-->
+<style>
+#verGrafico:hover{
+    text-decoration:none;
+    border:none;
+    color:red;
+    border:red;
+}
+#verGrafico:active{
+    text-decoration:none;
+    border:none;
+}
+#verGrafico:focus{
+    text-decoration:none;
+    border:none;
+}
+</style>
+<script src="../public/js/Chart.min.js"></script>
+<script src="../public/js/Chart.bundle.min.js"></script>
+<script type="text/javaScript">
+var ctx = document.getElementById('comprasFecha').getContext('2d');
+    function myFunction(fechaC,totalesC) {
+        if(fechaC[0] == false){       
+             $("#comprasFecha").hide();
+             $("#textofecha").hide();
+        }else{
+            $("#comprasFecha").show();
+            $("#textofecha").show();
+               // grafico de aumento en precio total
+               var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels:fechaC,
+                        datasets: [{
+                        label:['Compras por Fecha '],
+                            data: totalesC, //mostramos precios
+                            backgroundColor: [
+                                'rgba(255, 255, 255,0.10)',
 
+                            ],
+                            borderColor:[
+                                "rgba(243,156,18)"
+                            ]
+                        }]
+                    },
+                        options: {
+                        scales: {
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+        }
+    }
+</script>
 <?php
 }else{
     require 'accesoDenegado.php';

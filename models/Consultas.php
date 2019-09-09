@@ -68,6 +68,17 @@
              si quiero obtener de mas dias o menos , hay que cambiar el desc limit 0,10
             */
         }
+        Public function comprasFechaGrafico($fechaInicio,$fechaFin){
+            $sql="SELECT CONCAT(DAY(fecha_compra),'-',MONTH(fecha_compra)) AS fecha, SUM(total_compra) AS total 
+            FROM compras 
+            WHERE compras.`estado` = 'aceptado' AND DATE(compras.`fecha_compra`) BETWEEN '$fechaInicio' AND '$fechaFin'
+            GROUP BY fecha_compra 
+            ORDER BY fecha_compra DESC";
+            return ejectuarConsulta($sql);
+            /*obtengo los diez primeros registros , es decir de los primeros diez dias,
+             si quiero obtener de mas dias o menos , hay que cambiar el desc limit 0,10
+            */
+        }
         Public function ventasFechaGrafico($fechaInicio,$fechaFin){
             $sql="SELECT CONCAT(DAY(fecha_venta),'-',MONTH(fecha_venta)) AS fecha, SUM(monto_total) AS total 
             FROM facturas 

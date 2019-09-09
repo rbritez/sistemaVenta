@@ -23,7 +23,6 @@ if($_SESSION['consultav'] == 1){
                     <div class="box-header with-border" id="titlebtn">
                         <h1 class="box-title">Consulta de Ventas</h1>
                         <div class="box-tools pull-right"></div>
-                        <div id="grafico"></div>
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
@@ -37,7 +36,7 @@ if($_SESSION['consultav'] == 1){
                         <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="<?php echo date("Y-m-d"); ?>">
                     </div>
                     <div class="panel-body table-responsive" id="listadoregistros" style="text-align:center">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
+                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%;text-transform:uppercase">
                             <thead >
                                 <th style="text-align:center">FECHA</th>
                                 <th style="text-align:center" >CLIENTE</th>

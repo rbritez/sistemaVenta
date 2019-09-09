@@ -10,6 +10,9 @@ function init() {
 function listar() {
     var fechaInicio = $("#fechaInicio").val();
     var fechaFin = $("#fechaFin").val();
+    var newdateInicio = fechaInicio.split("-").reverse().join("-");
+    var newdateFin = fechaFin.split("-").reverse().join("-");
+    $("#textofecha").text('Total de Compras diario desde ' + newdateInicio + ' hasta ' + newdateFin);
     tabla = $('#tablalistado').dataTable({ //mediante la propiedad datatable enviamos valores
 
         "responsive": {
@@ -40,5 +43,11 @@ function listar() {
             ] //orden de listado , columna 0, el id de categoria
 
     }).dataTable();
+    $.post("../ajax/consulta.php?op=comprasFechaGrafico", { fechaInicio: fechaInicio, fechaFin: fechaFin }, function(data, status) {
+        datas = JSON.parse(data);
+        $("#titlebtn").html('<h1 class="box-title">CONSULTA DE COMPRAS <button type="button" style="background-color:rgba(255,255,255, 0.6); border:none; color:rgba(255,255,255, 0.6);cursor:default;" onclick="myFunction([' + datas[0]['fechaC'] + '],[' + datas[0]['totalesC'] + '])" id="verGrafico">Ver</button></h1>' +
+            '<div class="box-tools pull-right"></div>')
+        $('#verGrafico').trigger('click');
+    });
 }
 init();

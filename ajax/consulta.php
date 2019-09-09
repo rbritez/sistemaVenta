@@ -9,8 +9,9 @@
             $respuesta = $consulta->comprasFecha($fechaInicio,$fechaFin);
             $data = array();
             while ($reg = $respuesta->fetch_object()){
+                $newDate = date("d-m-Y", strtotime($reg->fecha));
                 $data[] = array(
-                "0"=>$reg->fecha,
+                "0"=>$newDate,
                 "1"=>$reg->nombre_proveedor.' '.$reg->apellido_proveedor,
                 "2"=>$reg->nombre_usuario,
                 "3"=>$reg->tipocomprobante,
@@ -35,8 +36,9 @@
         $respuesta = $consulta->ventasFecha($fechaInicio,$fechaFin);
         $data = array();
         while ($reg = $respuesta->fetch_object()){
+            $newDate = date("d-m-Y", strtotime($reg->fecha));
             $data[] = array(
-            "0"=>$reg->fecha,
+            "0"=>$newDate,
             "1"=>$reg->nombre_cliente.' '.$reg->apellido_cliente,
             "2"=>$reg->nombre_usuario,
             "3"=>$reg->tipo_comprobante,
@@ -123,6 +125,66 @@
         $data[]= array(
             "fechaV"=> $fechaV,
             "totalesV"=> $totalesV,
+        );
+        echo json_encode($data);
+        break;
+        case 'comprasFechaGrafico':
+        $fechaInicio = $_REQUEST["fechaInicio"];
+        $fechaFin = $_REQUEST["fechaFin"];
+        $compras10 = $consulta->comprasFechaGrafico($fechaInicio,$fechaFin);
+        $fechaC = "";
+        $totalesC="";
+        $nombremes="";
+        while ( $regfechaC = $compras10->fetch_object()){
+            list($dia,$mes)= explode("-",$regfechaC->fecha);
+            switch ($mes) {
+                case '1':
+                    $nombremes="Ene";
+                    break;
+                case '2':
+                    $nombremes="Feb";
+                    break;
+                case '3':
+                    $nombremes="Mar";
+                    break;
+                case '4':
+                    $nombremes="Abr";
+                    break;
+                case '5':
+                    $nombremes="May";
+                    break;
+                case '6':
+                    $nombremes="Jun";
+                    break;
+                case '7':
+                    $nombremes="Jul";
+                    break;
+                case '8':
+                    $nombremes="Ago";
+                    break;
+                case '9':
+                    $nombremes="Sep";
+                    break;
+                case '10':
+                    $nombremes="Oct";
+                    break;
+                case '11':
+                    $nombremes="Nov";
+                    break;
+                case '12':
+                    $nombremes="Dic";
+                    break;
+            }
+            $fechaC = $fechaC."'$dia de $nombremes'" .',';
+            $totalesC = $totalesC.$regfechaC->total.',';
+        }
+        //quitamos la ultima coma
+        $fechaC = substr($fechaC,0,-1);
+        $totalesC = substr($totalesC,0,-1);
+        $data = array();
+        $data[]= array(
+            "fechaC"=> $fechaC,
+            "totalesC"=> $totalesC,
         );
         echo json_encode($data);
         break;
