@@ -83,7 +83,7 @@
             return ejectuarConsulta($sql);
         }
         Public function traerproducto(){
-            $sql="SELECT id_producto ,descripcion FROM productos ";
+            $sql="SELECT id_producto ,descripcion FROM productos WHERE condicion = 1 ";
             return ejectuarConsulta($sql);
         }
     }

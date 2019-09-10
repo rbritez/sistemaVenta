@@ -92,6 +92,12 @@
             WHERE c.id_cuota = '$id_cuota'";
             return ejectuarConsultaSimpleFila($sql);
         }
+        Public function verificarCuota($cuenta_id){
+            $sql="SELECT c.`nro_cuota` AS proxCuota FROM cuotas c 
+            INNER JOIN cuenta cu ON cu.`id_cuenta` = c.`cuenta_id` 
+            WHERE c.`estado` <> 'pagado' AND c.`cuenta_id` = '$cuenta_id' LIMIT 1";
+            return ejectuarConsultaSimpleFila($sql);
+        }
        
         Public function encabezadoFacturaCuota($id_cuenta){
             $sql="SELECT LPAD(c.`id_cuenta`,4,'0') AS id_cuenta,LPAD(cl.`id_clientes`,4,'0') AS id_cliente, c.`fecha_cuenta`,curdate() as fecha,pe.`nombres` AS nombre_cliente ,pe.`apellidos` AS apellido_cliente,pe.`nro_doc` AS documento_cliente,

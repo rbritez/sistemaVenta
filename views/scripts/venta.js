@@ -281,7 +281,7 @@ function agregardetalle(idproducto, descripcion, precioVenta, stock) {
 
             '<td><input type="number" align="right" style="width:90%;text-align:right"  name="cantidad[]" min="1" max="' + stock + '" id="cantidad[]" value="' + cantidad + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
 
-            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" value="' + precioVenta + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
+            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" min="' + precioVenta + '" value="' + precioVenta + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
 
             '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
             '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
@@ -308,11 +308,22 @@ function modificarSubtotales() {
     var sub = document.getElementsByName("subtotal");
     for (var index = 0; index < cant.length; index++) {
 
+        if ($(cant[index]).val() == "") {
+            $(cant[index]).val('1');
+        }
+        if ($(desc[index]).val() == "") {
+            $(desc[index]).val('0');
+        }
+        if ($(inte[index]).val() == "") {
+            $(inte[index]).val('0');
+        }
+
         var inpC = parseFloat($(cant[index]).val()); //cantidad 
         var inpP = parseFloat($(prec[index]).val()); //precio
         var descP = parseFloat($(desc[index]).val()); //descuento
         var inteP = parseFloat($(inte[index]).val()); //interes
         var inpS = sub[index]; //subtotal
+
 
         inpS = (inpC * inpP); //calculo la cantidad * precio
         descuento = inpS - descP; //le resto el descuento

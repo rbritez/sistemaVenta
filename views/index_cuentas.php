@@ -19,7 +19,7 @@ if($_SESSION['ventas'] == 1){
                 <div class="box">
                     <div class="box-header with-border">
                         <h1 class="box-title" id="title">LISTA DE CUENTAS <button type="button" class="btn btn-success" onclick="mostrarform(true)" id="btnpagar"><i class="fa fa-money" aria-hidden="true"></i> Pagar Cuota</button></h1>  <?php if($_SESSION['acceso'] =='1'){
-                            echo '<button class="btn btn-warning" data-toggle="modal" data-target="#modal_interes" onclick="mostrarformInteres()" style="font-size:14.5px"><i class="fa fa-pencil"></i> Interes</button>';
+                            echo '<button class="btn btn-warning" data-toggle="modal" data-target="#modal_interes" id="btnInteres" onclick="mostrarformInteres()" style="font-size:14.5px"><i class="fa fa-pencil"></i> Interes</button>';
                         }?>
                         <div class="box-tools pull-right"></div>
                     </div>
@@ -75,7 +75,6 @@ if($_SESSION['ventas'] == 1){
                             <table id="detalles" class="table table-striped table-bordered table-condensed table-hover" style="display:none;">
                             <thead style="background-color:#F39C12" style="text-align:center">
                                             <th style="text-align:center" >Opciones</th>
-                                            <th style="text-align:center" >Producto</th>
                                             <th style="text-align:center" >Fecha Vto</th>
                                             <th style="text-align:center" >Nro Cuota</th>
                                             <th style="text-align:center" >Monto Cuota</th>
@@ -87,7 +86,6 @@ if($_SESSION['ventas'] == 1){
                                 </tbody>
                                 <tfoot>
                                     <th>TOTAL</th>
-                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

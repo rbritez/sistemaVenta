@@ -85,6 +85,11 @@
                 echo '<option value="'.$reg->id_clientes.'" >'.$reg->nombres.' '.$reg->apellidos.' | DNI: '.$reg->nro_doc.'</option>';
             }
         break;
+        case 'verificarCuota':
+            $cuenta_id = $_REQUEST['cuenta_id'];
+            $respuesta = $cuenta->verificarCuota($cuenta_id);
+            echo json_encode($respuesta);
+        break;
         case 'selectCuentaCliente':
         $cliente_id = $_REQUEST['cliente_id'];
         $respuesta= $cuenta->selectCuenta($cliente_id);

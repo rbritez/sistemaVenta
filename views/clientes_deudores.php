@@ -30,7 +30,7 @@ if($_SESSION['ventas'] == 1){
                       <!-- /.box-header -->
                     <!-- centro -->
                     <div class="panel-body table-responsive" id="listadoregistros" align="center">
-                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%;text-align: center ">
+                        <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%;text-align: center; text-transform:uppercase; ">
                             <thead>
                                 <th></th>
                                 <th style="text-align: center">NOMBRES Y APELLIDOS</th>

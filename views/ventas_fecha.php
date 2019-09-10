@@ -126,7 +126,8 @@ var ctx = document.getElementById('ventasFecha').getContext('2d');
                             ],
                             borderColor:[
                                 "rgba(243,156,18)"
-                            ]
+                            ],
+                            lineTension:[0]
                         }]
                     },
                         options: {

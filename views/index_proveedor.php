@@ -20,7 +20,7 @@ if($_SESSION['compras'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">LISTA DE PROVEEDORES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_proveedor"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
+                        <h1 class="box-title">LISTA DE PROVEEDORES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_proveedor"><i class="fa fa-plus-circle"></i> Nuevo Proveedor</button></h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->

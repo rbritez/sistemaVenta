@@ -105,6 +105,7 @@ if($_SESSION['consultac'] == 1){
 <script src="../public/js/Chart.bundle.min.js"></script>
 <script type="text/javaScript">
 var ctx = document.getElementById('comprasFecha').getContext('2d');
+
     function myFunction(fechaC,totalesC) {
         if(fechaC[0] == false){       
              $("#comprasFecha").hide();
@@ -125,8 +126,9 @@ var ctx = document.getElementById('comprasFecha').getContext('2d');
 
                             ],
                             borderColor:[
-                                "rgba(243,156,18)"
-                            ]
+                                "rgba(243,156,18)",
+                            ],
+                            lineTension:[0]
                         }]
                     },
                         options: {
@@ -137,6 +139,8 @@ var ctx = document.getElementById('comprasFecha').getContext('2d');
                         }
                     }
                 });
+                ctx.beginPath();
+                ctx.lineCap = 'butt';
         }
     }
 </script>

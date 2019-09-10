@@ -67,12 +67,14 @@ function mostrarform(flag) {
         $("#btnpagar").show();
         $("#listadoregistros").show();
         $("#title").html('LISTA DE CUENTAS <button type="button" class="btn btn-success" onclick="mostrarform(true)" id="btnpagar"><i class="fa fa-money" aria-hidden="true"></i> Pagar Cuota</button>');
+        $("#btnInteres").show();
 
     } else {
         $("#listadoregistros").hide()
         $("#btnpagar").hide();
         $("#title").text("NUEVO PAGO DE CUOTA");
-        $("#formularioregistros").show();;
+        $("#formularioregistros").show();
+        $("#btnInteres").hide();
     }
 }
 
@@ -111,18 +113,44 @@ function mostrarCuota() {
     $.post("../ajax/cuentas.php?op=selectCuotaCliente", { cuenta_id: cuenta }, function(r) {
         $("#cuota_id").html(r);
         $("#cuota_id").selectpicker("refresh");
+        if ($(".filas")) {
+            $(".filas").remove();
+            $("#detalles").hide();
+            $("#btnguardar").hide();
+        }
     });
 }
 
 function mostrardetalle() {
     var cuota = $("#cuota_id").val();
-    console.log(cuota);
-    $("#detalles").show();
-    $.post("../ajax/cuentas.php?op=detallarCuota", { id_cuota: cuota }, function(data, status) {
-        data = JSON.parse(data);
-        console.log(data.id_cuota);
-        agregardetalle(data.id_cuota, data.nro_cuota, data.fecha_v, data.total_cuotas, data.monto, data.interes);
-    });
+    var cuenta = $("#cuenta_id").val();
+    if (cuota == "") {
+
+    } else {
+        $.post("../ajax/cuentas.php?op=verificarCuota", { cuenta_id: cuenta }, function(datos, status) {
+            datos = JSON.parse(datos);
+            var nro_cuenta_cuota = datos.proxCuota;
+            $("#detalles").show();
+            $.post("../ajax/cuentas.php?op=detallarCuota", { id_cuota: cuota }, function(data, status) {
+                data = JSON.parse(data);
+                if (nro_cuenta_cuota == data.nro_cuota && $("#fila0").length == 0) {
+                    agregardetalle(data.id_cuota, data.nro_cuota, data.fecha_v, data.total_cuotas, data.monto, data.interes);
+                } else if (nro_cuenta_cuota < data.nro_cuota && $("#fila0").length > 0) {
+                    agregardetalle(data.id_cuota, data.nro_cuota, data.fecha_v, data.total_cuotas, data.monto, data.interes);
+                } else if (nro_cuenta_cuota < data.nro_cuota && $("#fila0").length == 0) {
+                    alertify.confirm('¡¡¡ CUIDADO !!!', 'ESTAS SELECCIONANDO UNA CUOTA SUPERIOR A LA PROXIMA POR VENCER, ¿SEGURO QUE DESEAS CONTINUAR?', function() {
+                        agregardetalle(data.id_cuota, data.nro_cuota, data.fecha_v, data.total_cuotas, data.monto, data.interes);
+                    }, function() {
+                        $("#cuota_id").val("");
+                        $("#cuota_id").selectpicker("refresh");
+                        alertify.success('CANCELADO, SELECCIONA NUEVAMENTE CON MÁS CUIDADO!')
+
+                    });
+                }
+
+            });
+        })
+    }
 }
 var cont = 0;
 var detalle = 0;
@@ -135,9 +163,7 @@ function agregardetalle(idcuota, nro_cuota, fecha_v, total_cuotas, monto, intere
     var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
         '<td><button type="button" class="btn btn-danger" onclick="eliminarcuota(' + cont + ')"><i class="fa fa-times"></i></button></td>' +
 
-        '<td><input type="hidden" style="width:90%;" id="idd_cuota" name="id_cuota[]" value="' + idcuota + '">' + nro_cuota + '/' + total_cuotas + '</td>' +
-
-        '<td>' + newdate + '</td>' +
+        '<td><input type="hidden" style="width:90%;" id="idd_cuota" name="id_cuota[]" value="' + idcuota + '">' + newdate + '</td>' +
 
         '<td>' + nro_cuota + '/' + total_cuotas + '</td>' +
 

@@ -57,10 +57,17 @@ if(strlen(session_id())< 1 )
                     <?php
                         if($_SESSION['ventas']==1){
                     ?>
-                    <ul class="nav navbar-nav">
-                    <li>&nbsp;</li>
-                     <li><a href="index_factura.php" type="button" role="button" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i> Nueva Venta</a></li>
-                    </ul>
+                
+                <div class="navbar-custom pull-left">
+                    <ul class="nav-divider nav navbar-header">
+                    <li class="nav navbar-header">
+                        <a href="index_factura.php" type="button" role="button" class="navbar-brand btn btn-success" ><i class="fa fa-arrow-circle-right"></i> Nueva Venta</a>
+                        </li>
+                    <ul>
+                </div>
+                     
+                    
+                   
                     <?php
                         }
                     ?>
@@ -69,6 +76,7 @@ if(strlen(session_id())< 1 )
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
                         <!-- User Account: style can be found in dropdown.less -->
+                        
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <?php 
@@ -92,7 +100,7 @@ if(strlen(session_id())< 1 )
                                             echo '<img src="../files/images/usuarios/usuario.jpg.jpg" class="img-circle" alt="User Image">';
                                         }
                                     ?>
-                                    <p>Administrador<small> <a href="usuario_editar.php">Editar Datos</a></small>
+                                    <p>Administrador<small> <a href="usuario_editar.php" type="button" class="btn btn-info" >Ver Datos de Usuario</a></small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
