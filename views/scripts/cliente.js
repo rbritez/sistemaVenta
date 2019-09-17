@@ -7,6 +7,10 @@ function init() {
         cerrar();
     })
 }
+
+function modal() {
+    $("#title_proveedor").text('NUEVO CLIENTE');
+}
 //function para mostrar en el datatable los datos de clientes.
 function listar() {
     tabla = $('#tablalistado').dataTable({ //mediante la propiedad datatable enviamos valores
@@ -82,6 +86,7 @@ function limpiar() {
 }
 //funcion para mostrar el cliente a la hora de editar en el modal
 function mostrar(idcliente) {
+    $("#title_proveedor").text('EDITAR CLIENTE');
     $.post("../ajax/cliente.php?op=mostrar", { id_cliente: idcliente }, function(data, status) {
         $("#title_cliente").text("EDITAR CLIENTE");
         $("#formulario").append('<input type="hidden" id="id_cliente" name="id_cliente">');

@@ -134,7 +134,7 @@ switch ($_GET['op']) {
             };
         $data[]=array(
          
-            "0"=>'<button class="btn btn-warning" onclick="agregardetalle('.$reg->id_producto.',\''.$reg->descripcion.'\',\''.$reg->precio_venta.'\',\''.$reg->stock.'\')"><span class="fa fa-plus"><span></button>',
+            "0"=>'<button class="btn btn-warning" id="agregarP'.$reg->id_producto.'"  onclick="agregardetalle('.$reg->id_producto.',\''.$reg->descripcion.'\',\''.$reg->precio_venta.'\',\''.$reg->stock.'\')"><span class="fa fa-plus"><span></button><button type="button" id="mostrarP'.$reg->id_producto.'" style="display:none" class="btn btn-success"><span class="fa fa-check"></span></button>',
             "1"=>$reg->cod_producto,
             "2"=>$reg->descripcion,
             "3"=>$reg->stock,

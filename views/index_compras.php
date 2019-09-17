@@ -20,12 +20,8 @@ if($_SESSION['compras'] == 1){
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <div class="box-header with-border">
-                        <h1 class="box-title">Lista de Compras <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Compra</button></h1>
-                        <!-- boton para el modal  
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa-plus-circle"></i> Agregar</button>
-                        -->
-                        <div class="box-tools pull-right"></div>
+                    <div class="box-header with-border" id="text-title">
+                        
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
@@ -90,7 +86,7 @@ if($_SESSION['compras'] == 1){
                                     <input type="text" class="form-control" name="impuesto" id="impuesto" required>
                                 </div>
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_block">
-                                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal_categoria" onclick="listarProductos()">
+                                    <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal_categoria">
                                             <span class="fa fa-plus"></span> Agregar Productos 
                                     </button>
                                 </div>
@@ -142,7 +138,7 @@ if($_SESSION['compras'] == 1){
 
 <!--Fin-Contenido-->
     <div class="modal fade" id="modal_categoria"> <!-- modallllllllll-->
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width:60% !important;">
             <div class="modal-content"> <!-- div content --> 
                 <div class="modal-warning modal-header " style="background-color:#f39c12">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -151,12 +147,14 @@ if($_SESSION['compras'] == 1){
                     <h4 style="color:white;" id="title_categoria" class="modal-title">Seleccionar Producto</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="tblproductos" class="table table-striped table-bordered table-condensed table-hover">
+                <div class="panel-body table-responsive">
+                    <table id="tblproductos" class="table table-striped table-bordered table-condensed table-hover nowrap">
                     <thead>
                         <th>Opciones</th>
                         <th>Descripcion</th>
                         <th>Codigo</th>
                         <th>Stock</th>
+                        <th>Ultm. Precio Compra</th>
                         <th>Material</th>
                         <th>Categoria</th>
                     </thead>
@@ -167,10 +165,12 @@ if($_SESSION['compras'] == 1){
                         <th>Descripcion</th>
                         <th>Codigo</th>
                         <th>Stock</th>
+                        <th>Ultm. Precio Compra</th>
                         <th>Material</th>
                         <th>Categoria</th>
                     </tfoot>
                     </table>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

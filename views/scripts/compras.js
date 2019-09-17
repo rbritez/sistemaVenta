@@ -3,6 +3,7 @@ var tabla;
 function init() {
     mostrarform(false);
     listar();
+    listarProductos();
 
     $("#formulario").on("submit", function(e) {
         guardaryeditar(e);
@@ -19,6 +20,9 @@ function mostrarform(flag) {
     limpiar();
 
     if (flag) {
+        $("#text-tile")
+        $("#text-title").html('<h1 class="box-title">Nueva Compras</h1>' +
+            '<div class="box-tools pull-right"></div>');
         $("#listadoregistros").hide();
         $("#formularioregistros").show();
         $("#btnguardar").prop('disabled', false);
@@ -26,6 +30,8 @@ function mostrarform(flag) {
         detalle = 0;
 
     } else {
+        $("#text-title").html('<h1 class="box-title">Lista de Compras <button type="button" id="btnagregar" onclick="mostrarform(true)" class="btn btn-success" ><i class="fa fa-plus-circle"></i> Nueva Compra</button></h1>' +
+            '<div class="box-tools pull-right"></div>');
         $("#listadoregistros").show();
         $("#formularioregistros").hide();
         $("#btnagregar").show();
@@ -154,8 +160,8 @@ function mostrar(idcompra) {
         function(data, status) {
             data = JSON.parse(data);
             mostrarform(true);
-            $("#id_proveedor").val(data.id_proveedor);
-            $("#id_proveedor").selectpicker('refresh');
+            $("#proveedor_id").val(data.id_proveedor);
+            $("#proveedor_id").selectpicker('refresh');
             $("#tipocomprobante").val(data.tipocomprobante);
             $("#tipocomprobante").selectpicker('refresh');
             $("#serie").val(data.serie);
@@ -164,6 +170,9 @@ function mostrar(idcompra) {
             $("#impuesto").val(data.impuesto);
             $("#id_compra").val(data.id_compra);
             //ocultar botones
+            $.post("../ajax/compras.php?op=mostrarDetalles&id=" + idcompra, function(r) {
+                $("#detalles").html(r);
+            })
             $("#btnguardar").hide();
             if ($("#boton_block").length) {
                 $("#boton_block").hide();
@@ -171,11 +180,6 @@ function mostrar(idcompra) {
             $("#btnCancelar").html("<i class='fa fa-arrow-circle-left'></i> Volver");
 
         });
-    $.post("../ajax/compras.php?op=mostrarDetalles&id=" + idcompra, function(r) {
-
-        $("#detalles").html(r);
-    })
-
 }
 
 //desactivar productos
@@ -211,15 +215,17 @@ function marcarImpuesto() {
     }
 }
 
-function agregardetalle(idproducto, descripcion) {
+function agregardetalle(idproducto, descripcion, precio_compra) {
+    $("#agregarP" + idproducto).hide();
+    $("#mostrarP" + idproducto).show();
     var cantidad = 1;
-    var precio_compra = 1;
+    if (precio_compra) {} else { precio_compra = 1 }
     var precio_venta = 1;
 
     if (idproducto != "") {
         var subtotal = cantidad * precio_compra;
         var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
-            '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ')"><i class="fa fa-times"></i></button></td>' +
+            '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ',' + idproducto + ')"><i class="fa fa-times"></i></button></td>' +
 
             '<td><input type="hidden" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
 
@@ -253,8 +259,7 @@ function modificarSubtotales() {
         var inpC = $(cant[index]).val(); //cantidad 
         var inpP = $(prec[index]).val(); //precio
         var inpS = sub[index]; //subtotal
-        var sumar = inpP * 1.2;
-        console.log(sumar);
+        var sumar = inpP * 1.3;
         var nuevo = $(preV[index]).val(sumar);
         preV.value = nuevo;
         $(preV[index]).prop('min', sumar);
@@ -287,7 +292,9 @@ function comprobar() {
     }
 }
 
-function eliminardetalle(i) {
+function eliminardetalle(i, idproducto) {
+    $("#agregarP" + idproducto).show();
+    $("#mostrarP" + idproducto).hide();
     $('#fila' + i).remove();
     calculartotales();
     detalle = detalle - 1;

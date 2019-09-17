@@ -5,6 +5,7 @@ function init() {
     mostrarform(false);
     listar();
 
+
     $("#formulario").on("submit", function(e) {
         guardaryeditar(e);
         // cerrar();
@@ -37,6 +38,7 @@ function mostrarform(flag) {
     limpiar();
 
     if (flag) {
+        listarProductos();
         $("#title_venta").html('Nueva Venta');
         $("#listadoregistros").hide();
         $("#formularioregistros").show();
@@ -220,6 +222,11 @@ function mostrar(idventa) {
             $("#impuesto").val(data.impuesto);
             $("#id_venta").val(data.id_factura);
             //ocultar botones
+            $.post("../ajax/venta.php?op=mostrarDetalles&id=" + idventa, function(r) {
+
+                $("#detalles").html(r);
+            })
+
             $("#btnguardar").hide();
             if ($("#boton_block").length) {
                 $("#boton_block").hide();
@@ -227,10 +234,6 @@ function mostrar(idventa) {
             $("#btnCancelar").html("<i class='fa fa-arrow-circle-left'></i> Volver");
 
         });
-    $.post("../ajax/venta.php?op=mostrarDetalles&id=" + idventa, function(r) {
-
-        $("#detalles").html(r);
-    })
 
 }
 
@@ -268,6 +271,8 @@ function marcarImpuesto() {
 }
 
 function agregardetalle(idproducto, descripcion, precioVenta, stock) {
+    $("#agregarP" + idproducto).hide();
+    $("#mostrarP" + idproducto).show();
     var cantidad = 1;
     var descuento = 0;
     var interes = 0;
@@ -275,7 +280,7 @@ function agregardetalle(idproducto, descripcion, precioVenta, stock) {
     if (idproducto != "") {
         var subtotal = cantidad * precioVenta;
         var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
-            '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ')"><i class="fa fa-times"></i></button></td>' +
+            '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ',' + idproducto + ')"><i class="fa fa-times"></i></button></td>' +
 
             '<td><input type="hidden" style="width:90%;" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
 
@@ -355,7 +360,9 @@ function comprobar() {
     }
 }
 
-function eliminardetalle(i) {
+function eliminardetalle(i, idproducto) {
+    $("#agregarP" + idproducto).show();
+    $("#mostrarP" + idproducto).hide();
     $('#fila' + i).remove();
     calculartotales();
     detalle = detalle - 1;

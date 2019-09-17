@@ -18,7 +18,7 @@ if($_SESSION['ventas'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">LISTA DE CLIENTES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cliente"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
+                        <h1 class="box-title">LISTA DE CLIENTES <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cliente" onclick="modal()"><i class="fa fa-plus-circle"></i> AGREGAR</button></h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -79,7 +79,7 @@ if($_SESSION['ventas'] == 1){
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color:white">&times;</span>
                     </button>
-                    <h4 style="color:white;" id="title_proveedor" class="modal-title">NUEVO PROVEEDOR</h4>
+                    <h4 style="color:white;" id="title_proveedor" class="modal-title">NUEVO CLIENTE</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">

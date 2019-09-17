@@ -51,7 +51,8 @@
             $sql="SELECT productos.`id_producto`,
             LPAD(productos.`cod_producto`,4,'0') AS cod_producto,
             productos.`descripcion`,
-            productos.`stock`,
+            productos.`stock`,(SELECT precio_compra FROM detalles_compra 
+            WHERE producto_id = productos.`id_producto` ORDER BY id_detallecompra DESC LIMIT 0,1 )AS precio_compra,
             materiales.`nombre` as material_id,
             categorias.`nombre_categoria` as categoria_id,
             productos.`condicion` FROM productos 
