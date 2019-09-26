@@ -134,5 +134,12 @@
             ";
         return ejectuarConsulta($sql);
         }
+        Public function stockbajo(){
+            $sql="SELECT descripcion, stock, categorias.`nombre_categoria` AS nombre_categoria,materiales.`nombre` AS nombre_material  FROM productos 
+            INNER JOIN categorias ON categorias.`id_categoria` = productos.`categoria_id`
+            INNER JOIN materiales ON materiales.`id_material` = productos.`material_id`
+            WHERE stock <= 5";
+            return ejectuarConsulta($sql);
+        }
     }
 ?>

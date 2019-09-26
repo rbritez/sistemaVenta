@@ -58,7 +58,7 @@ function guardaryeditar(e) {
             } else if (datos == 1) {
                 alertify.alert('RESULTADO INCONCLUSO', 'NO SE PUDO GUARDAR AL CLIENTE!');
             } else if (datos == 2) {
-                alertify.alert('RESULTAOO SATISFACTORIO', 'SE GUARDARON LOS DATOS CON EXITO!');
+                alertify.alert('RESULTADO SATISFACTORIO', 'SE GUARDARON LOS DATOS DEL CLIENTE CON EXITO!');
             } else if (datos == 3) {
                 alertify.alert('RESULTADO SATISFACTORIO', ' SE ACTUALIZARON LOS DATOS CON EXITO!');
             }

@@ -60,7 +60,7 @@ if($_SESSION['ventas'] == 1){
                     </div>
                     <!-- CONTENIDO DEL FORMULARIO DE COMPRA -->
                         <div class="panel-body" style="height:400px;display:none" id="formularioregistros" >
-                            <form name="formulario" id="formulario" method="POST">
+                        <form name="formulario" id="formulario" method="POST">
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                     <input type="hidden" name="id_venta" id="id_venta">
                                     <label>CLIENTE:</label>
@@ -145,11 +145,11 @@ if($_SESSION['ventas'] == 1){
                                     <button class="btn btn-danger" onclick="cancelarform()" id="btnCancelar"> <i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-                                    <button class="btn btn-primary pull-right" type="submit" id="btnguardar"><i class="fa fa-save"></i> Guardar</button>
+                                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-save"></i> Guardar</button>
                                 </div>
                             </form>
                         </div>
-                 
+                    
                     <!-- FIN DE FORMULARIO -->
                     <!-- Fin centro -->
                 </div>
@@ -164,6 +164,54 @@ if($_SESSION['ventas'] == 1){
 <!-- /.content-wrapper -->
 
 <!--Fin-Contenido-->
+
+
+<div class="modal fade" id="modal_nuevoCliente"> <!-- modallllllllll-->
+        <div class="modal-dialog">
+            <div class="modal-content"> <!-- div content --> 
+                <div class="modal-warning modal-header " style="background-color:#f39c12" id="agregarformularioCliente">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                    <h4 style="color:white;" class="modal-title">NUEVO CLIENTE</h4>
+                </div> 
+                <div id="EFC">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12"> 
+                            <form class="form-horizontal" name="fCliente" id="fCliente" method="POST"> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NOMBRES (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nombres" id="nombres" class="form-control" placeholder="" style="text-transform:uppercase" maxlength="50" required> 
+                                    </div> 
+                                </div> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">APELLIDOS (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="apellidos" id="apellidos" class="form-control" style="text-transform:uppercase" maxlength="50" required> 
+                                    </div> 
+                                </div> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NRO DOC/CUIL (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nro_doc" id="nro_doc" class="form-control" style="text-transform:uppercase" maxlength="50"> 
+                                    </div> 
+                                </div>
+                        </div>
+                    </div>             
+                </div>                
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrarCliente" name="cerrarCliente" ><i class="fa fa-arrow-circle-left" ></i> VOLVER</button> 
+                    <button type="submit" class="btn btn-info" id="btnGuardarCliente"><i class="fa fa-save" ></i> GUARDAR</button> 
+                            </form> 
+                </div> 
+                </div>
+            </div><!-- div content -->
+        </div><!-- /.modal-dialog -->
+</div>
+
+
     <div class="modal fade" id="modal_categoria"> <!-- modallllllllll-->
         <div class="modal-dialog" style="width:65% !important;">
             <div class="modal-content"> <!-- div content --> 
@@ -208,6 +256,7 @@ if($_SESSION['ventas'] == 1){
             </div><!-- div content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 <?php
 }else{
     require 'accesoDenegado.php';
@@ -215,6 +264,7 @@ if($_SESSION['ventas'] == 1){
 require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/venta.js"></script>
+<script type="text/javascript" src="scripts/ventaClienteNuevo.js"></script>
 <?php 
 } //cerramos el else de sesion
 ob_end_flush();

@@ -2,19 +2,16 @@ var tabla;
 var nuevo;
 
 function init() {
-    mostrarform(false);
-    listar();
-
-
+    mostrarform(false)
+    listar()
     $("#formulario").on("submit", function(e) {
-        guardaryeditar(e);
-        // cerrar();
-    });
-    //cargamos los clientes
+            guardaryeditar(e);
+        })
+        //cargamos los clientes
     $.post("../ajax/venta.php?op=selectCliente", function(r) {
         $("#cliente_id").html(r);
         $("#cliente_id").selectpicker('refresh');
-    });
+    })
 }
 
 function ultimaFactura(iduser) {
@@ -39,7 +36,7 @@ function mostrarform(flag) {
 
     if (flag) {
         listarProductos();
-        $("#title_venta").html('Nueva Venta');
+        $("#title_venta").html('Nueva Venta <button type="button" class="btn btn-success" onclick="formcliente()" data-toggle="modal" data-target="#modal_nuevoCliente"><i class="fa fa-plus-circle"></i> Nuevo Cliente</button>');
         $("#listadoregistros").hide();
         $("#formularioregistros").show();
         $("#btnguardar").prop('disabled', false);
@@ -198,6 +195,7 @@ function guardaryeditar(e) {
                 alertify.alert('Resultado Inconcluso', 'Hubo un error al guardar');
             }
             $('#tablalistado').dataTable().api().ajax.reload();
+            $('#tblproductos').dataTable().api().ajax.reload();
             listar();
         }
     });
@@ -271,33 +269,39 @@ function marcarImpuesto() {
 }
 
 function agregardetalle(idproducto, descripcion, precioVenta, stock) {
-    $("#agregarP" + idproducto).hide();
-    $("#mostrarP" + idproducto).show();
-    var cantidad = 1;
-    var descuento = 0;
-    var interes = 0;
-
-    if (idproducto != "") {
-        var subtotal = cantidad * precioVenta;
-        var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
-            '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ',' + idproducto + ')"><i class="fa fa-times"></i></button></td>' +
-
-            '<td><input type="hidden" style="width:90%;" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
-
-            '<td><input type="number" align="right" style="width:90%;text-align:right"  name="cantidad[]" min="1" max="' + stock + '" id="cantidad[]" value="' + cantidad + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
-
-            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" min="' + precioVenta + '" value="' + precioVenta + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
-
-            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
-            '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
-            '<td>$<span name="subtotal" style="width:90%;text-align:right" id="subtotal' + cont + '"> ' + subtotal + '</span></td>' +
-            '<tr>';
-        cont = cont + 1;
-        detalle = detalle + 1;
-        $("#detalles").append(fila);
-        modificarSubtotales();
+    if (stock == 0) {
+        alertify.alert("NOTIFICACIÓN", "ESTE PRODUCTO NO CUENTA CON STOCK!!, POR FAVOR SELECCIONE OTRO PRODUCTO ");
     } else {
-        alertify.alert("RESULTADO INCONCLUSO", "Error al ingresar el detalle, revisar los datos del Producto")
+        $("#agregarP" + idproducto).hide();
+        $("#mostrarP" + idproducto).show();
+        var cantidad = 1;
+        var descuento = 0;
+        var interes = 0;
+        if (stock <= 5) {
+            alertify.alert("NOTIFICACIÓN", "ESTE PRODUCTO SE ENCUENTRA CON STOCK BAJO!!, POR FAVOR INFORMAR AL ADMINISTRADOR!");
+        }
+        if (idproducto != "") {
+            var subtotal = cantidad * precioVenta;
+            var fila = '<tr class="filas" id="fila' + cont + '" style="text-align:center">' +
+                '<td><button type="button" class="btn btn-danger" onclick="eliminardetalle(' + cont + ',' + idproducto + ')"><i class="fa fa-times"></i></button></td>' +
+
+                '<td><input type="hidden" style="width:90%;" name="producto_id[]" value="' + idproducto + '">' + descripcion + '</td>' +
+
+                '<td><input type="number" align="right" style="width:90%;text-align:right"  name="cantidad[]" min="1" max="' + stock + '" id="cantidad[]" value="' + cantidad + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
+
+                '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="1" name="precio_venta[]" id="precio_compra[]" min="' + precioVenta + '" value="' + precioVenta + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
+
+                '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
+                '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
+                '<td>$<span name="subtotal" style="width:90%;text-align:right" id="subtotal' + cont + '"> ' + subtotal + '</span></td>' +
+                '<tr>';
+            cont = cont + 1;
+            detalle = detalle + 1;
+            $("#detalles").append(fila);
+            modificarSubtotales();
+        } else {
+            alertify.alert("RESULTADO INCONCLUSO", "Error al ingresar el detalle, revisar los datos del Producto")
+        }
     }
 }
 $("#cantidad").on('input', function() {

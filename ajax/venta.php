@@ -112,7 +112,7 @@ switch ($_GET['op']) {
         echo '<option value="">Seleccionar...</option><option value="7">CONSUMIDOR FINAL</option>';
         while($reg = $respuestaSelect->fetch_object())
         {
-            echo '<option style="text-transform:uppercase;" value="'.$reg->id_clientes.'">'.$reg->nombres.' '.$reg->apellidos.' | DNI: '.$reg->nro_doc.'</option>';
+            echo '<option style="text-transform:uppercase;" value="'.$reg->id_clientes.'"> '.$reg->apellidos.' '.$reg->nombres.' | DNI: '.$reg->nro_doc.'</option>';
         }
     break;
     case 'ultimocodigo':

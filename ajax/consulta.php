@@ -188,5 +188,19 @@
         );
         echo json_encode($data);
         break;
-    }
+  
+        case 'stockbajo':
+        $stockbajo = $consulta->stockbajo();
+        $data = array();
+        while ($reg = $stockbajo->fetch_object()){
+            $data[] = array(
+                "0"=>$reg->descripcion,
+                "1"=>$reg->nombre_categoria,
+                "2"=>$reg->nombre_material,
+                "3"=>$reg->stock,
+            );
+        }
+        echo json_encode($data);
+        break;
+}
 ?>

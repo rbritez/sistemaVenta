@@ -194,6 +194,25 @@ if(strlen(session_id())< 1 )
                 }//cerramos if
                 ?>    
                 <!-- fin li ventas -->
+                <!-- inicio li servicios -->
+                <?php
+                if($_SESSION['servicios']==1){
+                ?>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-briefcase"></i>
+                        <span>Servicios</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="index_enviosD.php"><i class="fa fa-circle-o"></i> Envios a Domicilio</a></li>
+                        <li><a href="index_productosAM.php"><i class="fa fa-circle-o"></i> Productos a Medida</a></li>
+                    </ul>
+                </li>            
+                <?php
+                }//cerramos if
+                ?>    
+                <!-- fin li servicios -->
                 <!-- inicio li acceso -->
                 <?php
                 if($_SESSION['acceso']==1){

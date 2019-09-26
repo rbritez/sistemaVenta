@@ -49,7 +49,8 @@
             clientes.`condicion` 
             FROM clientes 
             JOIN personas ON personas.`id_persona` = clientes.`persona_id`
-            WHERE clientes.`id_clientes` <> '7'
+            WHERE clientes.`id_clientes` <> '7' 
+            ORDER BY personas.`apellidos`
             ";
             return ejectuarConsulta($sql);
         }
@@ -61,7 +62,7 @@
             FROM clientes
             JOIN personas ON personas.`id_persona` = clientes.`persona_id`
             WHERE condicion = '1' AND id_clientes <> '7'
-            ORDER BY personas.`nombres` ASC ";
+            ORDER BY personas.`apellidos` ASC ";
             return ejectuarConsulta($sql);
         }
         Public function selectClientesCuenta(){

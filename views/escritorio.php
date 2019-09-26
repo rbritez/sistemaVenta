@@ -172,6 +172,36 @@ if($_SESSION['escritorio'] == 1){
                     <!-- /.box-header -->
                     <!-- centro -->
                     <div class="panel-body" style="text-align:center">
+                        <div class="col-lg-12 col-md-12 col-ms-12 col-xs-12">
+                            <div id="nuevocolor"  class="small-box bg-red-active">
+                                <div class="ineer">
+                                        <h4 style="font-size:18px">
+                                            <strong>PRODUCTOS CON STOCK BAJO</strong>
+                                        </h4>
+                                        <p id="stockbajo" style="font-size:15px"></p>
+                                        <div class="icon">
+                                            <i class="ion ion-bag"></i>
+                                        </div>
+                                        <a href="index_producto.php" style="color:white" class="small-box-footer">Productos <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-12 col-md-12 col-ms-12 col-xs-12">
+                            <div class="small-box bg-maroon-active">
+                                <div class="ineer">
+                                    <h4 style="font-size:17px">
+                                        <strong>PRODUCTOS MÁS VENDIDOS</strong>
+                                    </h4>
+                                    <p style="font-size:15px">Puerta placa 80x2</p>
+                                    <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                    </div>
+                                    <a href="index_ventas.php" style="color:white" class="small-box-footer">Ventas <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="panel-body" style="text-align:center">
                         <div class="col-lg-6 col-md-6 col-ms-6 col-xs-6">
                             <div class="small-box bg-aqua">
                                 <div class="ineer">
@@ -265,6 +295,25 @@ require 'footer.php';
 <script src="../public/js/Chart.min.js"></script>
 <script src="../public/js/Chart.bundle.min.js"></script>
 <script type="text/javascript" src="scripts/escritorio.js"></script>
+<script type="text/javascript">
+function CambiarColor(){
+//     if($("#nuevocolor").length > 0 ){
+//         $("#nuevocolor").removeAttr("css")
+//         $("#nuevocolor").attr("css","small-box bg-red-active")
+//     }
+// }
+    
+//     setInterval(CambiarColor,1000);
+}
+function blink(selector){
+    $(selector).fadeOut('slow', function(){
+          $(this).fadeIn('slow', function(){
+               blink(this);
+            });
+        });
+    } 
+    blink('#nuevocolor'); 
+</script>
 <script type="text/javascript">
 var ctx = document.getElementById('compras').getContext('2d');
 var compras = new Chart(ctx, {

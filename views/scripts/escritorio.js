@@ -3,6 +3,7 @@ var tabla;
 function init() {
     // mostrarform(false);
     gananciasDia()
+    stockbajo()
 
 }
 
@@ -15,6 +16,18 @@ function bienvenido() {
 function gananciasDia() {
     $.post("../ajax/consulta.php?op=GananciasDia", function(data, status) {
         $("#ganancias").html(' <i class="fa fa-arrow-right"></i> Ganancias Neto $' + data + '.00');
+    });
+}
+
+function stockbajo() {
+    $.post("../ajax/consulta.php?op=stockbajo", function(data, status) {
+        var datos = JSON.parse(data);
+
+        for (let index = 0; index < datos.length; index++) {
+            $("#stockbajo").html('Producto: ' + datos[index][0] + ' | Material: ' + datos[index][2] + ' | Categoria: ' + datos[index][1] + ' | Stock: ' + datos[index][3] + ' <br>');
+            $("#stockbajo1").html('Producto: ' + datos[index][0] + ' | Material: ' + datos[index][2] + ' | Categoria: ' + datos[index][1] + ' | Stock: ' + datos[index][3] + ' <br>');
+        }
+
     });
 }
 //funcion para listar en ajax
