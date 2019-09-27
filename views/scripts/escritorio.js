@@ -24,8 +24,7 @@ function stockbajo() {
         var datos = JSON.parse(data);
 
         for (let index = 0; index < datos.length; index++) {
-            $("#stockbajo").html('Producto: ' + datos[index][0] + ' | Material: ' + datos[index][2] + ' | Categoria: ' + datos[index][1] + ' | Stock: ' + datos[index][3] + ' <br>');
-            $("#stockbajo1").html('Producto: ' + datos[index][0] + ' | Material: ' + datos[index][2] + ' | Categoria: ' + datos[index][1] + ' | Stock: ' + datos[index][3] + ' <br>');
+            $("#stockbajo").append('Producto: ' + datos[index][0] + ' | Material: ' + datos[index][2] + ' | Categoria: ' + datos[index][1] + ' | Stock: ' + datos[index][3] + ' <br>');
         }
 
     });
