@@ -9,9 +9,15 @@ function init() {
         })
         //cargamos los clientes
     $.post("../ajax/venta.php?op=selectCliente", function(r) {
-        $("#cliente_id").html(r);
-        $("#cliente_id").selectpicker('refresh');
-    })
+            $("#cliente_id").html(r);
+            $("#cliente_id").selectpicker('refresh');
+        })
+        //fecha actual
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+    $("#fecha_p").val(today);
 }
 
 function ultimaFactura(iduser) {
@@ -294,7 +300,7 @@ function agregardetalle(idproducto, descripcion, precioVenta, stock) {
                 '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="descuento[]" id="descuento[]" value="' + descuento + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
                 '<td>$<input type="number" align="right" style="width:90%;text-align:right" step="0.01" min="0" name="interes[]" id="interes[]" value="' + interes + '" onchange="modificarSubtotales();" onkeyup="this.onchange(modificarSubtotales());" onpaste="this.onchange(modificarSubtotales());" oninput="this.onchange(modificarSubtotales());"></td>' +
                 '<td>$<span name="subtotal" style="width:90%;text-align:right" id="subtotal' + cont + '"> ' + subtotal + '</span></td>' +
-                '<tr>';
+                '</tr>';
             cont = cont + 1;
             detalle = detalle + 1;
             $("#detalles").append(fila);

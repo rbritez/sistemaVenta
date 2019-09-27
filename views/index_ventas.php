@@ -145,7 +145,7 @@ if($_SESSION['ventas'] == 1){
                                     <button class="btn btn-danger" onclick="cancelarform()" id="btnCancelar"> <i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12" >
-                                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-save"></i> Guardar</button>
+                                    <button class="btn btn-primary pull-right" type="submit" id="btnguardar"><i class="fa fa-save"></i> Guardar</button>
                                 </div>
                             </form>
                         </div>
