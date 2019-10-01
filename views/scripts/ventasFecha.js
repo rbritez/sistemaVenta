@@ -68,7 +68,6 @@ function listar() {
         buttons: [ //botones para exportar 
             'copyHtml5',
             'excelHtml5',
-            'csvHtml5',
             'pdf'
         ],
         "ajax": {
@@ -87,6 +86,16 @@ function listar() {
             ] //orden de listado , columna 0, el id de categoria
 
     }).dataTable();
+    $(".dt-button.buttons-copy.buttons-html5").attr('id', 'botonCopia');
+    $("#botonCopia").html('<span><i class="fa fa-copy"></i> Copia</span>');
+    $(".dt-button.buttons-excel.buttons-html5").attr('id', 'botonExcel');
+    $("#botonExcel").html('<span><i class="fa fa-file-excel-o"></i> Excel</span>');
+    $("#botonExcel").css('color', 'white');
+    $("#botonExcel").css('background', 'green');
+    $(".dt-button.buttons-pdf.buttons-html5").attr('id', 'botonPdf');
+    $("#botonPdf").html('<span><i class="fa fa-file-pdf-o"></i> PDF</span>');
+    $("#botonPdf").css('color', 'white');
+    $("#botonPdf").css('background', '#D33724');
     $.post("../ajax/consulta.php?op=ventasFechaGrafico", { fechaInicio: fechaInicio, fechaFin: fechaFin }, function(data, status) {
         datas = JSON.parse(data);
         $("#titlebtn").html('<h1 class="box-title">CONSULTA DE VENTAS <button type="button" style="background-color:rgba(255,255,255, 0.6); border:none; color:rgba(255,255,255, 0.6);cursor:default;" onclick="myFunction([' + datas[0]['fechaV'] + '],[' + datas[0]['totalesV'] + '])" id="verGrafico">Ver Grafico</button></h1>' +

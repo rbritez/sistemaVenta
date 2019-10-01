@@ -26,7 +26,7 @@ function mostrarform(flag) {
         $("#listadoregistros").hide();
         $("#formularioregistros").show();
         $("#boton_block").show();
-        $("#title_pm").html('Nueva Consultas o Pedido <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cliente"><i class="fa fa-plus-circle"></i> Nuevo Cliente</button>');
+        $("#title_pm").html('Nueva Consultas o Pedido <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_nuevoCliente"><i class="fa fa-plus-circle"></i> Nuevo Cliente</button>');
         //fecha actual
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
@@ -57,7 +57,6 @@ function listar() {
         buttons: [ //botones para exportar 
             'copyHtml5',
             'excelHtml5',
-            'csvHtml5',
             'pdf'
         ],
         "ajax": {
@@ -75,6 +74,16 @@ function listar() {
             ] //orden de listado , columna 0, el id de categoria
 
     }).dataTable();
+    $(".dt-button.buttons-copy.buttons-html5").attr('id', 'botonCopia');
+    $("#botonCopia").html('<span><i class="fa fa-copy"></i> Copia</span>');
+    $(".dt-button.buttons-excel.buttons-html5").attr('id', 'botonExcel');
+    $("#botonExcel").html('<span><i class="fa fa-file-excel-o"></i> Excel</span>');
+    $("#botonExcel").css('color', 'white');
+    $("#botonExcel").css('background', 'green');
+    $(".dt-button.buttons-pdf.buttons-html5").attr('id', 'botonPdf');
+    $("#botonPdf").html('<span><i class="fa fa-file-pdf-o"></i> PDF</span>');
+    $("#botonPdf").css('color', 'white');
+    $("#botonPdf").css('background', '#D33724');
 }
 
 function cerrar() {

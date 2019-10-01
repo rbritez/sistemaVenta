@@ -23,6 +23,20 @@
             echo $respuesta? "2" : "3";
         }   
         break;
+        case 'guardarDireccion':
+            $prov = isset($_POST["provDire"])? limpiarCadena($_POST["provDire"]):"";
+            $loc = isset($_POST["locDire"])? limpiarCadena($_POST["locDire"]):"";
+            $bar = isset($_POST["barDire"])? limpiarCadena($_POST["barDire"]):"";
+            $cal = isset($_POST["calDire"])? limpiarCadena($_POST["calDire"]):"";
+            $alt = isset($_POST["altDire"])? limpiarCadena($_POST["altDire"]):"";
+            $mz = isset($_POST["mzDire"])? limpiarCadena($_POST["mzDire"]):"";
+            $piso = isset($_POST["pisoDire"])? limpiarCadena($_POST["pisoDire"]):"";
+            $dpt = isset($_POST["dptDire"])? limpiarCadena($_POST["dptDire"]):"";
+            $infadd = isset($_POST["infaddDire"])? limpiarCadena($_POST["infaddDire"]):"";
+            $cliente_id = $_GET['id_cliente'];
+            $respuesta = $direccion->insertarDireccion($prov,$loc,$bar,$cal,$mz,$alt,$piso,$dpt,$infadd,$cliente_id);
+            echo $respuesta ? "1": "0";
+        break;
         case 'listar':
             $respuesta = $direccion->listar($persona_id);
             $data = array();

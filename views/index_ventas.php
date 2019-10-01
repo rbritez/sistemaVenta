@@ -79,7 +79,7 @@ if($_SESSION['ventas'] == 1){
                                     <label>FECHA</label>
                                     <input type="date" class="form-control" name="fecha_venta" id="fecha_venta" required>
                                 </div>
-                                <div id="tipoPagoDiv" class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12"> 
+                                <div id="tipoPagoDiv" class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12"> 
                                     <label>TIPO PAGO</label>
                                     <select name="tipo_pago" id="tipo_pago" class="form-control selectpicker" data-live-search="true" required>
                                         <option value="">Seleccionar...</option>
@@ -88,7 +88,7 @@ if($_SESSION['ventas'] == 1){
                                         <option value="cred_personal">CREDITO PERSONAL</option>
                                     </select>
                                 </div>
-                                <div id="cuotasDiv" class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                <div id="cuotasDiv" class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12"> 
                                     <label>CUOTAS</label>
                                     <select name="nro_cuotas" id="nro_cuotas" class="form-control selectpicker" data-live-search="true">
                                         <option value="">Seleccionar...</option>
@@ -106,14 +106,29 @@ if($_SESSION['ventas'] == 1){
                                     <label>NUMERO</label>
                                     <input type="text" class="form-control" maxlength="10" name="codigo" id="codigo" required>
                                 </div>
-                                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12"> 
-                                    <label>IMPUESTO</label>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12" align="center"> 
+                                    <label >IMPUESTO</label>
                                     <input type="text" class="form-control" name="impuesto" id="impuesto" required>
+                                </div>
+                                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12" align="center"> 
+                                    <label>ENVIO</label><br/>
+                                    <div align="center">
+                                    <label class="switch">
+                                        <input id="soliEnvio" type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    </div>
+                                </div>
+                                <div id="envioaprobado">
+                                   
                                 </div>
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_block">
                                     <button type="button"  class="btn btn-block btn-success" data-toggle="modal" data-target="#modal_categoria" >
                                             <span class="fa fa-plus"></span> Agregar Productos 
                                     </button>
+                                </div>
+                                <div>
+                                
                                 </div>
                                 <div class="col-lg-12 col-ms-12-col-md-12 col-xs-12">
                                     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover ">
@@ -198,6 +213,12 @@ if($_SESSION['ventas'] == 1){
                                         <input type="text" name="nro_doc" id="nro_doc" class="form-control" style="text-transform:uppercase" maxlength="50"> 
                                     </div> 
                                 </div>
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NRO TELEFONO (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nro_tel" id="nro_tel" class="form-control" style="text-transform:uppercase" maxlength="50"> 
+                                    </div> 
+                                </div>
                         </div>
                     </div>             
                 </div>                
@@ -210,6 +231,163 @@ if($_SESSION['ventas'] == 1){
             </div><!-- div content -->
         </div><!-- /.modal-dialog -->
 </div>
+
+
+<div class="modal fade" id="modal_selectContacto"> <!-- modallllllllll-->
+        <div class="modal-dialog">
+            <div class="modal-content"> <!-- div content --> 
+                <div class="modal-warning modal-header " style="background-color:#f39c12">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                    <h4 style="color:white;" class="modal-title">SELECCIONE EL NUMERO DEL CLIENTE</h4>
+                </div> 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12"style="background:#ECF0F5;paddin: 5px 0px 5px 0px;"> 
+                            <form  name="fContacto" id="fContacto" method="POST" onsubmit="return checkSubmit();" > 
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-right:0px;paddin-right:0px"> 
+                            <label>&nbsp;</label>
+                            <p><label>NUEVO CONTACTO: </label></p>
+                            </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>TELEFONO: </label>
+                                    <input type="text" class="form-control" name="telefonoContacto" id="telefonoContacto">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>CELULAR:</label>
+                                    <input type="text" class="form-control" name="celularContacto" id="celularContacto">
+                                </div>
+                                <div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-12"> 
+                                <label>&nbsp;</label>
+                                     <button type="submit" class="btn btn-info" id="btnGuardarContacto"><i class="fa fa-save" ></i></button> 
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-body table-responsive">
+                            <table id="tblContactos" class="table table-striped table-bordered table-condensed table-hover nowrap" style="width:100%; text-transform:uppercase">
+                                <thead>
+                                    <th>Opciones</th>
+                                    <th>Telefono</th>
+                                    <th>Celular</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <th>Opciones</th>
+                                    <th>Telefono</th>
+                                    <th>Celular</th>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>             
+                </div>                
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="" name="" ><i class="fa fa-arrow-circle-left" ></i> VOLVER</button> 
+                </div> 
+            </div><!-- div content -->
+        </div><!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal_selectDireccion"> <!-- modallllllllll-->
+        <div class="modal-dialog" >
+            <div class="modal-content"> <!-- div content --> 
+                <div class="modal-warning modal-header " style="background-color:#f39c12">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                    <h4 style="color:white;" class="modal-title">SELECCIONE LA DIRECCIÓN DEL CLIENTE</h4>
+                </div> 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12"style="background:#ECF0F5;paddin: 5px 0px 5px 0px;">
+                        <div class="box-header with-border">
+                            <h1 id="title_venta" class="box-title">Nueva Dirección</h1>
+                            <div class="box-tools pull-right"></div>
+                        </div>
+                            <form  name="fDire" id="fDire" method="POST" onsubmit="return checkSubmit();"> 
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>PROVINCIA: </label>
+                                    <input type="text" class="form-control" name="provDire" id="provDire" required>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>LOCALIDAD:</label>
+                                    <input type="text" class="form-control" name="locDire" id="locDire" required>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>BARRIO: </label>
+                                    <input type="text" class="form-control" name="barDire" id="barDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>CALLE:</label>
+                                    <input type="text" class="form-control" name="calDire" id="calDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>ALTURA: </label>
+                                    <input type="text" class="form-control" name="altDire" id="altDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>N° Mz.:</label>
+                                    <input type="text" class="form-control" name="mzDire" id="mzDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>N° Piso:</label>
+                                    <input type="text" class="form-control" name="pisoDire" id="pisoDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                    <label>N° Dpto.:</label>
+                                    <input type="text" class="form-control" name="dptDire" id="dptDire">
+                                </div>
+                                <div class="form-group col-lg-9 col-md-9 col-sm-9 col-xs-12"> 
+                                    <label>Info Add:</label>
+                                    <input type="text" class="form-control" name="infaddDire" id="infaddDire">
+                                </div>
+                                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+                                <label>&nbsp;</label>
+                                     <button type="submit" class="btn btn-info btn-block" id="btnGuardarDire"><i class="fa fa-save" ></i></button> 
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-body table-responsive">
+                            <table id="tblDireccion" class="table table-striped table-bordered table-condensed table-hover nowrap" style="width:100%; text-transform:uppercase">
+                                <thead>
+                                    <th>Opciones</th>
+                                    <th>Provincia</th>
+                                    <th>Localidad</th>
+                                    <th>Barrio</th>
+                                    <th>Calle</th>
+                                    <th>Altura</th>
+                                    <th>N° Mz.</th>
+                                    <th>N° Piso</th>
+                                    <th>N° Dpto.</th>
+                                    <th>Inf. Adicional</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <th>Opciones</th>
+                                    <th>Provincia</th>
+                                    <th>Localidad</th>
+                                    <th>Barrio</th>
+                                    <th>Calle</th>
+                                    <th>Altura</th>
+                                    <th>N° Mz.</th>
+                                    <th>N° Piso</th>
+                                    <th>N° Dpto.</th>
+                                    <th>Inf. Adicional</th>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>             
+                </div>                
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="" name="" ><i class="fa fa-arrow-circle-left" ></i> VOLVER</button> 
+                </div> 
+            </div><!-- div content -->
+        </div><!-- /.modal-dialog -->
+</div>
+
 
 
     <div class="modal fade" id="modal_categoria"> <!-- modallllllllll-->
@@ -265,6 +443,7 @@ require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/venta.js"></script>
 <script type="text/javascript" src="scripts/ventaClienteNuevo.js"></script>
+<link rel="stylesheet" href="../public/css/check_interruptor.css">
 <?php 
 } //cerramos el else de sesion
 ob_end_flush();

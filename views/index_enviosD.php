@@ -21,7 +21,7 @@ if($_SESSION['servicios'] == 1){
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h1 class="box-title">Lista de Categorias <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_categoria"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                        <h1 class="box-title" id="title-env">Lista de Envios </h1>
                         <div class="box-tools pull-right"></div>
                     </div>
                     <!-- /.box-header -->
@@ -29,17 +29,25 @@ if($_SESSION['servicios'] == 1){
                     <div class="panel-body table-responsive" id="listadoregistros">
                         <table id="tablalistado" class="table table-bordered table-hover nowrap" style="width:100%">
                             <thead>
-                                <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                            </thead>
-                            <tbody>
+                                <th style="text-align:center" >OPCIONES</th>
+                                <th style="text-align:center">F/HR ENVIO SOLICITADO </th>
+                                <th style="text-align:center">F/HR ENTREGADO </th>
+                                <th style="text-align:center">PRECIO ENVIO</th>
+                                <th style="text-align:center">ESTADO DE PAGO</th>
+                                <th style="text-align:center">ESTADO ENVIO</th>
+                                <th style="text-align:center">ESTADO</th>
+                            </thead >
+                            <tbody style="text-align:center" align="center">
 
                             </tbody>
                             <tfoot>
-                                <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
+                            <th  style="text-align:center">OPCIONES</th>
+                            <th  style="text-align:center">F/HR ENVIO SOLICITADO </th>
+                            <th  style="text-align:center">F/HR ENTREGADO </th>
+                            <th  style="text-align:center">PRECIO ENVIO</th>
+                            <th  style="text-align:center">ESTADO DE PAGO</th>
+                            <th style="text-align:center">ESTADO ENVIO</th>
+                            <th  style="text-align:center">ESTADO</th>
                             </tfoot>
                         </table>
                     </div>
@@ -94,7 +102,7 @@ if($_SESSION['servicios'] == 1){
 };
 require 'footer.php';
 ?>
-<script type="text/javascript" src="scripts/categoria.js"></script>
+<script type="text/javascript" src="scripts/envio.js"></script>
 <?php 
 } //cerramos el else de sesion
 ob_end_flush();

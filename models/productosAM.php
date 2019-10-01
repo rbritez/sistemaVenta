@@ -57,7 +57,7 @@ Class ProductoAM
     }
     //Implementamos un metodo para listar los registros
     Public function listar(){
-        $sql="SELECT id_prod_medida,p.`apellidos`,p.`nombres`,pm.`fecha_pedido`,pm.`fecha_aviso`,pm.`condicion`,pm.`estado` FROM prod_medida pm
+        $sql="SELECT id_prod_medida,p.`apellidos`,p.`nombres`,pm.`fecha_pedido`,(SELECT telefono FROM contactos WHERE contactos.`persona_id` = c.`persona_id` ORDER BY contactos.`id_contacto` DESC LIMIT 1 ) AS telefono,pm.`fecha_aviso`,pm.`condicion`,pm.`estado` FROM prod_medida pm
         INNER JOIN clientes c ON c.`id_clientes` = pm.`cliente_id`
         INNER JOIN personas p ON p.`id_persona` = c.`persona_id`";
         return ejectuarConsulta($sql);

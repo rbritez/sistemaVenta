@@ -23,7 +23,6 @@ function listar() {
         buttons: [ //botones para exportar 
             'copyHtml5',
             'excelHtml5',
-            'csvHtml5',
             'pdf'
         ],
         "ajax": {
@@ -40,6 +39,16 @@ function listar() {
                 [0, "desc"]
             ] //orden de listado , columna 0, el id de categoria
     }).dataTable();
+    $(".dt-button.buttons-copy.buttons-html5").attr('id', 'botonCopia');
+    $("#botonCopia").html('<span><i class="fa fa-copy"></i> Copia</span>');
+    $(".dt-button.buttons-excel.buttons-html5").attr('id', 'botonExcel');
+    $("#botonExcel").html('<span><i class="fa fa-file-excel-o"></i> Excel</span>');
+    $("#botonExcel").css('color', 'white');
+    $("#botonExcel").css('background', 'green');
+    $(".dt-button.buttons-pdf.buttons-html5").attr('id', 'botonPdf');
+    $("#botonPdf").html('<span><i class="fa fa-file-pdf-o"></i> PDF</span>');
+    $("#botonPdf").css('color', 'white');
+    $("#botonPdf").css('background', '#D33724');
 }
 //funcion para guardar y editar el cliente
 function guardaryeditar(e) {

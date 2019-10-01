@@ -13,11 +13,19 @@
         case 'guardaryeditar':
         if(empty($id_contacto)){
             $respuesta = $contacto->insertar($telefono,$celular,$email,$fax,$persona_id);
-            echo $respuesta ? "1" : "0";
+            echo $respuesta;
         }else{
             $respuesta = $contacto->editar($id_contacto,$telefono,$celular,$email,$fax);
             echo $respuesta ? "2" : "3"; 
         }
+        break;
+        case 'guardarContacto':
+            $telefonoContacto = isset($_POST["telefonoContacto"])? limpiarCadena($_POST["telefonoContacto"]):"";
+            $celularContacto = isset($_POST["celularContacto"])? limpiarCadena($_POST["celularContacto"]):"";
+         
+            $cliente_id = $_GET['id_cliente'];
+            $respuesta = $contacto->insertarContacto($telefonoContacto,$celularContacto,$cliente_id);
+            echo $respuesta ? "1": "0";
         break;
 
         case 'eliminar':

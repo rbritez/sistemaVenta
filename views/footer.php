@@ -10,6 +10,8 @@
     <script src="../public/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/js/app.min.js"></script>
+    <!-- moment js -->
+    <script src="../public/js/moment.min.js" ></script>
     </body>
     <!-- DATATABLE --->
     <script src="../public/datatables/jquery.dataTables.min.js"></script>
@@ -29,4 +31,5 @@
      <script src="../public/input-file/js/jquery.custom-file-input.js"></script>
      <!-- chosen select multiple -->
     <script src="../public/plugins/chosen_v1.8.7/chosen.jquery.js"></script>
+
 </html>

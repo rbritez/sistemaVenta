@@ -95,10 +95,11 @@ break;
             $data[] = array(
                 "0"=>($reg->condicion == 2)?'<button class="btn btn-info" onclick="mostrar('.$reg->id_prod_medida.')"><i class="fa fa-eye"></i></button> '. ' <button class="btn btn-danger" onclick="desactivar('.$reg->id_prod_medida.')"><i class="fa fa-close"></i></button>':'<button class="btn btn-info" onclick="mostrar('.$reg->id_prod_medida.')"><i class="fa fa-eye"></i></button> '. ' <button class="btn btn-danger" onclick="desactivar('.$reg->id_prod_medida.')"><i class="fa fa-close"></i></button>'.' <button class="btn btn-success" onclick="activar('.$reg->id_prod_medida.')"><i class="fa fa-check"></i></button>',
                 "1"=>$reg->apellidos.' '.$reg->nombres,
-                "2"=>$newDate,
-                "3"=>$dateAviso,
-                "4"=>$estcondicion,
-                "5"=>($reg->estado)?'<span class="label bg-green-active">Activo</span>':'<span class="label bg-red-active">Inactivo</span>',
+                "2"=>$reg->telefono,
+                "3"=>$newDate,
+                "4"=>$dateAviso,
+                "5"=>$estcondicion,
+                "6"=>($reg->estado)?'<span class="label bg-green-active">Activo</span>':'<span class="label bg-red-active">Inactivo</span>',
             );
         }
         $results = array(

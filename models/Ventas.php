@@ -70,6 +70,32 @@
             
             return $sw;
         }
+        Public function insertarConEnvio($tipo_comprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,
+        $producto_id,$cantidad,$precio_venta,$descuento,$interes,$fecha_envio,$hora_envio,$monto_envio,$pago_envio,$id_contacto,$id_direccion){
+            $sql= "INSERT INTO facturas (tipo_comprobante,serie,codigo,cliente_id,usuario_id,fecha_venta,impuesto,tipo_pago,monto_total) VALUES ('$tipo_comprobante','$serie','$codigo','$cliente_id','$usuario_id','$fecha_venta','$impuesto','$tipo_pago','$monto_total') ";
+            $venta_id =  ejectuarConsulta_retornarID($sql);
+            $num_elementos = 0;
+            $sw = true;
+            while ($num_elementos < count($producto_id)){
+                $sql_detalle = "INSERT INTO detalle_factura (factura_id, producto_id, cantidad,precio_venta,descuento, interes) VALUES ('$venta_id','$producto_id[$num_elementos]','$cantidad[$num_elementos]','$precio_venta[$num_elementos]','$descuento[$num_elementos]','$interes[$num_elementos]')";
+                ejectuarConsulta($sql_detalle) or $sw = false;
+                $num_elementos = $num_elementos +1;
+            }
+            if($tipo_pago == 'cred_personal'){
+                $sqlCuenta= "INSERT INTO cuenta (cliente_id,usuario_id,factura_id,fecha_cuenta,total_cuotas)VALUES('$cliente_id','$usuario_id','$venta_id','$fecha_venta','$cantidadCuotas')";
+                $cuenta_id = ejectuarConsulta_retornarID($sqlCuenta);
+                $montoCuota = $monto_total / $cantidadCuotas;
+                $cantidadCuotas = $cantidadCuotas+1;
+                for ($i=1; $i < $cantidadCuotas; $i++) 
+                { 
+                    $newfecha = date("Y-m-d", strtotime($fecha_venta."+ $i month"));
+                    $sqlCuota = "INSERT INTO cuotas (nro_cuota,fecha_v,interes,monto,cuenta_id)VALUES('$i','$newfecha',0,'$montoCuota',$cuenta_id)";
+                    ejectuarConsulta($sqlCuota);                    
+                }
+            }
+            $sqlEnvio="INSERT INTO envios (fecha_envio,hora_envio,precio_envio,condicion_pago,factura_id,contacto_id,direccion_id)VALUES('$fecha_envio','$hora_envio','$monto_envio','$pago_envio','$venta_id','$id_contacto','$id_direccion')";
+            return ejectuarConsulta($sqlEnvio);
+        }
         Public function anular($id_factura){
             $sql = "UPDATE facturas SET estado = 'anulado' WHERE id_factura = '$id_factura'";
             return ejectuarConsulta($sql);
@@ -160,6 +186,31 @@
             WHERE usuario_id = '$usuario_id'
             ORDER BY codigo DESC LIMIT 0,1";
             return ejectuarConsultaSimpleFila($sql);
+        }
+        Public function consultaDirTel($id_cliente){
+            $sql="SELECT c.`id_clientes`,pe.`id_persona`, 
+                    (SELECT telefono FROM contactos WHERE contactos.`persona_id` = pe.`id_persona` ORDER BY contactos.`id_contacto` DESC LIMIT 1 ) AS telefono,
+                    (SELECT celular FROM contactos WHERE contactos.`persona_id` = pe.`id_persona` ORDER BY contactos.`id_contacto` DESC LIMIT 1 ) AS celular,
+                    (SELECT persona_id FROM direcciones WHERE direcciones.`persona_id` = pe.`id_persona` ORDER BY direcciones.`id_direccion` DESC LIMIT 1)AS dir_existente 
+                FROM clientes c 
+                INNER JOIN personas pe ON pe.`id_persona` = c.`persona_id`
+                WHERE c.`id_clientes` = '$id_cliente'";
+                return ejectuarConsultaSimpleFila($sql);
+
+        }
+        Public function selectContactoEnvio($id_persona){
+            $sql= "SELECT id_contacto, telefono,celular FROM contactos 
+                    INNER JOIN personas ON personas.`id_persona` = contactos.`persona_id` 
+                    INNER JOIN  clientes ON clientes.`persona_id` = personas.`id_persona` 
+                    WHERE clientes.`id_clientes` = '$id_persona'";
+            return ejectuarConsulta($sql);
+        }
+        Public function selectDireccionEnvio($id_persona){
+            $sql= "SELECT * FROM direcciones 
+                    INNER JOIN personas ON personas.`id_persona` = direcciones.`persona_id` 
+                    INNER JOIN  clientes ON clientes.`persona_id` = personas.`id_persona` 
+                    WHERE clientes.`id_clientes` = '$id_persona'";
+            return ejectuarConsulta($sql);
         }
     }
 ?>

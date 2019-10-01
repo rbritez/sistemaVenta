@@ -44,7 +44,7 @@ function listar() {
             'pdf'
         ],
         "ajax": {
-            url: '../ajax/categoria.php?op=listar',
+            url: '../ajax/envios.php?op=listar',
             type: "get",
             dataType: "json",
             error: function(e) {
@@ -117,15 +117,15 @@ function mostrar(idcategoria) {
     });
 }
 
-function desactivar(idcategoria) {
+function desactivar(idenvio) {
 
-    alertify.confirm("ATENCIÓN", "¿Esta seguro que desea desactivar la Categoría?",
+    alertify.confirm("ATENCIÓN", "¿Esta seguro que desea Anular el Envio?",
         function() {
-            $.post("../ajax/categoria.php?op=desactivar", { id_categoria: idcategoria }, function(e) {
+            $.post("../ajax/envios.php?op=desactivar", { id_envio: idenvio }, function(e) {
                 if (e = 1) {
-                    alertify.success('Se desactivo con exito!');
+                    alertify.success('Se Anulo con exito!');
                 } else {
-                    alertify.error('Hubo un error al desactivar');
+                    alertify.error('Hubo un error al Anular');
                 }
                 $('#tablalistado').dataTable().api().ajax.reload();
             });
@@ -135,13 +135,13 @@ function desactivar(idcategoria) {
         });
 }
 
-function activar(idcategoria) {
+function activar(idenvio) {
 
-    alertify.confirm("ATENCIÓN", "¿Esta seguro que desea activar la Categoría?",
+    alertify.confirm("CONFIRMAR", "¿Envio de Productos Entregados?",
         function() {
-            $.post("../ajax/categoria.php?op=activar", { id_categoria: idcategoria }, function(e) {
+            $.post("../ajax/envios.php?op=activar", { id_envio: idenvio }, function(e) {
                 if (e = 1) {
-                    alertify.success('Se activo con exito!');
+                    alertify.success('Se confirmo el envio con exito!');
                 } else {
                     alertify.error('Hubo un error al activar');
                 }

@@ -33,6 +33,7 @@ if($_SESSION['servicios'] == 1){
                             <thead style="text-align:center;" >
                                 <th style="text-align:center;"  >OPCIONES</th>
                                 <th style="text-align:center;" >NOMBRE Y APELLIDO DE CLIENTE</th>
+                                <th style="text-align:center;"  >TELEFONO</th>
                                 <th style="text-align:center;"  >FECHA DE PEDIDO</th>
                                 <th style="text-align:center;"  >FECHA DE CONFIRMACION</th>
                                 <th style="text-align:center;"  >ESTADO DE CONFIRMACION</th>
@@ -44,6 +45,7 @@ if($_SESSION['servicios'] == 1){
                             <tfoot style="text-align:center;" >
                                 <th style="text-align:center;"  >OPCIONES</th>
                                 <th style="text-align:center;"  >NOMBRE Y APELLIDO DE CLIENTE</th>
+                                <th style="text-align:center;"  >TELEFONO</th>
                                 <th style="text-align:center;"  >FECHA DE PEDIDO</th>
                                 <th style="text-align:center;"  >FECHA DE CONFIRMACION</th>
                                 <th style="text-align:center;"  >ESTADO DE CONFIRMACION</th>
@@ -111,6 +113,56 @@ if($_SESSION['servicios'] == 1){
 </div>
 <!-- /.content-wrapper -->
 <!--Fin-Contenido-->
+<div class="modal fade" id="modal_nuevoCliente"> <!-- modallllllllll-->
+        <div class="modal-dialog">
+            <div class="modal-content"> <!-- div content --> 
+                <div class="modal-warning modal-header " style="background-color:#f39c12" id="agregarformularioCliente">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                    <h4 style="color:white;" class="modal-title">NUEVO CLIENTE</h4>
+                </div> 
+                <div id="EFC">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12"> 
+                            <form class="form-horizontal" name="fCliente" id="fCliente" method="POST"> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NOMBRES (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nombres" id="nombres" class="form-control" placeholder="" style="text-transform:uppercase" maxlength="50" required> 
+                                    </div> 
+                                </div> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">APELLIDOS (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="apellidos" id="apellidos" class="form-control" style="text-transform:uppercase" maxlength="50" required> 
+                                    </div> 
+                                </div> 
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NRO DOC/CUIL (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nro_doc" id="nro_doc" class="form-control" style="text-transform:uppercase" maxlength="50"> 
+                                    </div> 
+                                </div>
+                                <div class="form-group"> 
+                                    <label class="col-sm-3 col-sm-3 control-label">NRO TELEFONO (*)</label> 
+                                    <div class="col-sm-9"> 
+                                        <input type="text" name="nro_tel" id="nro_tel" class="form-control" style="text-transform:uppercase" maxlength="50"> 
+                                    </div> 
+                                </div>
+                        </div>
+                    </div>             
+                </div>                
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" id="cerrarCliente" name="cerrarCliente" ><i class="fa fa-arrow-circle-left" ></i> VOLVER</button> 
+                    <button type="submit" class="btn btn-info" id="btnGuardarCliente"><i class="fa fa-save" ></i> GUARDAR</button> 
+                            </form> 
+                </div> 
+                </div>
+            </div><!-- div content -->
+        </div><!-- /.modal-dialog -->
+</div>
 
 <?php
 }else{
@@ -119,6 +171,7 @@ if($_SESSION['servicios'] == 1){
 require 'footer.php';
 ?>
 <script type="text/javascript" src="scripts/productosAM.js"></script>
+<script type="text/javascript" src="scripts/ventaClienteNuevo.js"></script>
 <?php 
 } //cerramos el else de sesion
 ob_end_flush();

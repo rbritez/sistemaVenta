@@ -11,6 +11,18 @@
             $sql = "INSERT INTO clientes (persona_id) VALUES ('$persona_id')";
             return ejectuarConsulta($sql);
         }
+        Public function insertarClienteVenta($persona_id,$nro_tel)
+        {
+            $sql = "INSERT INTO clientes (persona_id) VALUES ('$persona_id')";
+            $env = ejectuarConsulta($sql);
+            if($nro_tel){
+                $sqlContacto = "INSERT INTO contactos (telefono,persona_id) VALUES('$nro_tel','$persona_id');";
+                return ejectuarConsulta($sqlContacto);
+            }else{
+                return $env;
+            }
+           
+        }
         Public function editar()
         {
         }

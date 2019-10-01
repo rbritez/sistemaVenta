@@ -23,8 +23,20 @@ $monto_total=isset($_POST['total_compra']) ? limpiarCadena($_POST['total_compra'
 switch ($_GET['op']) {
     case 'guardaryeditar':
         if(empty($id_compra)){
-            $respuesta = $venta->insertar($tipocomprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,$_POST['producto_id'],$_POST['cantidad'],$_POST['precio_venta'],$_POST['descuento'],$_POST['interes']);
-            echo $respuesta ? "1" : "0";
+            if(isset($_POST['fecha_envio']) && !empty($_POST['fecha_envio'])){
+                $fecha_envio=isset($_POST['fecha_envio']) ? limpiarCadena($_POST['fecha_envio']) : "";
+                $hora_envio=isset($_POST['hora_envio']) ? limpiarCadena($_POST['hora_envio']) : "";
+                $monto_envio=isset($_POST['monto_envio']) ? limpiarCadena($_POST['monto_envio']) : "";
+                $pago_envio=isset($_POST['pago_envio']) ? limpiarCadena($_POST['pago_envio']) : "";
+                $id_contacto=isset($_POST['id_contacto_enviar']) ? limpiarCadena($_POST['id_contacto_enviar']) : "";;
+                $id_direccion=isset($_POST['id_direccion_enviar']) ? limpiarCadena($_POST['id_direccion_enviar']) : "";
+                   
+                $respuesta = $venta->insertarConEnvio($tipocomprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,$_POST['producto_id'],$_POST['cantidad'],$_POST['precio_venta'],$_POST['descuento'],$_POST['interes'],$fecha_envio,$hora_envio,$monto_envio,$pago_envio,$id_contacto,$id_direccion);
+                echo $respuesta ? "1" : "0";
+            }else{
+                $respuesta = $venta->insertar($tipocomprobante,$serie,$codigo,$cliente_id,$usuario_id,$fecha_venta,$impuesto,$tipo_pago,$cantidadCuotas,$monto_total,$_POST['producto_id'],$_POST['cantidad'],$_POST['precio_venta'],$_POST['descuento'],$_POST['interes']);
+                            echo $respuesta ? "1" : "0";
+            }    
         }else{
 
         }
@@ -157,5 +169,57 @@ switch ($_GET['op']) {
     $respuesta=$venta->ultimaFacturaUser($id);
     echo json_encode($respuesta);
     break;
+    case 'consultaDirTel':
+        $id_cliente= $_POST['id_cliente'];
+        $respuesta = $venta->consultaDirTel($id_cliente);
+        echo json_encode($respuesta);
+    break;
+    case 'traerContactoCliente':
+        $id_cliente = $_GET['id_cliente'];
+        $respuesta = $venta->selectContactoEnvio($id_cliente);
+        $data = array();
+        while($reg = $respuesta->fetch_object())
+        {   
+            $data[]=array(
+                "0"=>'<button class="btn btn-warning botn-agregarC" id="agregarC'.$reg->id_contacto.'"  onclick="agregarContacto('.$reg->id_contacto.')"><span class="fa fa-plus"><span></button><button type="button" id="mostrarC'.$reg->id_contacto.'"  style="display:none" class="btn btn-success botn-mostrarC"><span class="fa fa-check"></span></button>',
+                "1"=>$reg->telefono,
+                "2"=>$reg->celular,
+            );
+        }
+        $results = array(
+            "sEcho" =>1, //Informacion para el data table
+            "iTotalRecords"=>count($data), //enviamos el total de registros al data table
+            "iTotalDisplayRecords"=>count($data), //enviamos el toal de registros a visualizar
+            "aaData"=>$data //aca se encuentra almacenado todos los registros
+        );
+        echo json_encode($results);//devolvemos en json
+    break;
+    case 'traerDireccionCliente':
+    $id_cliente = $_GET['id_cliente'];
+    $respuesta = $venta->selectDireccionEnvio($id_cliente);
+    $data = array();
+    while($reg = $respuesta->fetch_object())
+    {   
+        $data[]=array(
+            "0"=>'<button class="btn btn-warning botn-agregarD" id="agregarD'.$reg->id_direccion.'"  onclick="agregarDireccion('.$reg->id_direccion.')"><span class="fa fa-plus"><span></button><button type="button" id="mostrarD'.$reg->id_direccion.'"  style="display:none" class="btn btn-success botn-mostrarD"><span class="fa fa-check"></span></button>',
+            "1"=>$reg->provincia,
+            "2"=>$reg->localidad,
+            "3"=>$reg->barrio,
+            "4"=>$reg->calle,
+            "5"=>$reg->altura,
+            "6"=>$reg->manzana,
+            "7"=>$reg->nro_piso,
+            "8"=>$reg->nro_dpto,
+            "9"=>$reg->info_add
+        );
+    }
+    $results = array(
+        "sEcho" =>1, //Informacion para el data table
+        "iTotalRecords"=>count($data), //enviamos el total de registros al data table
+        "iTotalDisplayRecords"=>count($data), //enviamos el toal de registros a visualizar
+        "aaData"=>$data //aca se encuentra almacenado todos los registros
+    );
+    echo json_encode($results);//devolvemos en json
+break;
 }
 ?>

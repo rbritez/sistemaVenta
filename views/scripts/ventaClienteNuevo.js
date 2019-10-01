@@ -25,7 +25,7 @@ function guardarCliente(f) {
     f.preventDefault();
     var formData = new FormData($("#fCliente")[0]);
     $.ajax({
-        url: "../ajax/cliente.php?op=guardaryeditar",
+        url: "../ajax/cliente.php?op=guardarClienteVenta",
         type: "POST",
         data: formData,
         contentType: false,

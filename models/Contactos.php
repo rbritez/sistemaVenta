@@ -7,7 +7,15 @@
         }
         Public function insertar($telefono,$celular,$email,$fax,$persona_id)
         {
-            $sql = "INSERT INTO contactos (telefono, celular, email, fax, persona_id) VALUES ('$telefono','$celular','$email','$fax','$persona_id')";
+            $sql = "INSERT INTO contactos (telefono, celular, email, fax,fecha_carga, persona_id) VALUES ('$telefono','$celular','$email','$fax',curdate(),'$persona_id')";
+            return ejectuarConsulta($sql);
+        }
+        Public function insertarContacto($telefono,$celular,$cliente_id)
+        {
+            $sqlCliente = "SELECT persona_id FROM clientes WHERE id_clientes = '$cliente_id'";
+            $id_persona = ejectuarConsultaSimpleFila($sqlCliente);
+            $id = $id_persona['persona_id'];
+            $sql = "INSERT INTO contactos (telefono, celular,fecha_carga, persona_id) VALUES ('$telefono','$celular',curdate(),'$id')";
             return ejectuarConsulta($sql);
         }
         Public function editar($id_contacto,$telefono,$celular,$email,$fax)

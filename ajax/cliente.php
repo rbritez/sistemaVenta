@@ -9,6 +9,7 @@
     $apellidos = isset($_POST["apellidos"])? limpiarCadena($_POST["apellidos"]):"";
     $nro_doc = isset($_POST["nro_doc"])? limpiarCadena($_POST["nro_doc"]):"";
     $fecha_nac = isset($_POST["fecha_nac"])? limpiarCadena($_POST["fecha_nac"]):"";
+    $nro_tel = isset($_POST["nro_tel"])? limpiarCadena($_POST["nro_tel"]):"";
     switch($_GET["op"]){
         case 'guardaryeditar':
             if(empty($id_cliente)){
@@ -43,6 +44,24 @@
                 $respuestaPersona = $persona->editar_sinFN($nombres,$apellidos,$nro_doc,$persona_id);
                 echo $respuestaPersona ? "3" : "4"; 
             }
+        break;
+        case 'guardarClienteVenta':
+            $datos= [
+                'nombres' => $nombres,
+                'apellidos'=> $apellidos,
+                'nro_doc' => $nro_doc,
+            ];
+            $respuestaPersona = $persona->insertar($datos);
+                if ($respuestaPersona == 0) {
+                // Si no se guardo el registro de la persona devolvera 0, entonces informamos que falto completar algun campo de los datos de la persona
+                $respuesta = "0";//error al guardar persona
+                echo $respuesta; 
+                }else{
+                    $persona_id = $respuestaPersona;
+                  
+                    $respuestaCliente = $cliente->insertarClienteVenta($persona_id,$nro_tel);
+                    echo $respuestaCliente ? "2" : "1";
+                }
         break;
         
         case 'activar':

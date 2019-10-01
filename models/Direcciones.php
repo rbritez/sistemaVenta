@@ -23,7 +23,15 @@ require "../config/conexion.php";
         }
         Public function insertar($provincia,$localidad,$barrio,$calle,$manzana,$altura,$nro_piso,$nro_dpto,$info_add,$persona_id)
         {   
-                $sql= "INSERT INTO direcciones (provincia, localidad, barrio,calle,manzana,altura,nro_piso,nro_dpto,info_add, persona_id) VALUES ('$provincia','$localidad','$barrio','$calle','$manzana','$altura','$nro_piso','$nro_dpto','$info_add','$persona_id')";
+                $sql= "INSERT INTO direcciones (provincia, localidad, barrio,calle,manzana,altura,nro_piso,nro_dpto,info_add,fecha_carga, persona_id) VALUES ('$provincia','$localidad','$barrio','$calle','$manzana','$altura','$nro_piso','$nro_dpto','$info_add',curdate(),'$persona_id')";
+                return ejectuarConsulta($sql);
+        }
+        Public function insertarDireccion($provincia,$localidad,$barrio,$calle,$manzana,$altura,$nro_piso,$nro_dpto,$info_add,$cliente_id)
+        {   
+            $sqlCliente = "SELECT persona_id FROM clientes WHERE id_clientes = '$cliente_id'";
+            $id_persona = ejectuarConsultaSimpleFila($sqlCliente);
+            $id = $id_persona['persona_id'];
+                $sql= "INSERT INTO direcciones (provincia, localidad, barrio,calle,manzana,altura,nro_piso,nro_dpto,info_add,fecha_carga, persona_id) VALUES ('$provincia','$localidad','$barrio','$calle','$manzana','$altura','$nro_piso','$nro_dpto','$info_add',curdate(),'$id')";
                 return ejectuarConsulta($sql);
         }
         Public function editar($id_direccion,$provincia,$localidad,$barrio,$calle,$manzana,$altura,$nro_piso,$nro_dpto,$info_add)
